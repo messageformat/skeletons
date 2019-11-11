@@ -1,4 +1,4 @@
-import { Skeleton } from "./parse";
+import { Skeleton } from "./skeleton";
 
 export interface NumberFormatOptions extends Intl.NumberFormatOptions {
   compactDisplay?: "long" | "short";
