@@ -101,28 +101,15 @@ function parseDigits(src: string, style: "fraction" | "significant") {
 
 class Parser {
   errors: SkeletonError[] = [];
-  skeleton: Skeleton = {
-    decimal: null,
-    group: null,
-    integerWidth: null,
-    notation: null,
-    numberingSystem: null,
-    precision: null,
-    roundingMode: null,
-    scale: null,
-    sign: null,
-    unit: null,
-    unitPer: null,
-    unitWidth: null
-  };
+  skeleton: Skeleton = {};
 
   badOption(stem: string, opt: string) {
     this.errors.push(new BadOptionError(stem, opt));
   }
 
   isEmpty(key: keyof Skeleton) {
-    if (this.skeleton[key])
-      this.errors.push(new MaskedValueError(key, this.skeleton[key]));
+    const prev = this.skeleton[key];
+    if (prev) this.errors.push(new MaskedValueError(key, prev));
   }
 
   parseBlueprints(stem: string, options: string[]) {

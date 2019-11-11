@@ -8,26 +8,24 @@ export type Sign =
   | "sign-accounting-except-zero";
 
 export interface Skeleton {
-  decimal: "decimal-auto" | "decimal-always" | null;
-  group:
+  decimal?: "decimal-auto" | "decimal-always";
+  group?:
     | "group-off"
     | "group-min2"
     | "group-auto"
     | "group-on-aligned"
-    | "group-thousands"
-    | null;
-  integerWidth: { min: number; max?: number; source: string } | null;
-  notation:
+    | "group-thousands";
+  integerWidth?: { min: number; max?: number; source: string };
+  notation?:
     | { style: "compact-short" | "compact-long" | "notation-simple" }
     | {
         style: "scientific" | "engineering";
         expDigits: number | null;
         expSign: Sign | null;
         source: string;
-      }
-    | null;
-  numberingSystem: string | null;
-  precision:
+      };
+  numberingSystem?: string;
+  precision?:
     | {
         style:
           | "precision-integer"
@@ -43,9 +41,8 @@ export interface Skeleton {
         minSignificant?: number;
         maxSignificant?: number;
         source: string;
-      }
-    | null;
-  roundingMode:
+      };
+  roundingMode?:
     | "rounding-mode-ceiling"
     | "rounding-mode-floor"
     | "rounding-mode-down"
@@ -53,21 +50,18 @@ export interface Skeleton {
     | "rounding-mode-half-even"
     | "rounding-mode-half-down"
     | "rounding-mode-half-up"
-    | "rounding-mode-unnecessary"
-    | null;
-  scale: number | null;
-  sign: Sign | null;
-  unit:
+    | "rounding-mode-unnecessary";
+  scale?: number;
+  sign?: Sign;
+  unit?:
     | { style: "percent" | "permille" | "base-unit" }
     | { style: "currency"; currency: string }
-    | { style: "measure-unit"; unit: string }
-    | null;
-  unitPer: string | null;
-  unitWidth:
+    | { style: "measure-unit"; unit: string };
+  unitPer?: string;
+  unitWidth?:
     | "unit-width-narrow"
     | "unit-width-short"
     | "unit-width-full-name"
     | "unit-width-iso-code"
-    | "unit-width-hidden"
-    | null;
+    | "unit-width-hidden";
 }

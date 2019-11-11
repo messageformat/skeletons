@@ -1,5 +1,7 @@
 import { Skeleton } from "./skeleton";
 
+// Extends options to include features brought by the Stage 3 Intl.NumberFormat
+// Unified API Proposal: https://github.com/tc39/proposal-unified-intl-numberformat
 export interface NumberFormatOptions extends Intl.NumberFormatOptions {
   compactDisplay?: "long" | "short";
   currencySign?: "standard" | "accounting";
@@ -148,32 +150,32 @@ export function getNumberFormatOptions(
         break;
       }
     }
+  }
 
-    switch (sign) {
-      case "sign-auto":
-        opt.signDisplay = "auto";
-        break;
-      case "sign-always":
-        opt.signDisplay = "always";
-        break;
-      case "sign-except-zero":
-        opt.signDisplay = "exceptZero";
-        break;
-      case "sign-never":
-        opt.signDisplay = "never";
-        break;
-      case "sign-accounting":
-        opt.currencySign = "accounting";
-        break;
-      case "sign-accounting-always":
-        opt.currencySign = "accounting";
-        opt.signDisplay = "always";
-        break;
-      case "sign-accounting-except-zero":
-        opt.currencySign = "accounting";
-        opt.signDisplay = "exceptZero";
-        break;
-    }
+  switch (sign) {
+    case "sign-auto":
+      opt.signDisplay = "auto";
+      break;
+    case "sign-always":
+      opt.signDisplay = "always";
+      break;
+    case "sign-except-zero":
+      opt.signDisplay = "exceptZero";
+      break;
+    case "sign-never":
+      opt.signDisplay = "never";
+      break;
+    case "sign-accounting":
+      opt.currencySign = "accounting";
+      break;
+    case "sign-accounting-always":
+      opt.currencySign = "accounting";
+      opt.signDisplay = "always";
+      break;
+    case "sign-accounting-except-zero":
+      opt.currencySign = "accounting";
+      opt.signDisplay = "exceptZero";
+      break;
   }
 
   if (decimal === "decimal-always") unsupported(decimal);

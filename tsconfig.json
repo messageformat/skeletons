@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "lib": ["es5"],
     "listEmittedFiles": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
