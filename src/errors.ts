@@ -56,13 +56,13 @@ export class TooManyOptionsError extends SkeletonError {
 
 export class UnsupportedError extends SkeletonError {
   stem: string;
-  value?: string;
-  constructor(stem: string, value?: string) {
+  source?: string;
+  constructor(stem: string, source?: string) {
     super("UNSUPPORTED", `The stem ${stem} is not supported`);
     this.stem = stem;
-    if (value) {
-      this.message += ` with value ${value}`;
-      this.value = value;
+    if (source) {
+      this.message += ` with value ${source}`;
+      this.source = source;
     }
   }
 }

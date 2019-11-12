@@ -9,12 +9,12 @@ export function getFormatter(
 ) {
   const { errors, skeleton } = parseSkeleton(src);
   if (onError) for (const error of errors) onError(error);
-  function handleUnsupported(stem: string, value?: string) {
-    if (onError) onError(new UnsupportedError(stem, value));
+  function handleUnsupported(stem: string, source?: string) {
+    if (onError) onError(new UnsupportedError(stem, source));
   }
   const opt = getNumberFormatOptions(skeleton, handleUnsupported);
 
-  const { numberingSystem, scale } = skeleton;
+  const { numberingSystem, scale, unit } = skeleton;
   if (numberingSystem) {
     const nu = (lc: string) => `${lc}-u-nu-${numberingSystem}`;
     if (Array.isArray(locales)) {
@@ -23,6 +23,7 @@ export function getFormatter(
   }
 
   const nf = new Intl.NumberFormat(locales, opt);
-  const mult = typeof scale === "number" && scale > 0 ? scale : 1;
+  let mult = typeof scale === "number" && scale > 0 ? scale : 1;
+  if (unit && unit.style === "percent") mult *= 0.01;
   return (value: number) => nf.format(mult * value);
 }

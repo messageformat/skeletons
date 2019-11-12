@@ -24,7 +24,7 @@ export function getNumberFormatOptions(
     unitPer,
     unitWidth
   }: Skeleton,
-  unsupported: (stem: string, value?: string) => void
+  unsupported: (stem: string, source?: string) => void
 ) {
   const opt: NumberFormatOptions = {};
 
