@@ -1,4 +1,4 @@
-import { Sign, Skeleton } from "./skeleton";
+import { Sign, Skeleton, Unit } from "./skeleton";
 
 import {
   SkeletonError,
@@ -77,8 +77,33 @@ function hasMinOption(stem: string): stem is keyof typeof minOptions {
   return stem in minOptions;
 }
 
-function parseUnit(src: string) {
-  return /.-./.test(src) ? src : null;
+// FIXME: subtype is not checked
+function isUnit(unit: string): unit is Unit {
+  const types = [
+    "acceleration",
+    "angle",
+    "area",
+    "concentr",
+    "consumption",
+    "digital",
+    "duration",
+    "electric",
+    "energy",
+    "force",
+    "frequency",
+    "graphics",
+    "length",
+    "light",
+    "mass",
+    "power",
+    "pressure",
+    "speed",
+    "temperature",
+    "torque",
+    "volume"
+  ];
+  const [type] = unit.split("-", 1);
+  return types.indexOf(type) !== -1;
 }
 
 function parseDigits(src: string, style: "fraction" | "significant") {
@@ -218,19 +243,18 @@ class Parser {
         } else this.badOption(stem, option);
         break;
       case "measure-unit": {
-        const unit = parseUnit(option);
-        if (unit) this.isEmpty("unit");
-        if (unit) res.unit = { style: stem, unit };
-        else this.badOption(stem, option);
+        if (isUnit(option)) {
+          this.isEmpty("unit");
+          res.unit = { style: stem, unit: option };
+        } else this.badOption(stem, option);
         break;
       }
 
       // unitPer
       case "per-measure-unit": {
-        const unit = parseUnit(option);
-        if (unit) {
+        if (isUnit(option)) {
           this.isEmpty("unitPer");
-          res.unitPer = unit;
+          res.unitPer = option;
         } else this.badOption(stem, option);
         break;
       }
@@ -261,7 +285,6 @@ class Parser {
         } else this.badOption(stem, option);
         break;
       }
-      // TODO: fractions & significant digits
 
       // roundingMode
       case "rounding-mode-ceiling":
