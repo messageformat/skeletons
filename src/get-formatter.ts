@@ -1,5 +1,6 @@
 import { UnsupportedError, SkeletonError } from './errors'
 import { getNumberFormatLocales } from './nf-locales'
+import { getNumberFormatMultiplier } from './nf-multiplier'
 import { getNumberFormatOptions } from './nf-options'
 import { parseSkeleton } from './parse'
 
@@ -14,12 +15,8 @@ export function getFormatter(
     if (onError) onError(new UnsupportedError(stem, source))
   }
   const opt = getNumberFormatOptions(skeleton, handleUnsupported)
-
-  const { scale, unit } = skeleton
   const lc = getNumberFormatLocales(locales, skeleton)
-
+  const mult = getNumberFormatMultiplier(skeleton)
   const nf = new Intl.NumberFormat(lc, opt)
-  let mult = typeof scale === 'number' && scale > 0 ? scale : 1
-  if (unit && unit.style === 'percent') mult *= 0.01
   return (value: number) => nf.format(mult * value)
 }
