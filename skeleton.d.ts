@@ -1,3 +1,28 @@
+// from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat
+export type NumberingSystem =
+  | 'arab'
+  | 'arabext'
+  | 'bali'
+  | 'beng'
+  | 'deva'
+  | 'fullwide'
+  | 'gujr'
+  | 'guru'
+  | 'hanidec'
+  | 'khmr'
+  | 'knda'
+  | 'laoo'
+  | 'latn'
+  | 'limb'
+  | 'mlym'
+  | 'mong'
+  | 'mymr'
+  | 'orya'
+  | 'tamldec'
+  | 'telu'
+  | 'thai'
+  | 'tibt'
+
 export type Sign =
   | 'sign-auto'
   | 'sign-always'
@@ -199,7 +224,7 @@ export interface Skeleton {
         expSign: Sign | null
         source: string
       }
-  numberingSystem?: string
+  numberingSystem?: NumberingSystem
   precision?:
     | {
         style:

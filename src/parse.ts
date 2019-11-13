@@ -1,4 +1,4 @@
-import { Sign, Skeleton, Unit } from './skeleton'
+import { NumberingSystem, Sign, Skeleton, Unit } from './skeleton'
 
 import {
   SkeletonError,
@@ -75,6 +75,34 @@ function hasMaxOption(stem: string): stem is keyof typeof maxOptions {
 
 function hasMinOption(stem: string): stem is keyof typeof minOptions {
   return stem in minOptions
+}
+
+function isNumberingSystem(ns: string): ns is NumberingSystem {
+  const systems = [
+    'arab',
+    'arabext',
+    'bali',
+    'beng',
+    'deva',
+    'fullwide',
+    'gujr',
+    'guru',
+    'hanidec',
+    'khmr',
+    'knda',
+    'laoo',
+    'latn',
+    'limb',
+    'mlym',
+    'mong',
+    'mymr',
+    'orya',
+    'tamldec',
+    'telu',
+    'thai',
+    'tibt'
+  ]
+  return systems.indexOf(ns) !== -1
 }
 
 // FIXME: subtype is not checked
@@ -344,7 +372,7 @@ class Parser {
         res.numberingSystem = 'latn'
         break
       case 'numbering-system': {
-        if (option) {
+        if (isNumberingSystem(option)) {
           this.isEmpty('numberingSystem')
           res.numberingSystem = option
         } else this.badOption(stem, option)
