@@ -1,8 +1,8 @@
 import { Skeleton } from './skeleton'
 
 /**
- * Extends options to include features brought by the Stage 3 Intl.NumberFormat
- * Unified API Proposal: https://github.com/tc39/proposal-unified-intl-numberformat
+ * Extends `Intl.NumberFormat` options to include features brought by the
+ * {@link https://github.com/tc39/proposal-unified-intl-numberformat | Unified API Proposal}
  *
  * @public
  */
@@ -20,17 +20,17 @@ export interface NumberFormatOptions extends Intl.NumberFormatOptions {
  * corresponding `Intl.NumberFormat` options structure.
  *
  * @remarks
- * In addition to standard options, some features make use of the currently
- * Stage 3
- * {@link https://github.com/tc39/proposal-unified-intl-numberformat | Intl.NumberFormat Unified API Proposal},
- * which have limited support. If encountering unsupported features (e.g.
+ * In addition to standard `Intl.NumberFormat` options, some features make use
+ * of the
+ * {@link https://github.com/tc39/proposal-unified-intl-numberformat | Unified API Proposal},
+ * which has limited support. If encountering unsupported features (e.g.
  * `decimal-always`, `permille`, others), the callback will be called with the
  * arguments `(stem: string, source?: string)`, where `source` may specify the
  * source of an unsupported option.
  *
  * @public
  * @example
- * ```
+ * ```js
  * import {
  *   getNumberFormatOptions,
  *   parseSkeleton
@@ -65,7 +65,7 @@ export interface NumberFormatOptions extends Intl.NumberFormatOptions {
  */
 export function getNumberFormatOptions(
   skeleton: Skeleton,
-  unsupported: (stem: string, source?: string) => void
+  onUnsupported: (stem: string, source?: string) => void
 ) {
   const {
     decimal,
@@ -99,7 +99,7 @@ export function getNumberFormatOptions(
         opt.style = 'percent'
         break
       case 'permille':
-        unsupported('permille')
+        onUnsupported('permille')
         break
     }
   }
@@ -110,7 +110,7 @@ export function getNumberFormatOptions(
       opt.unitDisplay = 'long'
       break
     case 'unit-width-hidden':
-      unsupported(unitWidth)
+      onUnsupported(unitWidth)
       break
     case 'unit-width-iso-code':
       opt.currencyDisplay = 'code'
@@ -135,14 +135,14 @@ export function getNumberFormatOptions(
     case 'group-min2':
     case 'group-on-aligned':
     case 'group-thousands':
-      unsupported(group)
+      onUnsupported(group)
       break
   }
 
   if (integerWidth) {
     const { min, max, source } = integerWidth
     if (min > 0) opt.minimumIntegerDigits = min
-    if (Number(max) > 0) unsupported('integer-width', source)
+    if (Number(max) > 0) onUnsupported('integer-width', source)
   }
 
   if (precision) {
@@ -158,7 +158,7 @@ export function getNumberFormatOptions(
         if (typeof minF === 'number') {
           opt.minimumFractionDigits = minF
           if (typeof minS === 'number')
-            unsupported('precision-fraction', source)
+            onUnsupported('precision-fraction', source)
         }
         if (typeof maxF === 'number') opt.maximumFractionDigits = maxF
         if (typeof minS === 'number') opt.minimumSignificantDigits = minS
@@ -174,10 +174,10 @@ export function getNumberFormatOptions(
       case 'precision-currency-standard':
         break
       case 'precision-currency-cash':
-        unsupported(precision.style)
+        onUnsupported(precision.style)
         break
       case 'precision-increment':
-        unsupported(precision.style, String(precision.increment))
+        onUnsupported(precision.style, String(precision.increment))
         break
     }
   }
@@ -199,7 +199,7 @@ export function getNumberFormatOptions(
       case 'engineering': {
         const { expDigits, expSign, source, style } = notation
         opt.notation = style
-        if (expDigits || expSign) unsupported(style, source)
+        if (expDigits || expSign) onUnsupported(style, source)
         break
       }
     }
@@ -231,8 +231,8 @@ export function getNumberFormatOptions(
       break
   }
 
-  if (decimal === 'decimal-always') unsupported(decimal)
-  if (roundingMode) unsupported(roundingMode)
+  if (decimal === 'decimal-always') onUnsupported(decimal)
+  if (roundingMode) onUnsupported(roundingMode)
 
   return opt
 }

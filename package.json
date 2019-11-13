@@ -26,8 +26,9 @@
     "postbuild:esm": "for f in *.js; do mv \"$f\" \"${f%.js}.mjs\"; done",
     "prebuild": "cp src/skeleton.d.ts .",
     "build": "npm run build:esm && npm run build:cjs",
-    "predocs": "api-extractor run --local --verbose",
-    "docs": "api-documenter markdown -i temp/ -o docs/",
+    "predocs": "npm run build",
+    "docs": "api-extractor run --local --verbose",
+    "postdocs": "api-documenter markdown -i temp/ -o docs/",
     "clean": "git clean -fdxe node_modules",
     "prettier": "prettier --write skeleton.d.ts src/*",
     "test": "jest"

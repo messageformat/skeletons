@@ -1,4 +1,4 @@
-import { NumberingSystem, Sign, Skeleton, Unit } from './skeleton'
+import { Skeleton, Unit } from './skeleton'
 
 import {
   SkeletonError,
@@ -77,7 +77,9 @@ function hasMinOption(stem: string): stem is keyof typeof minOptions {
   return stem in minOptions
 }
 
-function isNumberingSystem(ns: string): ns is NumberingSystem {
+function isNumberingSystem(
+  ns: string
+): ns is string & Skeleton['numberingSystem'] {
   const systems = [
     'arab',
     'arabext',
@@ -233,7 +235,7 @@ class Parser {
       case 'scientific':
       case 'engineering': {
         let expDigits = null
-        let expSign: Sign | null = null
+        let expSign: Skeleton['sign'] = undefined
         for (const opt of options) {
           switch (opt) {
             case 'sign-auto':
@@ -437,7 +439,7 @@ function readTokens(src: string) {
  *
  * @public
  * @example
- * ```
+ * ```js
  * import { parseSkeleton } from 'messageformat-number-skeleton'
  *
  * const src = 'compact-short currency/GBP'

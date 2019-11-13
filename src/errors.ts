@@ -1,6 +1,12 @@
-/** @public */
+/**
+ * Base class for errors. In addition to a `code` and a human-friendly
+ * `message`, often also includes the token `stem` as well as other fields.
+ *
+ * @public
+ */
 export class SkeletonError extends Error {
   code: string
+  /** @internal */
   constructor(code: string, msg: string) {
     super(msg)
     this.code = code

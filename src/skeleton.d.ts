@@ -1,41 +1,11 @@
-// from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat
-/** @internal */
-export type NumberingSystem =
-  | 'arab'
-  | 'arabext'
-  | 'bali'
-  | 'beng'
-  | 'deva'
-  | 'fullwide'
-  | 'gujr'
-  | 'guru'
-  | 'hanidec'
-  | 'khmr'
-  | 'knda'
-  | 'laoo'
-  | 'latn'
-  | 'limb'
-  | 'mlym'
-  | 'mong'
-  | 'mymr'
-  | 'orya'
-  | 'tamldec'
-  | 'telu'
-  | 'thai'
-  | 'tibt'
+import { SkeletonError } from './errors'
 
-/** @internal */
-export type Sign =
-  | 'sign-auto'
-  | 'sign-always'
-  | 'sign-never'
-  | 'sign-accounting'
-  | 'sign-accounting-always'
-  | 'sign-except-zero'
-  | 'sign-accounting-except-zero'
-
-// from https://github.com/unicode-org/cldr/blob/d4d77a2/common/validity/unit.xml
-/** @internal */
+/**
+ * Measurement units defined by the
+ * {@link https://github.com/unicode-org/cldr/blob/d4d77a2/common/validity/unit.xml | Unicode CLDR}
+ *
+ * @public
+ */
 export type Unit =
   | 'acceleration-g-force'
   | 'acceleration-meter-per-second-squared'
@@ -183,6 +153,7 @@ export type Unit =
   | 'torque-newton-meter'
   | 'torque-pound-foot'
   | 'volume-acre-foot'
+  | 'volume-barrel'
   | 'volume-bushel'
   | 'volume-centiliter'
   | 'volume-cubic-centimeter'
@@ -208,9 +179,13 @@ export type Unit =
   | 'volume-quart'
   | 'volume-tablespoon'
   | 'volume-teaspoon'
-  | 'volume-barrel'
 
-/** @public */
+/**
+ * An object representation of a parsed string skeleton, with token values
+ * grouped by type.
+ *
+ * @public
+ */
 export interface Skeleton {
   decimal?: 'decimal-auto' | 'decimal-always'
   group?:
@@ -225,10 +200,37 @@ export interface Skeleton {
     | {
         style: 'scientific' | 'engineering'
         expDigits?: number
-        expSign?: Sign
+        expSign?: Skeleton['sign']
         source?: string
       }
-  numberingSystem?: NumberingSystem
+  /**
+   * @remarks
+   * List collected from
+   * {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat | MDN documentation}
+   */
+  numberingSystem?:
+    | 'arab'
+    | 'arabext'
+    | 'bali'
+    | 'beng'
+    | 'deva'
+    | 'fullwide'
+    | 'gujr'
+    | 'guru'
+    | 'hanidec'
+    | 'khmr'
+    | 'knda'
+    | 'laoo'
+    | 'latn'
+    | 'limb'
+    | 'mlym'
+    | 'mong'
+    | 'mymr'
+    | 'orya'
+    | 'tamldec'
+    | 'telu'
+    | 'thai'
+    | 'tibt'
   precision?:
     | {
         style:
@@ -256,7 +258,14 @@ export interface Skeleton {
     | 'rounding-mode-half-up'
     | 'rounding-mode-unnecessary'
   scale?: number
-  sign?: Sign
+  sign?:
+    | 'sign-auto'
+    | 'sign-always'
+    | 'sign-never'
+    | 'sign-accounting'
+    | 'sign-accounting-always'
+    | 'sign-except-zero'
+    | 'sign-accounting-except-zero'
   unit?:
     | { style: 'percent' | 'permille' | 'base-unit' }
     | { style: 'currency'; currency: string }

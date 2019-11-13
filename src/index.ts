@@ -1,3 +1,25 @@
+/**
+ * Tools for working with
+ * {@link https://github.com/unicode-org/icu/blob/master/docs/userguide/format_parse/numbers/skeletons.md | ICU NumberFormatter skeletons}.
+ *
+ * ```js
+ * import {
+ *  getFormatter,
+ *  getFormatterSource,
+ *  getNumberFormatLocales,
+ *  getNumberFormatMultiplier,
+ *  getNumberFormatOptions,
+ *  parseSkeleton,
+ *  NumberFormatOptions,
+ *  Skeleton,
+ *  SkeletonError,
+ *  Unit
+ * } from 'messageformat-number-skeleton'
+ * ```
+ *
+ * @packageDocumentation
+ */
+
 export {
   BadOptionError,
   BadStemError,
@@ -12,4 +34,4 @@ export { getNumberFormatLocales } from './nf-locales'
 export { getNumberFormatMultiplier } from './nf-multiplier'
 export { getNumberFormatOptions, NumberFormatOptions } from './nf-options'
 export { parseSkeleton } from './parse'
-export { Sign, Skeleton, Unit } from './skeleton'
+export { Skeleton, Unit } from './skeleton'
