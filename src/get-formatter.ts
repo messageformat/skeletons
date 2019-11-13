@@ -1,6 +1,7 @@
 import { UnsupportedError, SkeletonError } from './errors'
-import { parseSkeleton } from './parse'
+import { getNumberFormatLocales } from './nf-locales'
 import { getNumberFormatOptions } from './nf-options'
+import { parseSkeleton } from './parse'
 
 export function getFormatter(
   locales: string | string[],
@@ -14,15 +15,10 @@ export function getFormatter(
   }
   const opt = getNumberFormatOptions(skeleton, handleUnsupported)
 
-  const { numberingSystem, scale, unit } = skeleton
-  if (numberingSystem) {
-    const nu = (lc: string) => `${lc}-u-nu-${numberingSystem}`
-    if (Array.isArray(locales)) {
-      locales = locales.map(nu).concat(locales)
-    } else locales = [nu(locales), locales]
-  }
+  const { scale, unit } = skeleton
+  const lc = getNumberFormatLocales(locales, skeleton)
 
-  const nf = new Intl.NumberFormat(locales, opt)
+  const nf = new Intl.NumberFormat(lc, opt)
   let mult = typeof scale === 'number' && scale > 0 ? scale : 1
   if (unit && unit.style === 'percent') mult *= 0.01
   return (value: number) => nf.format(mult * value)
