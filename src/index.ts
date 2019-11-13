@@ -7,7 +7,7 @@ export {
   TooManyOptionsError,
   UnsupportedError
 } from './errors'
-export { getFormatter } from './get-formatter'
+export { getFormatter, getFormatterSource } from './get-formatter'
 export { getNumberFormatLocales } from './nf-locales'
 export { getNumberFormatMultiplier } from './nf-multiplier'
 export { getNumberFormatOptions, NumberFormatOptions } from './nf-options'
