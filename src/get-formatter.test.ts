@@ -1,7 +1,8 @@
 import { getFormatter, getFormatterSource } from './get-formatter'
-import { Skeleton } from '../skeleton'
 
-const tests: { [testSet: string]: { [src: string]: any[] } } = {
+const tests: {
+  [testSet: string]: { [src: string]: [number, string, {}[]?] }
+} = {
   examples: {
     percent: [42, '42%'],
     '.00': [42, '42.00'],

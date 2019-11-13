@@ -1,5 +1,5 @@
 import { parseSkeleton } from './parse'
-import { Skeleton } from '../skeleton'
+import { Skeleton } from './skeleton'
 
 const tests: { [testSet: string]: { [src: string]: Skeleton } } = {
   examples: {
@@ -187,7 +187,7 @@ for (const [testSet, cases] of Object.entries(tests)) {
 }
 
 describe('errors', () => {
-  const cases = {
+  const cases: { [src: string]: {}[] } = {
     '/': [{ code: 'BAD_STEM', stem: '' }],
     foo: [{ code: 'BAD_STEM', stem: 'foo' }],
     currency: [{ code: 'MISSING_OPTION', stem: 'currency' }],

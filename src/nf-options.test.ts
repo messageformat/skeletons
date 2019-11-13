@@ -1,5 +1,5 @@
-import { Skeleton } from '../skeleton'
 import { getNumberFormatOptions, NumberFormatOptions } from './nf-options'
+import { Skeleton } from './skeleton'
 
 interface TestCase {
   skeleton: Skeleton
@@ -235,6 +235,7 @@ const tests: { [K in keyof Skeleton]: { [name: string]: TestCase } } = {
       unsupported: [['decimal-always']]
     }
   },
+
   roundingMode: {
     'rounding-mode-ceiling': {
       skeleton: { roundingMode: 'rounding-mode-ceiling' },
@@ -272,6 +273,7 @@ const tests: { [K in keyof Skeleton]: { [name: string]: TestCase } } = {
 }
 
 for (const [testSet, cases] of Object.entries(tests)) {
+  if (!cases) continue
   describe(testSet, () => {
     for (const [name, data] of Object.entries(cases)) {
       const { skeleton, result, unsupported } = data

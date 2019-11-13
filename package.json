@@ -24,6 +24,7 @@
     "build:cjs": "tsc",
     "build:esm": "tsc -d -m ES6",
     "postbuild:esm": "for f in *.js; do mv \"$f\" \"${f%.js}.mjs\"; done",
+    "prebuild": "cp src/skeleton.d.ts .",
     "build": "npm run build:esm && npm run build:cjs",
     "clean": "git clean -fdxe node_modules",
     "prettier": "prettier --write skeleton.d.ts src/*",

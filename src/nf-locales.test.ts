@@ -1,6 +1,7 @@
 import { getNumberFormatLocales } from './nf-locales'
+import { Skeleton } from './skeleton'
 
-const latin = { numberingSystem: 'latn' }
+const latin: Skeleton = { numberingSystem: 'latn' }
 
 describe('string locale', () => {
   test('no numbering system', () => {

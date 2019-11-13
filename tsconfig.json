@@ -7,11 +7,10 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "outDir": "",
-    "rootDirs": ["src", ""],
     "strict": true,
     "target": "es5",
     "types": []
   },
   "exclude": ["src/*.test.ts"],
-  "include": ["src/*", "skeleton.d.ts"]
+  "include": ["src/*"]
 }
