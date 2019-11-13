@@ -160,7 +160,7 @@ class Parser {
     this.errors.push(new BadOptionError(stem, opt))
   }
 
-  isEmpty(key: keyof Skeleton) {
+  assertEmpty(key: keyof Skeleton) {
     const prev = this.skeleton[key]
     if (prev) this.errors.push(new MaskedValueError(key, prev))
   }
@@ -173,7 +173,7 @@ class Parser {
     if (fd) {
       if (options.length > 1)
         this.errors.push(new TooManyOptionsError(stem, options, 1))
-      this.isEmpty('precision')
+      this.assertEmpty('precision')
       res.precision = {
         style: 'precision-fraction',
         source: stem,
@@ -192,7 +192,7 @@ class Parser {
     const sd = parseDigits(stem, 'significant')
     if (sd) {
       for (const opt of options) this.badOption(stem, opt)
-      this.isEmpty('precision')
+      this.assertEmpty('precision')
       res.precision = {
         style: 'precision-fraction',
         source: stem,
@@ -212,9 +212,14 @@ class Parser {
       const maxOpt = maxOptions[stem]
       if (options.length > maxOpt) {
         if (maxOpt === 0) for (const opt of options) this.badOption(stem, opt)
-        else this.errors.push(new TooManyOptionsError(stem, options, maxOpt))
-      } else if (hasMinOption(stem) && options.length < minOptions[stem])
+        else {
+          this.errors.push(new TooManyOptionsError(stem, options, maxOpt))
+          return
+        }
+      } else if (hasMinOption(stem) && options.length < minOptions[stem]) {
         this.errors.push(new MissingOptionError(stem))
+        return
+      }
     }
 
     switch (stem) {
@@ -222,7 +227,7 @@ class Parser {
       case 'compact-short':
       case 'compact-long':
       case 'notation-simple':
-        this.isEmpty('notation')
+        this.assertEmpty('notation')
         res.notation = { style: stem }
         break
       case 'scientific':
@@ -247,7 +252,7 @@ class Parser {
               }
           }
         }
-        this.isEmpty('notation')
+        this.assertEmpty('notation')
         const source = options.join('/')
         res.notation =
           expDigits && expSign
@@ -264,18 +269,18 @@ class Parser {
       case 'percent':
       case 'permille':
       case 'base-unit':
-        this.isEmpty('unit')
+        this.assertEmpty('unit')
         res.unit = { style: stem }
         break
       case 'currency':
         if (/^[A-Z]{3}$/.test(option)) {
-          this.isEmpty('unit')
+          this.assertEmpty('unit')
           res.unit = { style: stem, currency: option }
         } else this.badOption(stem, option)
         break
       case 'measure-unit': {
         if (isUnit(option)) {
-          this.isEmpty('unit')
+          this.assertEmpty('unit')
           res.unit = { style: stem, unit: option }
         } else this.badOption(stem, option)
         break
@@ -284,7 +289,7 @@ class Parser {
       // unitPer
       case 'per-measure-unit': {
         if (isUnit(option)) {
-          this.isEmpty('unitPer')
+          this.assertEmpty('unitPer')
           res.unitPer = option
         } else this.badOption(stem, option)
         break
@@ -296,7 +301,7 @@ class Parser {
       case 'unit-width-full-name':
       case 'unit-width-iso-code':
       case 'unit-width-hidden':
-        this.isEmpty('unitWidth')
+        this.assertEmpty('unitWidth')
         res.unitWidth = stem
         break
 
@@ -305,13 +310,13 @@ class Parser {
       case 'precision-unlimited':
       case 'precision-currency-standard':
       case 'precision-currency-cash':
-        this.isEmpty('precision')
+        this.assertEmpty('precision')
         res.precision = { style: stem }
         break
       case 'precision-increment': {
         const increment = Number(option)
         if (increment > 0) {
-          this.isEmpty('precision')
+          this.assertEmpty('precision')
           res.precision = { style: stem, increment }
         } else this.badOption(stem, option)
         break
@@ -326,19 +331,19 @@ class Parser {
       case 'rounding-mode-half-down':
       case 'rounding-mode-half-up':
       case 'rounding-mode-unnecessary':
-        this.isEmpty('roundingMode')
+        this.assertEmpty('roundingMode')
         res.roundingMode = stem
         break
 
       // integerWidth
       case 'integer-width': {
         if (/^\+0*$/.test(option)) {
-          this.isEmpty('integerWidth')
+          this.assertEmpty('integerWidth')
           res.integerWidth = { source: option, min: option.length - 1 }
         } else {
           const m = option.match(/^#*(0*)$/)
           if (m) {
-            this.isEmpty('integerWidth')
+            this.assertEmpty('integerWidth')
             res.integerWidth = {
               source: option,
               min: m[1].length,
@@ -353,7 +358,7 @@ class Parser {
       case 'scale': {
         const scale = Number(option)
         if (scale > 0) {
-          this.isEmpty('scale')
+          this.assertEmpty('scale')
           res.scale = scale
         } else this.badOption(stem, option)
         break
@@ -365,18 +370,18 @@ class Parser {
       case 'group-auto':
       case 'group-on-aligned':
       case 'group-thousands':
-        this.isEmpty('group')
+        this.assertEmpty('group')
         res.group = stem
         break
 
       // numberingSystem
       case 'latin':
-        this.isEmpty('numberingSystem')
+        this.assertEmpty('numberingSystem')
         res.numberingSystem = 'latn'
         break
       case 'numbering-system': {
         if (isNumberingSystem(option)) {
-          this.isEmpty('numberingSystem')
+          this.assertEmpty('numberingSystem')
           res.numberingSystem = option
         } else this.badOption(stem, option)
         break
@@ -390,14 +395,14 @@ class Parser {
       case 'sign-accounting-always':
       case 'sign-except-zero':
       case 'sign-accounting-except-zero':
-        this.isEmpty('sign')
+        this.assertEmpty('sign')
         res.sign = stem
         break
 
       // decimal
       case 'decimal-auto':
       case 'decimal-always':
-        this.isEmpty('decimal')
+        this.assertEmpty('decimal')
         res.decimal = stem
         break
 

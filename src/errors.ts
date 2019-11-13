@@ -25,9 +25,11 @@ export class BadStemError extends SkeletonError {
 }
 
 export class MaskedValueError extends SkeletonError {
+  type: string
   prev: any
-  constructor(key: string, prev: any) {
-    super('MASKED_VALUE', `Value for skeleton ${key} masks previous`)
+  constructor(type: string, prev: any) {
+    super('MASKED_VALUE', `Value for skeleton type ${type} masks previous`)
+    this.type = type
     this.prev = prev
   }
 }
