@@ -248,12 +248,15 @@ class Parser {
           }
         }
         this.isEmpty('notation')
-        res.notation = {
-          style: stem,
-          source: options.join('/'),
-          expDigits,
-          expSign
-        }
+        const source = options.join('/')
+        res.notation =
+          expDigits && expSign
+            ? { style: stem, source, expDigits, expSign }
+            : expDigits
+            ? { style: stem, source, expDigits }
+            : expSign
+            ? { style: stem, source, expSign }
+            : { style: stem, source }
         break
       }
 

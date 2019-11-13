@@ -215,14 +215,14 @@ export interface Skeleton {
     | 'group-auto'
     | 'group-on-aligned'
     | 'group-thousands'
-  integerWidth?: { min: number; max?: number; source: string }
+  integerWidth?: { min: number; max?: number; source?: string }
   notation?:
     | { style: 'compact-short' | 'compact-long' | 'notation-simple' }
     | {
         style: 'scientific' | 'engineering'
-        expDigits: number | null
-        expSign: Sign | null
-        source: string
+        expDigits?: number
+        expSign?: Sign
+        source?: string
       }
   numberingSystem?: NumberingSystem
   precision?:
@@ -240,7 +240,7 @@ export interface Skeleton {
         maxFraction?: number
         minSignificant?: number
         maxSignificant?: number
-        source: string
+        source?: string
       }
   roundingMode?:
     | 'rounding-mode-ceiling'
