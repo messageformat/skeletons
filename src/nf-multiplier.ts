@@ -1,5 +1,6 @@
 import { Skeleton } from './skeleton'
 
+/** @public */
 export function getNumberFormatMultiplier({ scale, unit }: Skeleton) {
   if (typeof scale !== 'number' || isNaN(scale) || scale <= 0) scale = 1
 

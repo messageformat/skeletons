@@ -1,7 +1,11 @@
 import { Skeleton } from './skeleton'
 
-// Extends options to include features brought by the Stage 3 Intl.NumberFormat
-// Unified API Proposal: https://github.com/tc39/proposal-unified-intl-numberformat
+/**
+ * Extends options to include features brought by the Stage 3 Intl.NumberFormat
+ * Unified API Proposal: https://github.com/tc39/proposal-unified-intl-numberformat
+ *
+ * @public
+ */
 export interface NumberFormatOptions extends Intl.NumberFormatOptions {
   compactDisplay?: 'long' | 'short'
   currencySign?: 'standard' | 'accounting'
@@ -11,8 +15,59 @@ export interface NumberFormatOptions extends Intl.NumberFormatOptions {
   unitDisplay?: 'long' | 'short' | 'narrow'
 }
 
+/**
+ * Given an input ICU NumberFormatter skeleton, does its best to construct a
+ * corresponding `Intl.NumberFormat` options structure.
+ *
+ * @remarks
+ * In addition to standard options, some features make use of the currently
+ * Stage 3
+ * {@link https://github.com/tc39/proposal-unified-intl-numberformat | Intl.NumberFormat Unified API Proposal},
+ * which have limited support. If encountering unsupported features (e.g.
+ * `decimal-always`, `permille`, others), the callback will be called with the
+ * arguments `(stem: string, source?: string)`, where `source` may specify the
+ * source of an unsupported option.
+ *
+ * @public
+ * @example
+ * ```
+ * import {
+ *   getNumberFormatOptions,
+ *   parseSkeleton
+ * } from 'messageformat-number-skeleton'
+ *
+ * const logUnsupported = (stem, src) =>
+ *   console.log('Unsupported:', stem, src || '')
+ *
+ * const src = 'currency/CAD unit-width-narrow'
+ * const { errors, skeleton } = parseSkeleton(src)
+ * // errors: []
+ * // skeleton: {
+ * //   unit: { style: 'currency', currency: 'CAD' },
+ * //   unitWidth: 'unit-width-narrow'
+ * // }
+ *
+ * getNumberFormatOptions(skeleton, logUnsupported)
+ * // {
+ * //   style: 'currency',
+ * //   currency: 'CAD',
+ * //   currencyDisplay: 'narrowSymbol',
+ * //   unitDisplay: 'narrow'
+ * // }
+ *
+ * const { skeleton: sk2 } = parseSkeleton('group-min2')
+ * // { group: 'group-min2' }
+ *
+ * getNumberFormatOptions(sk2, logUnsupported)
+ * // Unsupported: group-min2
+ * // {}
+ * ```
+ */
 export function getNumberFormatOptions(
-  {
+  skeleton: Skeleton,
+  unsupported: (stem: string, source?: string) => void
+) {
+  const {
     decimal,
     group,
     integerWidth,
@@ -23,9 +78,7 @@ export function getNumberFormatOptions(
     unit,
     unitPer,
     unitWidth
-  }: Skeleton,
-  unsupported: (stem: string, source?: string) => void
-) {
+  } = skeleton
   const opt: NumberFormatOptions = {}
 
   if (unit) {

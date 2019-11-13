@@ -1,6 +1,10 @@
 import { Skeleton } from './skeleton'
 
-// see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#Locale_identification_and_negotiation
+/**
+ * see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#Locale_identification_and_negotiation
+ *
+ * @public
+ */
 export function getNumberFormatLocales(
   locales: string | string[],
   { numberingSystem }: Skeleton

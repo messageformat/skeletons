@@ -429,6 +429,26 @@ function readTokens(src: string) {
   return tokens
 }
 
+/**
+ * Parse an input skeleton string into a {@link Skeleton} structure.
+ *
+ * @remarks
+ * Should never throw, collecting instead errors into an array.
+ *
+ * @public
+ * @example
+ * ```
+ * import { parseSkeleton } from 'messageformat-number-skeleton'
+ *
+ * const src = 'compact-short currency/GBP'
+ * const { errors, skeleton } = parseSkeleton(src)
+ * // errors: []
+ * // skeleton: {
+ * //   notation: { style: 'compact-short' },
+ * //   unit: { style: 'currency', currency: 'GBP' }
+ * // }
+ * ```
+ */
 export function parseSkeleton(src: string) {
   const parser = new Parser()
   for (const { stem, options } of readTokens(src)) {

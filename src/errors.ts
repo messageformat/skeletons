@@ -1,3 +1,4 @@
+/** @public */
 export class SkeletonError extends Error {
   code: string
   constructor(code: string, msg: string) {
@@ -6,6 +7,7 @@ export class SkeletonError extends Error {
   }
 }
 
+/** @internal */
 export class BadOptionError extends SkeletonError {
   stem: string
   option: string
@@ -16,6 +18,7 @@ export class BadOptionError extends SkeletonError {
   }
 }
 
+/** @internal */
 export class BadStemError extends SkeletonError {
   stem: string
   constructor(stem: string) {
@@ -24,6 +27,7 @@ export class BadStemError extends SkeletonError {
   }
 }
 
+/** @internal */
 export class MaskedValueError extends SkeletonError {
   type: string
   prev: any
@@ -34,6 +38,7 @@ export class MaskedValueError extends SkeletonError {
   }
 }
 
+/** @internal */
 export class MissingOptionError extends SkeletonError {
   stem: any
   constructor(stem: string) {
@@ -42,6 +47,7 @@ export class MissingOptionError extends SkeletonError {
   }
 }
 
+/** @internal */
 export class TooManyOptionsError extends SkeletonError {
   stem: any
   options: any
@@ -56,6 +62,7 @@ export class TooManyOptionsError extends SkeletonError {
   }
 }
 
+/** @internal */
 export class UnsupportedError extends SkeletonError {
   stem: string
   source?: string

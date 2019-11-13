@@ -20,6 +20,28 @@ function getNumberFormatVariables(
   return { lc, opt, mult }
 }
 
+/**
+ * Returns a number formatter function for the given locales and skeleton source.
+ *
+ * @remarks
+ * Uses `Intl.NumberFormat` internally. If the error callback is defined, it
+ * will be called separately for each encountered parsing error and unsupported
+ * feature.
+ *
+ * @public
+ * @example
+ * ```
+ * import { getFormatter } from 'messageformat-number-skeleton'
+ *
+ * let src = 'currency/CAD unit-width-narrow'
+ * let fmt = getFormatter('en-CA', src, console.error)
+ * fmt(42) // '$42.00'
+ *
+ * src = 'percent scale/100'
+ * fmt = getFormatter('en', src, console.error)
+ * fmt(0.3) // '30%'
+ * ```
+ */
 export function getFormatter(
   locales: string | string[],
   src: string,
@@ -30,6 +52,7 @@ export function getFormatter(
   return (value: number) => nf.format(mult * value)
 }
 
+/** @public */
 export function getFormatterSource(
   locales: string | string[],
   src: string,

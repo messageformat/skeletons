@@ -1,4 +1,5 @@
 // from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat
+/** @internal */
 export type NumberingSystem =
   | 'arab'
   | 'arabext'
@@ -23,6 +24,7 @@ export type NumberingSystem =
   | 'thai'
   | 'tibt'
 
+/** @internal */
 export type Sign =
   | 'sign-auto'
   | 'sign-always'
@@ -33,6 +35,7 @@ export type Sign =
   | 'sign-accounting-except-zero'
 
 // from https://github.com/unicode-org/cldr/blob/d4d77a2/common/validity/unit.xml
+/** @internal */
 export type Unit =
   | 'acceleration-g-force'
   | 'acceleration-meter-per-second-squared'
@@ -207,6 +210,7 @@ export type Unit =
   | 'volume-teaspoon'
   | 'volume-barrel'
 
+/** @public */
 export interface Skeleton {
   decimal?: 'decimal-auto' | 'decimal-always'
   group?:
