@@ -19,6 +19,7 @@
     "/*.js",
     "/*.mjs"
   ],
+  "main": "index",
   "scripts": {
     "build:cjs": "tsc",
     "build:esm": "tsc -d -m ES6",

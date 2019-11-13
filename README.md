@@ -7,10 +7,10 @@ Tools for working with [ICU NumberFormatter skeletons](https://github.com/unicod
 Parse an input skeleton string into a regular structure; see [`skeleton.d.ts`](skeleton.d.ts) for its structure. Should never throw, collecting instead errors into an array.
 
 ```js
-import { parseSkeleton } from "messageformat-number-skeleton/parse";
+import { parseSkeleton } from 'messageformat-number-skeleton'
 
-const src = "compact-short currency/GBP";
-const { errors, skeleton } = parseSkeleton(src);
+const src = 'compact-short currency/GBP'
+const { errors, skeleton } = parseSkeleton(src)
 // errors: []
 // skeleton: {
 //   notation: { style: 'compact-short' },
@@ -23,21 +23,21 @@ const { errors, skeleton } = parseSkeleton(src);
 Given an input ICU NumberFormatter skeleton, does its best to construct a corresponding `Intl.NumberFormat` options structure. In addition to standard options, some features make use of the currently Stage 3 [Intl.NumberFormat Unified API Proposal](https://github.com/tc39/proposal-unified-intl-numberformat), which have limited support. If encountering unsupported features (e.g. `decimal-always`, `permille`, others), the callback will be called with the arguments `(stem: string, source?: string)`, where `source` may specify the source of an unsupported option.
 
 ```js
-import { getNumberFormatOptions } from "messageformat-number-skeleton/nf-options";
-import { parseSkeleton } from "messageformat-number-skeleton/parse";
+import { getNumberFormatOptions } from 'messageformat-number-skeleton'
+import { parseSkeleton } from 'messageformat-number-skeleton'
 
 const logUnsupported = (stem, src) =>
-  console.log("Unsupported:", stem, src || "");
+  console.log('Unsupported:', stem, src || '')
 
-const src = "currency/CAD unit-width-narrow";
-const { errors, skeleton } = parseSkeleton(src);
+const src = 'currency/CAD unit-width-narrow'
+const { errors, skeleton } = parseSkeleton(src)
 // errors: []
 // skeleton: {
 //   unit: { style: 'currency', currency: 'CAD' },
 //   unitWidth: 'unit-width-narrow'
 // }
 
-getNumberFormatOptions(skeleton, logUnsupported);
+getNumberFormatOptions(skeleton, logUnsupported)
 // {
 //   style: 'currency',
 //   currency: 'CAD',
@@ -45,10 +45,10 @@ getNumberFormatOptions(skeleton, logUnsupported);
 //   unitDisplay: 'narrow'
 // }
 
-const { skeleton: sk2 } = parseSkeleton("group-min2");
+const { skeleton: sk2 } = parseSkeleton('group-min2')
 // { group: 'group-min2' }
 
-getNumberFormatOptions(sk2, logUnsupported);
+getNumberFormatOptions(sk2, logUnsupported)
 // Unsupported: group-min2
 // {}
 ```
@@ -58,15 +58,15 @@ getNumberFormatOptions(sk2, logUnsupported);
 Returns a number formatter function `(value: number) => string` for the given locales and skeleton source. Uses `Intl.NumberFormat` internally. If the error callback `(error: Error) => void` is defined, it will be called separately for each encountered parsing error and unsupported feature.
 
 ```js
-import { getFormatter } from "messageformat-number-skeleton/get-formatter";
+import { getFormatter } from 'messageformat-number-skeleton'
 
-let src = "currency/CAD unit-width-narrow";
-let fmt = getFormatter("en-CA", src, console.error);
-fmt(42); // '$42.00'
+let src = 'currency/CAD unit-width-narrow'
+let fmt = getFormatter('en-CA', src, console.error)
+fmt(42) // '$42.00'
 
-src = "percent scale/100";
-fmt = getFormatter("en", src, console.error);
-fmt(0.3); // '30%'
+src = 'percent scale/100'
+fmt = getFormatter('en', src, console.error)
+fmt(0.3) // '30%'
 ```
 
 ---
