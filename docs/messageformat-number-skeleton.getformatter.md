@@ -26,7 +26,7 @@ export declare function getFormatter(locales: string | string[], src: string, on
 
 ## Remarks
 
-Uses `Intl.NumberFormat` internally. If the error callback is defined, it will be called separately for each encountered parsing error and unsupported feature.
+Uses `Intl.NumberFormat` internally, including features provided by the [Unified API Proposal](https://github.com/tc39/proposal-unified-intl-numberformat)<!-- -->. If the error callback is defined, it will be called separately for each encountered parsing error and unsupported feature.
 
 ## Example
 

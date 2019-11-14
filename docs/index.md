@@ -13,11 +13,7 @@
 import {
  getFormatter,
  getFormatterSource,
- getNumberFormatLocales,
- getNumberFormatMultiplier,
- getNumberFormatOptions,
  parseSkeleton,
- NumberFormatOptions,
  Skeleton,
  SkeletonError,
  Unit

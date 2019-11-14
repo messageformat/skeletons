@@ -6,7 +6,7 @@ import { Skeleton } from '../types/skeleton'
  * {@link https://github.com/tc39/proposal-unified-intl-numberformat | Unified
  * API Proposal}
  *
- * @public
+ * @internal
  */
 export interface NumberFormatOptions extends Intl.NumberFormatOptions {
   compactDisplay?: 'long' | 'short'
@@ -26,7 +26,7 @@ export interface NumberFormatOptions extends Intl.NumberFormatOptions {
  * of the {@link https://github.com/tc39/proposal-unified-intl-numberformat |
  * Unified API Proposal}, which has limited support.
  *
- * @public
+ * @internal
  * @param onUnsupported - If defined, called when encountering unsupported (but
  *   valid) tokens, such as `decimal-always` or `permille`. The error `source`
  *   may specify the source of an unsupported option.
@@ -176,13 +176,11 @@ export function getNumberFormatOptions(
       case 'precision-unlimited':
         opt.maximumFractionDigits = 20
         break
+      case 'precision-increment':
       case 'precision-currency-standard':
         break
       case 'precision-currency-cash':
         fail(precision.style)
-        break
-      case 'precision-increment':
-        fail(precision.style, String(precision.increment))
         break
     }
   }

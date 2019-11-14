@@ -26,7 +26,7 @@ export declare function getFormatterSource(locales: string | string[], src: stri
 
 ## Remarks
 
-The returned function will memoize an `Intl.NumberFormat` instance. If the error callback is defined, it will be called separately for each encountered parsing error and unsupported feature.
+The returned function will memoize an `Intl.NumberFormat` instance that makes use of features provided by the [Unified API Proposal](https://github.com/tc39/proposal-unified-intl-numberformat)<!-- -->. If the error callback is defined, it will be called separately for each encountered parsing error and unsupported feature.
 
 ## Example
 
@@ -38,7 +38,8 @@ getFormatterSource('en', 'percent', console.error)
 // '(function() {\n' +
 // '  var opt = {"style":"percent"};\n' +
 // '  var nf = new Intl.NumberFormat(["en"], opt);\n' +
-// '  return function(value) { return nf.format(0.01 * value); }\n' +
+// '  var mod = function(n) { return n * 0.01; };\n' +
+// '  return function(value) { return nf.format(mod(value)); }\n' +
 // '})()'
 
 const src = getFormatterSource('en-CA', 'currency/CAD unit-width-narrow', console.error)

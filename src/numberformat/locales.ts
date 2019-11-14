@@ -5,7 +5,7 @@ import { Skeleton } from '../types/skeleton'
  * {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#Locale_identification_and_negotiation | numbering-system tags}
  * to locale identifiers
  *
- * @public
+ * @internal
  */
 export function getNumberFormatLocales(
   locales: string | string[],

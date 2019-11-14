@@ -1,28 +1,20 @@
 import { SkeletonError } from './errors'
 import { getNumberFormatLocales } from './numberformat/locales'
-import { getNumberFormatMultiplier } from './numberformat/multiplier'
+import {
+  getNumberFormatModifier,
+  getNumberFormatModifierSource
+} from './numberformat/modifier'
 import { getNumberFormatOptions } from './numberformat/options'
 import { parseSkeleton } from './parser/parse-skeleton'
-
-function getNumberFormatVariables(
-  locales: string | string[],
-  src: string,
-  onError?: (err: SkeletonError) => void
-) {
-  const skeleton = parseSkeleton(src, onError)
-  const lc = getNumberFormatLocales(locales, skeleton)
-  const opt = getNumberFormatOptions(skeleton, onError)
-  const mult = getNumberFormatMultiplier(skeleton)
-  return { lc, opt, mult }
-}
 
 /**
  * Returns a number formatter function for the given locales and skeleton source.
  *
  * @remarks
- * Uses `Intl.NumberFormat` internally. If the error callback is defined, it
- * will be called separately for each encountered parsing error and unsupported
- * feature.
+ * Uses `Intl.NumberFormat` internally, including features provided by the
+ * {@link https://github.com/tc39/proposal-unified-intl-numberformat | Unified
+ * API Proposal}. If the error callback is defined, it will be called separately
+ * for each encountered parsing error and unsupported feature.
  *
  * @public
  * @example
@@ -43,9 +35,12 @@ export function getFormatter(
   src: string,
   onError?: (err: SkeletonError) => void
 ) {
-  const { lc, opt, mult } = getNumberFormatVariables(locales, src, onError)
+  const skeleton = parseSkeleton(src, onError)
+  const lc = getNumberFormatLocales(locales, skeleton)
+  const opt = getNumberFormatOptions(skeleton, onError)
+  const mod = getNumberFormatModifier(skeleton)
   const nf = new Intl.NumberFormat(lc, opt)
-  return (value: number) => nf.format(mult * value)
+  return (value: number) => nf.format(mod(value))
 }
 
 /**
@@ -54,9 +49,11 @@ export function getFormatter(
  * returned by {@link getFormatter}.
  *
  * @remarks
- * The returned function will memoize an `Intl.NumberFormat` instance. If the
- * error callback is defined, it will be called separately for each encountered
- * parsing error and unsupported feature.
+ * The returned function will memoize an `Intl.NumberFormat` instance that makes
+ * use of features provided by the {@link
+ * https://github.com/tc39/proposal-unified-intl-numberformat | Unified API
+ * Proposal}. If the error callback is defined, it will be called separately for
+ * each encountered parsing error and unsupported feature.
  *
  * @public
  * @example
@@ -67,7 +64,8 @@ export function getFormatter(
  * // '(function() {\n' +
  * // '  var opt = {"style":"percent"};\n' +
  * // '  var nf = new Intl.NumberFormat(["en"], opt);\n' +
- * // '  return function(value) { return nf.format(0.01 * value); }\n' +
+ * // '  var mod = function(n) { return n * 0.01; };\n' +
+ * // '  return function(value) { return nf.format(mod(value)); }\n' +
  * // '})()'
  *
  * const src = getFormatterSource('en-CA', 'currency/CAD unit-width-narrow', console.error)
@@ -85,13 +83,22 @@ export function getFormatterSource(
   src: string,
   onError?: (err: SkeletonError) => void
 ) {
-  const { lc, opt, mult } = getNumberFormatVariables(locales, src, onError)
-  const valueExp = mult === 1 || isNaN(mult) ? `value` : `${mult} * value`
-  const source = `
-(function() {
-  var opt = ${JSON.stringify(opt)};
-  var nf = new Intl.NumberFormat(${JSON.stringify(lc)}, opt);
-  return function(value) { return nf.format(${valueExp}); }
-})()`
-  return source.trim()
+  const skeleton = parseSkeleton(src, onError)
+  const lc = getNumberFormatLocales(locales, skeleton)
+  const opt = getNumberFormatOptions(skeleton, onError)
+  const modSrc = getNumberFormatModifierSource(skeleton)
+  const lines = [
+    `(function() {`,
+    `var opt = ${JSON.stringify(opt)};`,
+    `var nf = new Intl.NumberFormat(${JSON.stringify(lc)}, opt);`
+  ]
+  if (modSrc) {
+    lines.push(
+      `var mod = ${modSrc};`,
+      `return function(value) { return nf.format(mod(value)); }`
+    )
+  } else {
+    lines.push(`return function(value) { return nf.format(value); }`)
+  }
+  return lines.join('\n  ') + '\n})()'
 }

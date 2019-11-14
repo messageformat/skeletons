@@ -144,6 +144,10 @@ const tests: { [K in keyof Skeleton]: { [name: string]: TestCase } } = {
       skeleton: { precision: { style: 'precision-unlimited' } },
       result: { maximumFractionDigits: 20 }
     },
+    'precision-increment': {
+      skeleton: { precision: { style: 'precision-increment', increment: 2 } },
+      result: {}
+    },
     'precision-currency-standard': {
       skeleton: { precision: { style: 'precision-currency-standard' } },
       result: {}
@@ -151,10 +155,6 @@ const tests: { [K in keyof Skeleton]: { [name: string]: TestCase } } = {
     'precision-currency-cash': {
       skeleton: { precision: { style: 'precision-currency-cash' } },
       unsupported: [['precision-currency-cash']]
-    },
-    'precision-increment': {
-      skeleton: { precision: { style: 'precision-increment', increment: 2 } },
-      unsupported: [['precision-increment', '2']]
     }
   },
 

@@ -10,11 +10,7 @@ Tools for working with [ICU NumberFormatter skeletons](https://github.com/unicod
 import {
  getFormatter,
  getFormatterSource,
- getNumberFormatLocales,
- getNumberFormatMultiplier,
- getNumberFormatOptions,
  parseSkeleton,
- NumberFormatOptions,
  Skeleton,
  SkeletonError,
  Unit
@@ -34,16 +30,12 @@ import {
 |  --- | --- |
 |  [getFormatter(locales, src, onError)](./messageformat-number-skeleton.getformatter.md) | Returns a number formatter function for the given locales and skeleton source. |
 |  [getFormatterSource(locales, src, onError)](./messageformat-number-skeleton.getformattersource.md) | Returns a string of JavaScript source that evaluates to a number formatter function with the same <code>(value: number) =&gt; string</code> signature as the function returned by [getFormatter()](./messageformat-number-skeleton.getformatter.md)<!-- -->. |
-|  [getNumberFormatLocales(locales, { numberingSystem })](./messageformat-number-skeleton.getnumberformatlocales.md) | Add [numbering-system tags](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#Locale_identification_and_negotiation) to locale identifiers |
-|  [getNumberFormatMultiplier({ scale, unit })](./messageformat-number-skeleton.getnumberformatmultiplier.md) | Determine a multiplier for the input value to account for any <code>scale</code> and <code>percent</code> tokens in the skeleton. |
-|  [getNumberFormatOptions(skeleton, onUnsupported)](./messageformat-number-skeleton.getnumberformatoptions.md) | Given an input ICU NumberFormatter skeleton, does its best to construct a corresponding <code>Intl.NumberFormat</code> options structure. |
 |  [parseSkeleton(src, onError)](./messageformat-number-skeleton.parseskeleton.md) | Parse an input skeleton string into a [Skeleton](./messageformat-number-skeleton.skeleton.md) structure. |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
-|  [NumberFormatOptions](./messageformat-number-skeleton.numberformatoptions.md) | Extends <code>Intl.NumberFormat</code> options to include features brought by the [Unified API Proposal](https://github.com/tc39/proposal-unified-intl-numberformat) |
 |  [Skeleton](./messageformat-number-skeleton.skeleton.md) | An object representation of a parsed string skeleton, with token values grouped by type. |
 
 ## Type Aliases

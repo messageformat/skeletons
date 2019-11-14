@@ -6,11 +6,7 @@
  * import {
  *  getFormatter,
  *  getFormatterSource,
- *  getNumberFormatLocales,
- *  getNumberFormatMultiplier,
- *  getNumberFormatOptions,
  *  parseSkeleton,
- *  NumberFormatOptions,
  *  Skeleton,
  *  SkeletonError,
  *  Unit
@@ -30,12 +26,6 @@ export {
   UnsupportedError
 } from './errors'
 export { getFormatter, getFormatterSource } from './get-formatter'
-export { getNumberFormatLocales } from './numberformat/locales'
-export { getNumberFormatMultiplier } from './numberformat/multiplier'
-export {
-  getNumberFormatOptions,
-  NumberFormatOptions
-} from './numberformat/options'
 export { parseSkeleton } from './parser/parse-skeleton'
 export { Skeleton } from './types/skeleton'
 export { Unit } from './types/unit'

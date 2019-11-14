@@ -32,7 +32,9 @@ const tests: {
     ]
   },
   precision: {
-    'precision-increment/0.05': [0.42, '0.42', [{ source: '0.05' }]],
+    'precision-increment/0.05': [0.42, '0.4'],
+    'precision-increment/1': [4.2, '4'],
+    'precision-increment/10 scale/100': [42, '4,000'],
     '.00+': [42, '42.00'],
     '.##': [42.1234, '42.12'],
     '.0#': [42, '42.0'],
