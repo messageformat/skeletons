@@ -1,6 +1,6 @@
-import { UnsupportedError } from './errors'
-import { getNumberFormatOptions, NumberFormatOptions } from './nf-options'
-import { Skeleton } from './skeleton'
+import { UnsupportedError } from '../errors'
+import { Skeleton } from '../types/skeleton'
+import { getNumberFormatOptions, NumberFormatOptions } from './options'
 
 interface TestCase {
   skeleton: Skeleton

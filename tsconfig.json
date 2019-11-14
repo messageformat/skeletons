@@ -11,6 +11,6 @@
     "target": "es5",
     "types": []
   },
-  "exclude": ["src/*.test.ts"],
-  "include": ["src/*"]
+  "exclude": ["src/**/*.test.ts"],
+  "include": ["src/**/*"]
 }

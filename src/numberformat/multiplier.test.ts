@@ -1,4 +1,4 @@
-import { getNumberFormatMultiplier } from './nf-multiplier'
+import { getNumberFormatMultiplier } from './multiplier'
 
 test('empty skeleton', () => {
   const n = getNumberFormatMultiplier({})

@@ -1,4 +1,4 @@
-import { Skeleton } from './skeleton'
+import { Skeleton } from '../types/skeleton'
 
 /**
  * Determine a multiplier for the input value to account for any `scale` and

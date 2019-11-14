@@ -1,8 +1,8 @@
 import { SkeletonError } from './errors'
-import { getNumberFormatLocales } from './nf-locales'
-import { getNumberFormatMultiplier } from './nf-multiplier'
-import { getNumberFormatOptions } from './nf-options'
-import { parseSkeleton } from './parse-skeleton'
+import { getNumberFormatLocales } from './numberformat/locales'
+import { getNumberFormatMultiplier } from './numberformat/multiplier'
+import { getNumberFormatOptions } from './numberformat/options'
+import { parseSkeleton } from './parser/parse-skeleton'
 
 function getNumberFormatVariables(
   locales: string | string[],

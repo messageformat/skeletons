@@ -30,9 +30,12 @@ export {
   UnsupportedError
 } from './errors'
 export { getFormatter, getFormatterSource } from './get-formatter'
-export { getNumberFormatLocales } from './nf-locales'
-export { getNumberFormatMultiplier } from './nf-multiplier'
-export { getNumberFormatOptions, NumberFormatOptions } from './nf-options'
-export { parseSkeleton } from './parse-skeleton'
-export { Skeleton } from './skeleton'
-export { Unit } from './unit'
+export { getNumberFormatLocales } from './numberformat/locales'
+export { getNumberFormatMultiplier } from './numberformat/multiplier'
+export {
+  getNumberFormatOptions,
+  NumberFormatOptions
+} from './numberformat/options'
+export { parseSkeleton } from './parser/parse-skeleton'
+export { Skeleton } from './types/skeleton'
+export { Unit } from './types/unit'

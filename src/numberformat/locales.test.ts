@@ -1,5 +1,5 @@
-import { getNumberFormatLocales } from './nf-locales'
-import { Skeleton } from './skeleton'
+import { Skeleton } from '../types/skeleton'
+import { getNumberFormatLocales } from './locales'
 
 const latin: Skeleton = { numberingSystem: 'latn' }
 

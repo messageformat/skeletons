@@ -4,10 +4,10 @@ import {
   BadStemError,
   MaskedValueError,
   TooManyOptionsError
-} from './errors'
-import { validOptions } from './parser-options'
-import { isNumberingSystem, Skeleton } from './skeleton'
-import { isUnit } from './unit'
+} from '../errors'
+import { isNumberingSystem, Skeleton } from '../types/skeleton'
+import { isUnit } from '../types/unit'
+import { validOptions } from './options'
 
 function parseBlueprintDigits(src: string, style: 'fraction' | 'significant') {
   const re = style === 'fraction' ? /^\.(0*)(\+|#*)$/ : /^(@+)(\+|#*)$/
