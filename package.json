@@ -15,15 +15,13 @@
   "homepage": "https://github.com/messageformat/number-skeleton",
   "repository": "messageformat/number-skeleton",
   "files": [
-    "/*.d.ts",
-    "/*.js",
-    "/*.mjs"
+    "lib/"
   ],
-  "main": "index",
+  "main": "lib/index",
   "scripts": {
     "build:cjs": "tsc",
     "build:esm": "tsc -d -m ES6",
-    "postbuild:esm": "for f in *.js; do mv \"$f\" \"${f%.js}.mjs\"; done",
+    "postbuild:esm": "for f in lib/*.js; do mv \"$f\" \"${f%.js}.mjs\"; done",
     "build": "npm run build:esm && npm run build:cjs",
     "predocs": "npm run build",
     "docs": "api-extractor run --local --verbose",

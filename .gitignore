@@ -2,8 +2,5 @@
 node_modules
 tsdoc-metadata.json
 /coverage
+/lib
 /temp
-/*.d.ts
-/*.js
-/*.map
-/*.mjs
