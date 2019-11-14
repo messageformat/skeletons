@@ -7,5 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-integerWidth?: { min: number; max?: number; source?: string }
+integerWidth?: {
+        min: number;
+        max?: number;
+        source?: string;
+    };
 ```

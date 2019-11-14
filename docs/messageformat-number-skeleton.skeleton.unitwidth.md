@@ -7,10 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-unitWidth?:
-    | 'unit-width-narrow'
-    | 'unit-width-short'
-    | 'unit-width-full-name'
-    | 'unit-width-iso-code'
-    | 'unit-width-hidden'
+unitWidth?: 'unit-width-narrow' | 'unit-width-short' | 'unit-width-full-name' | 'unit-width-iso-code' | 'unit-width-hidden';
 ```

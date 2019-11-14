@@ -7,29 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-numberingSystem?:
-    | 'arab'
-    | 'arabext'
-    | 'bali'
-    | 'beng'
-    | 'deva'
-    | 'fullwide'
-    | 'gujr'
-    | 'guru'
-    | 'hanidec'
-    | 'khmr'
-    | 'knda'
-    | 'laoo'
-    | 'latn'
-    | 'limb'
-    | 'mlym'
-    | 'mong'
-    | 'mymr'
-    | 'orya'
-    | 'tamldec'
-    | 'telu'
-    | 'thai'
-    | 'tibt'
+numberingSystem?: 'arab' | 'arabext' | 'bali' | 'beng' | 'deva' | 'fullwide' | 'gujr' | 'guru' | 'hanidec' | 'khmr' | 'knda' | 'laoo' | 'latn' | 'limb' | 'mlym' | 'mong' | 'mymr' | 'orya' | 'tamldec' | 'telu' | 'thai' | 'tibt';
 ```
 
 ## Remarks

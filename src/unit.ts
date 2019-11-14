@@ -1,8 +1,7 @@
-import { SkeletonError } from './errors'
-
 /**
- * Measurement units defined by the
- * {@link https://github.com/unicode-org/cldr/blob/d4d77a2/common/validity/unit.xml | Unicode CLDR}
+ * Measurement units defined by the {@link
+ * https://github.com/unicode-org/cldr/blob/d4d77a2/common/validity/unit.xml |
+ * Unicode CLDR}
  *
  * @public
  */
@@ -180,101 +179,32 @@ export type Unit =
   | 'volume-tablespoon'
   | 'volume-teaspoon'
 
-/**
- * An object representation of a parsed string skeleton, with token values
- * grouped by type.
- *
- * @public
- */
-export interface Skeleton {
-  decimal?: 'decimal-auto' | 'decimal-always'
-  group?:
-    | 'group-off'
-    | 'group-min2'
-    | 'group-auto'
-    | 'group-on-aligned'
-    | 'group-thousands'
-  integerWidth?: { min: number; max?: number; source?: string }
-  notation?:
-    | { style: 'compact-short' | 'compact-long' | 'notation-simple' }
-    | {
-        style: 'scientific' | 'engineering'
-        expDigits?: number
-        expSign?: Skeleton['sign']
-        source?: string
-      }
-  /**
-   * @remarks
-   * List collected from
-   * {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat | MDN documentation}
-   */
-  numberingSystem?:
-    | 'arab'
-    | 'arabext'
-    | 'bali'
-    | 'beng'
-    | 'deva'
-    | 'fullwide'
-    | 'gujr'
-    | 'guru'
-    | 'hanidec'
-    | 'khmr'
-    | 'knda'
-    | 'laoo'
-    | 'latn'
-    | 'limb'
-    | 'mlym'
-    | 'mong'
-    | 'mymr'
-    | 'orya'
-    | 'tamldec'
-    | 'telu'
-    | 'thai'
-    | 'tibt'
-  precision?:
-    | {
-        style:
-          | 'precision-integer'
-          | 'precision-unlimited'
-          | 'precision-currency-standard'
-          | 'precision-currency-cash'
-      }
-    | { style: 'precision-increment'; increment: number }
-    | {
-        style: 'precision-fraction'
-        minFraction?: number
-        maxFraction?: number
-        minSignificant?: number
-        maxSignificant?: number
-        source?: string
-      }
-  roundingMode?:
-    | 'rounding-mode-ceiling'
-    | 'rounding-mode-floor'
-    | 'rounding-mode-down'
-    | 'rounding-mode-up'
-    | 'rounding-mode-half-even'
-    | 'rounding-mode-half-down'
-    | 'rounding-mode-half-up'
-    | 'rounding-mode-unnecessary'
-  scale?: number
-  sign?:
-    | 'sign-auto'
-    | 'sign-always'
-    | 'sign-never'
-    | 'sign-accounting'
-    | 'sign-accounting-always'
-    | 'sign-except-zero'
-    | 'sign-accounting-except-zero'
-  unit?:
-    | { style: 'percent' | 'permille' | 'base-unit' }
-    | { style: 'currency'; currency: string }
-    | { style: 'measure-unit'; unit: Unit }
-  unitPer?: Unit
-  unitWidth?:
-    | 'unit-width-narrow'
-    | 'unit-width-short'
-    | 'unit-width-full-name'
-    | 'unit-width-iso-code'
-    | 'unit-width-hidden'
+// FIXME: subtype is not checked
+/** @internal */
+export function isUnit(unit: string): unit is Unit {
+  const types = [
+    'acceleration',
+    'angle',
+    'area',
+    'concentr',
+    'consumption',
+    'digital',
+    'duration',
+    'electric',
+    'energy',
+    'force',
+    'frequency',
+    'graphics',
+    'length',
+    'light',
+    'mass',
+    'power',
+    'pressure',
+    'speed',
+    'temperature',
+    'torque',
+    'volume'
+  ]
+  const [type] = unit.split('-', 1)
+  return types.indexOf(type) !== -1
 }

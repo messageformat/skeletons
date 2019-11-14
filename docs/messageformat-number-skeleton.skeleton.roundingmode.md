@@ -7,13 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-roundingMode?:
-    | 'rounding-mode-ceiling'
-    | 'rounding-mode-floor'
-    | 'rounding-mode-down'
-    | 'rounding-mode-up'
-    | 'rounding-mode-half-even'
-    | 'rounding-mode-half-down'
-    | 'rounding-mode-half-up'
-    | 'rounding-mode-unnecessary'
+roundingMode?: 'rounding-mode-ceiling' | 'rounding-mode-floor' | 'rounding-mode-down' | 'rounding-mode-up' | 'rounding-mode-half-even' | 'rounding-mode-half-down' | 'rounding-mode-half-up' | 'rounding-mode-unnecessary';
 ```

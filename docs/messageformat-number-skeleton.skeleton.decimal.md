@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-decimal?: 'decimal-auto' | 'decimal-always'
+decimal?: 'decimal-auto' | 'decimal-always';
 ```

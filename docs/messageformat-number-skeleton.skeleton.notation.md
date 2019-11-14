@@ -7,12 +7,12 @@
 <b>Signature:</b>
 
 ```typescript
-notation?:
-    | { style: 'compact-short' | 'compact-long' | 'notation-simple' }
-    | {
-        style: 'scientific' | 'engineering'
-        expDigits?: number
-        expSign?: Skeleton['sign']
-        source?: string
-      }
+notation?: {
+        style: 'compact-short' | 'compact-long' | 'notation-simple';
+    } | {
+        style: 'scientific' | 'engineering';
+        expDigits?: number;
+        expSign?: Skeleton['sign'];
+        source?: string;
+    };
 ```

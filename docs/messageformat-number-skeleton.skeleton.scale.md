@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-scale?: number
+scale?: number;
 ```

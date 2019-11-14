@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-unitPer?: Unit
+unitPer?: Unit;
 ```

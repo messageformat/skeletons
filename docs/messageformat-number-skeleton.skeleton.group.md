@@ -7,10 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-group?:
-    | 'group-off'
-    | 'group-min2'
-    | 'group-auto'
-    | 'group-on-aligned'
-    | 'group-thousands'
+group?: 'group-off' | 'group-min2' | 'group-auto' | 'group-on-aligned' | 'group-thousands';
 ```

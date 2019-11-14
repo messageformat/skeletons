@@ -1,5 +1,3 @@
-import { Skeleton, Unit } from './skeleton'
-
 import {
   SkeletonError,
   BadOptionError,
@@ -8,6 +6,8 @@ import {
   MissingOptionError,
   TooManyOptionsError
 } from './errors'
+import { isNumberingSystem, Skeleton } from './skeleton'
+import { isUnit } from './unit'
 
 const maxOptions = {
   'compact-short': 0,
@@ -75,65 +75,6 @@ function hasMaxOption(stem: string): stem is keyof typeof maxOptions {
 
 function hasMinOption(stem: string): stem is keyof typeof minOptions {
   return stem in minOptions
-}
-
-function isNumberingSystem(
-  ns: string
-): ns is string & Skeleton['numberingSystem'] {
-  const systems = [
-    'arab',
-    'arabext',
-    'bali',
-    'beng',
-    'deva',
-    'fullwide',
-    'gujr',
-    'guru',
-    'hanidec',
-    'khmr',
-    'knda',
-    'laoo',
-    'latn',
-    'limb',
-    'mlym',
-    'mong',
-    'mymr',
-    'orya',
-    'tamldec',
-    'telu',
-    'thai',
-    'tibt'
-  ]
-  return systems.indexOf(ns) !== -1
-}
-
-// FIXME: subtype is not checked
-function isUnit(unit: string): unit is Unit {
-  const types = [
-    'acceleration',
-    'angle',
-    'area',
-    'concentr',
-    'consumption',
-    'digital',
-    'duration',
-    'electric',
-    'energy',
-    'force',
-    'frequency',
-    'graphics',
-    'length',
-    'light',
-    'mass',
-    'power',
-    'pressure',
-    'speed',
-    'temperature',
-    'torque',
-    'volume'
-  ]
-  const [type] = unit.split('-', 1)
-  return types.indexOf(type) !== -1
 }
 
 function parseDigits(src: string, style: 'fraction' | 'significant') {

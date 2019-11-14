@@ -7,8 +7,13 @@
 <b>Signature:</b>
 
 ```typescript
-unit?:
-    | { style: 'percent' | 'permille' | 'base-unit' }
-    | { style: 'currency'; currency: string }
-    | { style: 'measure-unit'; unit: Unit }
+unit?: {
+        style: 'percent' | 'permille' | 'base-unit';
+    } | {
+        style: 'currency';
+        currency: string;
+    } | {
+        style: 'measure-unit';
+        unit: Unit;
+    };
 ```
