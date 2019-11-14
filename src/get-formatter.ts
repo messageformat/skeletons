@@ -2,7 +2,7 @@ import { SkeletonError } from './errors'
 import { getNumberFormatLocales } from './nf-locales'
 import { getNumberFormatMultiplier } from './nf-multiplier'
 import { getNumberFormatOptions } from './nf-options'
-import { parseSkeleton } from './parse'
+import { parseSkeleton } from './parse-skeleton'
 
 function getNumberFormatVariables(
   locales: string | string[],

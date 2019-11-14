@@ -1,4 +1,4 @@
-import { parseSkeleton } from './parse'
+import { parseSkeleton } from './parse-skeleton'
 import { Skeleton } from './skeleton'
 
 const tests: { [testSet: string]: { [src: string]: Skeleton } } = {

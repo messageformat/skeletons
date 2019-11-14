@@ -3,81 +3,13 @@ import {
   BadOptionError,
   BadStemError,
   MaskedValueError,
-  MissingOptionError,
   TooManyOptionsError
 } from './errors'
+import { validOptions } from './parser-options'
 import { isNumberingSystem, Skeleton } from './skeleton'
 import { isUnit } from './unit'
 
-const maxOptions = {
-  'compact-short': 0,
-  'compact-long': 0,
-  'notation-simple': 0,
-  scientific: 2,
-  engineering: 2,
-  percent: 0,
-  permille: 0,
-  'base-unit': 0,
-  currency: 1,
-  'measure-unit': 1,
-  'per-measure-unit': 1,
-  'unit-width-narrow': 0,
-  'unit-width-short': 0,
-  'unit-width-full-name': 0,
-  'unit-width-iso-code': 0,
-  'unit-width-hidden': 0,
-  'precision-integer': 0,
-  'precision-unlimited': 0,
-  'precision-currency-standard': 0,
-  'precision-currency-cash': 0,
-  'precision-increment': 1,
-  'rounding-mode-ceiling': 0,
-  'rounding-mode-floor': 0,
-  'rounding-mode-down': 0,
-  'rounding-mode-up': 0,
-  'rounding-mode-half-even': 0,
-  'rounding-mode-half-down': 0,
-  'rounding-mode-half-up': 0,
-  'rounding-mode-unnecessary': 0,
-  'integer-width': 1,
-  scale: 1,
-  'group-off': 0,
-  'group-min2': 0,
-  'group-auto': 0,
-  'group-on-aligned': 0,
-  'group-thousands': 0,
-  latin: 0,
-  'numbering-system': 1,
-  'sign-auto': 0,
-  'sign-always': 0,
-  'sign-never': 0,
-  'sign-accounting': 0,
-  'sign-accounting-always': 0,
-  'sign-except-zero': 0,
-  'sign-accounting-except-zero': 0,
-  'decimal-auto': 0,
-  'decimal-always': 0
-}
-
-const minOptions = {
-  currency: 1,
-  'integer-width': 1,
-  'measure-unit': 1,
-  'numbering-system': 1,
-  'per-measure-unit': 1,
-  'precision-increment': 1,
-  scale: 1
-}
-
-function hasMaxOption(stem: string): stem is keyof typeof maxOptions {
-  return stem in maxOptions
-}
-
-function hasMinOption(stem: string): stem is keyof typeof minOptions {
-  return stem in minOptions
-}
-
-function parseDigits(src: string, style: 'fraction' | 'significant') {
+function parseBlueprintDigits(src: string, style: 'fraction' | 'significant') {
   const re = style === 'fraction' ? /^\.(0*)(\+|#*)$/ : /^(@+)(\+|#*)$/
   const match = src && src.match(re)
   if (match) {
@@ -116,7 +48,7 @@ class Parser {
     const option = options[0]
     const res = this.skeleton
 
-    const fd = parseDigits(stem, 'fraction')
+    const fd = parseBlueprintDigits(stem, 'fraction')
     if (fd) {
       if (options.length > 1)
         this.onError(new TooManyOptionsError(stem, options, 1))
@@ -127,7 +59,7 @@ class Parser {
         minFraction: fd.min
       }
       if (fd.max != null) res.precision.maxFraction = fd.max
-      const sd = parseDigits(option, 'significant')
+      const sd = parseBlueprintDigits(option, 'significant')
       if (sd) {
         res.precision.source = `${stem}/${option}`
         res.precision.minSignificant = sd.min
@@ -136,7 +68,7 @@ class Parser {
       return
     }
 
-    const sd = parseDigits(stem, 'significant')
+    const sd = parseBlueprintDigits(stem, 'significant')
     if (sd) {
       for (const opt of options) this.badOption(stem, opt)
       this.assertEmpty('precision')
@@ -153,21 +85,10 @@ class Parser {
   }
 
   parseToken(stem: string, options: string[]) {
+    if (!validOptions(stem, options, this.onError)) return
+
     const option = options[0]
     const res = this.skeleton
-    if (hasMaxOption(stem)) {
-      const maxOpt = maxOptions[stem]
-      if (options.length > maxOpt) {
-        if (maxOpt === 0) for (const opt of options) this.badOption(stem, opt)
-        else {
-          this.onError(new TooManyOptionsError(stem, options, maxOpt))
-          return
-        }
-      } else if (hasMinOption(stem) && options.length < minOptions[stem]) {
-        this.onError(new MissingOptionError(stem))
-        return
-      }
-    }
 
     switch (stem) {
       // notation
