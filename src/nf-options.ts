@@ -1,8 +1,10 @@
+import { UnsupportedError } from './errors'
 import { Skeleton } from './skeleton'
 
 /**
  * Extends `Intl.NumberFormat` options to include features brought by the
- * {@link https://github.com/tc39/proposal-unified-intl-numberformat | Unified API Proposal}
+ * {@link https://github.com/tc39/proposal-unified-intl-numberformat | Unified
+ * API Proposal}
  *
  * @public
  */
@@ -21,14 +23,14 @@ export interface NumberFormatOptions extends Intl.NumberFormatOptions {
  *
  * @remarks
  * In addition to standard `Intl.NumberFormat` options, some features make use
- * of the
- * {@link https://github.com/tc39/proposal-unified-intl-numberformat | Unified API Proposal},
- * which has limited support. If encountering unsupported features (e.g.
- * `decimal-always`, `permille`, others), the callback will be called with the
- * arguments `(stem: string, source?: string)`, where `source` may specify the
- * source of an unsupported option.
+ * of the {@link https://github.com/tc39/proposal-unified-intl-numberformat |
+ * Unified API Proposal}, which has limited support.
  *
  * @public
+ * @param onUnsupported - If defined, called when encountering unsupported (but
+ *   valid) tokens, such as `decimal-always` or `permille`. The error `source`
+ *   may specify the source of an unsupported option.
+ *
  * @example
  * ```js
  * import {
@@ -36,18 +38,14 @@ export interface NumberFormatOptions extends Intl.NumberFormatOptions {
  *   parseSkeleton
  * } from 'messageformat-number-skeleton'
  *
- * const logUnsupported = (stem, src) =>
- *   console.log('Unsupported:', stem, src || '')
- *
  * const src = 'currency/CAD unit-width-narrow'
- * const { errors, skeleton } = parseSkeleton(src)
- * // errors: []
- * // skeleton: {
+ * const skeleton = parseSkeleton(src, console.error)
+ * // {
  * //   unit: { style: 'currency', currency: 'CAD' },
  * //   unitWidth: 'unit-width-narrow'
  * // }
  *
- * getNumberFormatOptions(skeleton, logUnsupported)
+ * getNumberFormatOptions(skeleton, console.error)
  * // {
  * //   style: 'currency',
  * //   currency: 'CAD',
@@ -55,17 +53,21 @@ export interface NumberFormatOptions extends Intl.NumberFormatOptions {
  * //   unitDisplay: 'narrow'
  * // }
  *
- * const { skeleton: sk2 } = parseSkeleton('group-min2')
+ * const sk2 = parseSkeleton('group-min2')
  * // { group: 'group-min2' }
  *
- * getNumberFormatOptions(sk2, logUnsupported)
- * // Unsupported: group-min2
+ * getNumberFormatOptions(sk2, console.error)
+ * // Error: The stem group-min2 is not supported
+ * //   at UnsupportedError.SkeletonError ... {
+ * //     code: 'UNSUPPORTED',
+ * //     stem: 'group-min2'
+ * //   }
  * // {}
  * ```
  */
 export function getNumberFormatOptions(
   skeleton: Skeleton,
-  onUnsupported: (stem: string, source?: string) => void
+  onUnsupported?: (err: UnsupportedError) => void
 ) {
   const {
     decimal,
@@ -79,6 +81,10 @@ export function getNumberFormatOptions(
     unitPer,
     unitWidth
   } = skeleton
+  const fail = (stem: string, source?: string) => {
+    if (onUnsupported) onUnsupported(new UnsupportedError(stem, source))
+  }
+
   const opt: NumberFormatOptions = {}
 
   if (unit) {
@@ -99,7 +105,7 @@ export function getNumberFormatOptions(
         opt.style = 'percent'
         break
       case 'permille':
-        onUnsupported('permille')
+        fail('permille')
         break
     }
   }
@@ -110,7 +116,7 @@ export function getNumberFormatOptions(
       opt.unitDisplay = 'long'
       break
     case 'unit-width-hidden':
-      onUnsupported(unitWidth)
+      fail(unitWidth)
       break
     case 'unit-width-iso-code':
       opt.currencyDisplay = 'code'
@@ -135,14 +141,14 @@ export function getNumberFormatOptions(
     case 'group-min2':
     case 'group-on-aligned':
     case 'group-thousands':
-      onUnsupported(group)
+      fail(group)
       break
   }
 
   if (integerWidth) {
     const { min, max, source } = integerWidth
     if (min > 0) opt.minimumIntegerDigits = min
-    if (Number(max) > 0) onUnsupported('integer-width', source)
+    if (Number(max) > 0) fail('integer-width', source)
   }
 
   if (precision) {
@@ -157,8 +163,7 @@ export function getNumberFormatOptions(
         } = precision
         if (typeof minF === 'number') {
           opt.minimumFractionDigits = minF
-          if (typeof minS === 'number')
-            onUnsupported('precision-fraction', source)
+          if (typeof minS === 'number') fail('precision-fraction', source)
         }
         if (typeof maxF === 'number') opt.maximumFractionDigits = maxF
         if (typeof minS === 'number') opt.minimumSignificantDigits = minS
@@ -174,10 +179,10 @@ export function getNumberFormatOptions(
       case 'precision-currency-standard':
         break
       case 'precision-currency-cash':
-        onUnsupported(precision.style)
+        fail(precision.style)
         break
       case 'precision-increment':
-        onUnsupported(precision.style, String(precision.increment))
+        fail(precision.style, String(precision.increment))
         break
     }
   }
@@ -199,7 +204,7 @@ export function getNumberFormatOptions(
       case 'engineering': {
         const { expDigits, expSign, source, style } = notation
         opt.notation = style
-        if (expDigits || expSign) onUnsupported(style, source)
+        if (expDigits || expSign) fail(style, source)
         break
       }
     }
@@ -231,8 +236,8 @@ export function getNumberFormatOptions(
       break
   }
 
-  if (decimal === 'decimal-always') onUnsupported(decimal)
-  if (roundingMode) onUnsupported(roundingMode)
+  if (decimal === 'decimal-always') fail(decimal)
+  if (roundingMode) fail(roundingMode)
 
   return opt
 }

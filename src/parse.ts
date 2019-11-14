@@ -155,16 +155,20 @@ function parseDigits(src: string, style: 'fraction' | 'significant') {
 }
 
 class Parser {
-  errors: SkeletonError[] = []
+  onError: (err: SkeletonError) => void
   skeleton: Skeleton = {}
 
+  constructor(onError?: (err: SkeletonError) => void) {
+    this.onError = onError || (() => {})
+  }
+
   badOption(stem: string, opt: string) {
-    this.errors.push(new BadOptionError(stem, opt))
+    this.onError(new BadOptionError(stem, opt))
   }
 
   assertEmpty(key: keyof Skeleton) {
     const prev = this.skeleton[key]
-    if (prev) this.errors.push(new MaskedValueError(key, prev))
+    if (prev) this.onError(new MaskedValueError(key, prev))
   }
 
   parseBlueprints(stem: string, options: string[]) {
@@ -174,7 +178,7 @@ class Parser {
     const fd = parseDigits(stem, 'fraction')
     if (fd) {
       if (options.length > 1)
-        this.errors.push(new TooManyOptionsError(stem, options, 1))
+        this.onError(new TooManyOptionsError(stem, options, 1))
       this.assertEmpty('precision')
       res.precision = {
         style: 'precision-fraction',
@@ -204,7 +208,7 @@ class Parser {
       return
     }
 
-    this.errors.push(new BadStemError(stem))
+    this.onError(new BadStemError(stem))
   }
 
   parseToken(stem: string, options: string[]) {
@@ -215,11 +219,11 @@ class Parser {
       if (options.length > maxOpt) {
         if (maxOpt === 0) for (const opt of options) this.badOption(stem, opt)
         else {
-          this.errors.push(new TooManyOptionsError(stem, options, maxOpt))
+          this.onError(new TooManyOptionsError(stem, options, maxOpt))
           return
         }
       } else if (hasMinOption(stem) && options.length < minOptions[stem]) {
-        this.errors.push(new MissingOptionError(stem))
+        this.onError(new MissingOptionError(stem))
         return
       }
     }
@@ -413,10 +417,6 @@ class Parser {
         this.parseBlueprints(stem, options)
     }
   }
-
-  get result() {
-    return { errors: this.errors, skeleton: this.skeleton }
-  }
 }
 
 function readTokens(src: string) {
@@ -434,27 +434,32 @@ function readTokens(src: string) {
 /**
  * Parse an input skeleton string into a {@link Skeleton} structure.
  *
- * @remarks
- * Should never throw, collecting instead errors into an array.
- *
  * @public
+ * @param src - The skeleton string, consisting of {@link
+ *   https://github.com/unicode-org/icu/blob/master/docs/userguide/format_parse/numbers/skeletons.md
+ *   | space-separated tokens}
+ * @param onError - If defined, will be called when the parser encounters a
+ *   syntax error. The function will still return a {@link Skeleton}, but it may
+ *   not contain information for all tokens.
+ *
  * @example
  * ```js
  * import { parseSkeleton } from 'messageformat-number-skeleton'
  *
- * const src = 'compact-short currency/GBP'
- * const { errors, skeleton } = parseSkeleton(src)
- * // errors: []
- * // skeleton: {
+ * parseSkeleton('compact-short currency/GBP', console.error)
+ * // {
  * //   notation: { style: 'compact-short' },
  * //   unit: { style: 'currency', currency: 'GBP' }
  * // }
  * ```
  */
-export function parseSkeleton(src: string) {
-  const parser = new Parser()
+export function parseSkeleton(
+  src: string,
+  onError?: (err: SkeletonError) => void
+) {
+  const parser = new Parser(onError)
   for (const { stem, options } of readTokens(src)) {
     parser.parseToken(stem, options)
   }
-  return parser.result
+  return parser.skeleton
 }

@@ -37,7 +37,7 @@ import {
 |  [getNumberFormatLocales(locales, { numberingSystem })](./messageformat-number-skeleton.getnumberformatlocales.md) | Add [numbering-system tags](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#Locale_identification_and_negotiation) to locale identifiers |
 |  [getNumberFormatMultiplier({ scale, unit })](./messageformat-number-skeleton.getnumberformatmultiplier.md) | Determine a multiplier for the input value to account for any <code>scale</code> and <code>percent</code> tokens in the skeleton. |
 |  [getNumberFormatOptions(skeleton, onUnsupported)](./messageformat-number-skeleton.getnumberformatoptions.md) | Given an input ICU NumberFormatter skeleton, does its best to construct a corresponding <code>Intl.NumberFormat</code> options structure. |
-|  [parseSkeleton(src)](./messageformat-number-skeleton.parseskeleton.md) | Parse an input skeleton string into a [Skeleton](./messageformat-number-skeleton.skeleton.md) structure. |
+|  [parseSkeleton(src, onError)](./messageformat-number-skeleton.parseskeleton.md) | Parse an input skeleton string into a [Skeleton](./messageformat-number-skeleton.skeleton.md) structure. |
 
 ## Interfaces
 

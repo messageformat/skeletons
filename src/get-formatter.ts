@@ -1,4 +1,4 @@
-import { UnsupportedError, SkeletonError } from './errors'
+import { SkeletonError } from './errors'
 import { getNumberFormatLocales } from './nf-locales'
 import { getNumberFormatMultiplier } from './nf-multiplier'
 import { getNumberFormatOptions } from './nf-options'
@@ -9,13 +9,9 @@ function getNumberFormatVariables(
   src: string,
   onError?: (err: SkeletonError) => void
 ) {
-  const { errors, skeleton } = parseSkeleton(src)
-  if (onError) for (const error of errors) onError(error)
-  function handleUnsupported(stem: string, source?: string) {
-    if (onError) onError(new UnsupportedError(stem, source))
-  }
+  const skeleton = parseSkeleton(src, onError)
   const lc = getNumberFormatLocales(locales, skeleton)
-  const opt = getNumberFormatOptions(skeleton, handleUnsupported)
+  const opt = getNumberFormatOptions(skeleton, onError)
   const mult = getNumberFormatMultiplier(skeleton)
   return { lc, opt, mult }
 }

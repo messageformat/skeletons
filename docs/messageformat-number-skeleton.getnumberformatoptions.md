@@ -9,7 +9,7 @@ Given an input ICU NumberFormatter skeleton, does its best to construct a corres
 <b>Signature:</b>
 
 ```typescript
-export declare function getNumberFormatOptions(skeleton: Skeleton, onUnsupported: (stem: string, source?: string) => void): NumberFormatOptions;
+export declare function getNumberFormatOptions(skeleton: Skeleton, onUnsupported?: (err: UnsupportedError) => void): NumberFormatOptions;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ export declare function getNumberFormatOptions(skeleton: Skeleton, onUnsupported
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  skeleton | <code>Skeleton</code> |  |
-|  onUnsupported | <code>(stem: string, source?: string) =&gt; void</code> |  |
+|  onUnsupported | <code>(err: UnsupportedError) =&gt; void</code> | If defined, called when encountering unsupported (but valid) tokens, such as <code>decimal-always</code> or <code>permille</code>. The error <code>source</code> may specify the source of an unsupported option. |
 
 <b>Returns:</b>
 
@@ -25,7 +25,7 @@ export declare function getNumberFormatOptions(skeleton: Skeleton, onUnsupported
 
 ## Remarks
 
-In addition to standard `Intl.NumberFormat` options, some features make use of the [Unified API Proposal](https://github.com/tc39/proposal-unified-intl-numberformat)<!-- -->, which has limited support. If encountering unsupported features (e.g. `decimal-always`<!-- -->, `permille`<!-- -->, others), the callback will be called with the arguments `(stem: string, source?: string)`<!-- -->, where `source` may specify the source of an unsupported option.
+In addition to standard `Intl.NumberFormat` options, some features make use of the [Unified API Proposal](https://github.com/tc39/proposal-unified-intl-numberformat)<!-- -->, which has limited support.
 
 ## Example
 
@@ -36,18 +36,14 @@ import {
   parseSkeleton
 } from 'messageformat-number-skeleton'
 
-const logUnsupported = (stem, src) =>
-  console.log('Unsupported:', stem, src || '')
-
 const src = 'currency/CAD unit-width-narrow'
-const { errors, skeleton } = parseSkeleton(src)
-// errors: []
-// skeleton: {
+const skeleton = parseSkeleton(src, console.error)
+// {
 //   unit: { style: 'currency', currency: 'CAD' },
 //   unitWidth: 'unit-width-narrow'
 // }
 
-getNumberFormatOptions(skeleton, logUnsupported)
+getNumberFormatOptions(skeleton, console.error)
 // {
 //   style: 'currency',
 //   currency: 'CAD',
@@ -55,11 +51,15 @@ getNumberFormatOptions(skeleton, logUnsupported)
 //   unitDisplay: 'narrow'
 // }
 
-const { skeleton: sk2 } = parseSkeleton('group-min2')
+const sk2 = parseSkeleton('group-min2')
 // { group: 'group-min2' }
 
-getNumberFormatOptions(sk2, logUnsupported)
-// Unsupported: group-min2
+getNumberFormatOptions(sk2, console.error)
+// Error: The stem group-min2 is not supported
+//   at UnsupportedError.SkeletonError ... {
+//     code: 'UNSUPPORTED',
+//     stem: 'group-min2'
+//   }
 // {}
 
 ```

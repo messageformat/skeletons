@@ -178,8 +178,9 @@ for (const [testSet, cases] of Object.entries(tests)) {
   describe(testSet, () => {
     for (const [src, expected] of Object.entries(cases)) {
       test(src, () => {
-        const { errors, skeleton } = parseSkeleton(src)
-        expect(errors).toEqual([])
+        const onError = jest.fn()
+        const skeleton = parseSkeleton(src, onError)
+        expect(onError).not.toHaveBeenCalled()
         expect(skeleton).toEqual(expected)
       })
     }
@@ -187,16 +188,18 @@ for (const [testSet, cases] of Object.entries(tests)) {
 }
 
 describe('errors', () => {
-  const cases: { [src: string]: {}[] } = {
-    '/': [{ code: 'BAD_STEM', stem: '' }],
-    foo: [{ code: 'BAD_STEM', stem: 'foo' }],
-    currency: [{ code: 'MISSING_OPTION', stem: 'currency' }],
-    'currency/EUR/CAD': [{ code: 'TOO_MANY_OPTIONS', stem: 'currency' }],
-    '.00/@@/@@': [{ code: 'TOO_MANY_OPTIONS', stem: '.00' }],
-    'notation-simple/foo': [{ code: 'BAD_OPTION', stem: 'notation-simple' }],
-    'scientific engineering': [
-      { code: 'MASKED_VALUE', type: 'notation', prev: { style: 'scientific' } }
-    ]
+  const cases: { [src: string]: {} } = {
+    '/': { code: 'BAD_STEM', stem: '' },
+    foo: { code: 'BAD_STEM', stem: 'foo' },
+    currency: { code: 'MISSING_OPTION', stem: 'currency' },
+    'currency/EUR/CAD': { code: 'TOO_MANY_OPTIONS', stem: 'currency' },
+    '.00/@@/@@': { code: 'TOO_MANY_OPTIONS', stem: '.00' },
+    'notation-simple/foo': { code: 'BAD_OPTION', stem: 'notation-simple' },
+    'scientific engineering': {
+      code: 'MASKED_VALUE',
+      type: 'notation',
+      prev: { style: 'scientific' }
+    }
   }
   for (const stem of [
     'currency',
@@ -209,12 +212,13 @@ describe('errors', () => {
     'scale',
     '.00'
   ])
-    cases[`${stem}/foo`] = [{ code: 'BAD_OPTION', stem, option: 'foo' }]
+    cases[`${stem}/foo`] = { code: 'BAD_OPTION', stem, option: 'foo' }
 
   for (const [src, expected] of Object.entries(cases)) {
     test(src, () => {
-      const { errors } = parseSkeleton(src)
-      expect(errors).toMatchObject(expected)
+      const onError = jest.fn()
+      parseSkeleton(src, onError)
+      expect(onError.mock.calls).toMatchObject([[expected]])
     })
   }
 })

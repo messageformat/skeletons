@@ -9,28 +9,19 @@ Parse an input skeleton string into a [Skeleton](./messageformat-number-skeleton
 <b>Signature:</b>
 
 ```typescript
-export declare function parseSkeleton(src: string): {
-    errors: SkeletonError[];
-    skeleton: Skeleton;
-};
+export declare function parseSkeleton(src: string, onError?: (err: SkeletonError) => void): Skeleton;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  src | <code>string</code> |  |
+|  src | <code>string</code> | The skeleton string, consisting of [space-separated tokens](https://github.com/unicode-org/icu/blob/master/docs/userguide/format_parse/numbers/skeletons.md) |
+|  onError | <code>(err: SkeletonError) =&gt; void</code> | If defined, will be called when the parser encounters a syntax error. The function will still return a [Skeleton](./messageformat-number-skeleton.skeleton.md)<!-- -->, but it may not contain information for all tokens. |
 
 <b>Returns:</b>
 
-`{
-    errors: SkeletonError[];
-    skeleton: Skeleton;
-}`
-
-## Remarks
-
-Should never throw, collecting instead errors into an array.
+`Skeleton`
 
 ## Example
 
@@ -38,10 +29,8 @@ Should never throw, collecting instead errors into an array.
 ```js
 import { parseSkeleton } from 'messageformat-number-skeleton'
 
-const src = 'compact-short currency/GBP'
-const { errors, skeleton } = parseSkeleton(src)
-// errors: []
-// skeleton: {
+parseSkeleton('compact-short currency/GBP', console.error)
+// {
 //   notation: { style: 'compact-short' },
 //   unit: { style: 'currency', currency: 'GBP' }
 // }

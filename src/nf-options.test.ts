@@ -1,3 +1,4 @@
+import { UnsupportedError } from './errors'
 import { getNumberFormatOptions, NumberFormatOptions } from './nf-options'
 import { Skeleton } from './skeleton'
 
@@ -281,7 +282,12 @@ for (const [testSet, cases] of Object.entries(tests)) {
         const cb = jest.fn()
         const opt = getNumberFormatOptions(skeleton, cb)
         expect(opt).toEqual(result || {})
-        expect(cb.mock.calls).toEqual(unsupported || [])
+        if (unsupported) {
+          const errors = unsupported.map(([stem, source]) => [
+            new UnsupportedError(stem, source)
+          ])
+          expect(cb.mock.calls).toEqual(errors)
+        } else expect(cb).not.toHaveBeenCalled()
       })
     }
   })
