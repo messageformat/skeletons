@@ -1,4 +1,5 @@
 import { getFormatter, getFormatterSource } from './get-formatter'
+import { parseSkeleton } from './parser/parse-skeleton'
 
 const tests: {
   [testSet: string]: { [src: string]: [number, string, {}[]?] }
@@ -108,8 +109,9 @@ for (const [testSet, cases] of Object.entries(tests)) {
     for (const [src, [value, expected, errors]] of Object.entries(cases)) {
       test(src, () => {
         const cb = jest.fn()
-        const fmt = getFormatter('en', src, cb)
-        const res = fmt(value)
+
+        // function from string
+        let fmt = getFormatter('en', src, cb)
         if (errors) {
           const [stem] = src.split('/', 1)
           const base = { code: 'UNSUPPORTED', stem }
@@ -117,11 +119,22 @@ for (const [testSet, cases] of Object.entries(tests)) {
             errors.map(error => [{ ...base, ...error }])
           )
         } else expect(cb).not.toHaveBeenCalled()
-        expect(res).toBe(expected)
+        expect(fmt(value)).toBe(expected)
 
-        const fmtSrc = getFormatterSource('en', src)
-        const fmtFn = new Function(`return ${fmtSrc}`)()
-        expect(fmtFn(value)).toBe(expected)
+        // function from skeleton
+        const skeleton = parseSkeleton(src)
+        fmt = getFormatter(['en'], skeleton)
+        expect(fmt(value)).toBe(expected)
+
+        // source from string
+        let fmtSrc = getFormatterSource('en', src)
+        fmt = new Function(`return ${fmtSrc}`)()
+        expect(fmt(value)).toBe(expected)
+
+        // source from skeleton
+        fmtSrc = getFormatterSource(['en'], skeleton)
+        fmt = new Function(`return ${fmtSrc}`)()
+        expect(fmt(value)).toBe(expected)
       })
     }
   })

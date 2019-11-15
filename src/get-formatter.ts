@@ -6,6 +6,7 @@ import {
 } from './numberformat/modifier'
 import { getNumberFormatOptions } from './numberformat/options'
 import { parseSkeleton } from './parser/parse-skeleton'
+import { Skeleton } from './types/skeleton'
 
 /**
  * Returns a number formatter function for the given locales and skeleton source.
@@ -32,10 +33,10 @@ import { parseSkeleton } from './parser/parse-skeleton'
  */
 export function getFormatter(
   locales: string | string[],
-  src: string,
+  skeleton: string | Skeleton,
   onError?: (err: SkeletonError) => void
 ) {
-  const skeleton = parseSkeleton(src, onError)
+  if (typeof skeleton === 'string') skeleton = parseSkeleton(skeleton, onError)
   const lc = getNumberFormatLocales(locales, skeleton)
   const opt = getNumberFormatOptions(skeleton, onError)
   const mod = getNumberFormatModifier(skeleton)
@@ -80,10 +81,10 @@ export function getFormatter(
  */
 export function getFormatterSource(
   locales: string | string[],
-  src: string,
+  skeleton: string | Skeleton,
   onError?: (err: SkeletonError) => void
 ) {
-  const skeleton = parseSkeleton(src, onError)
+  if (typeof skeleton === 'string') skeleton = parseSkeleton(skeleton, onError)
   const lc = getNumberFormatLocales(locales, skeleton)
   const opt = getNumberFormatOptions(skeleton, onError)
   const modSrc = getNumberFormatModifierSource(skeleton)

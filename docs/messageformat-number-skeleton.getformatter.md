@@ -9,7 +9,7 @@ Returns a number formatter function for the given locales and skeleton source.
 <b>Signature:</b>
 
 ```typescript
-export declare function getFormatter(locales: string | string[], src: string, onError?: (err: SkeletonError) => void): (value: number) => string;
+export declare function getFormatter(locales: string | string[], skeleton: string | Skeleton, onError?: (err: SkeletonError) => void): (value: number) => string;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ export declare function getFormatter(locales: string | string[], src: string, on
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  locales | <code>string &#124; string[]</code> |  |
-|  src | <code>string</code> |  |
+|  skeleton | <code>string &#124; Skeleton</code> |  |
 |  onError | <code>(err: SkeletonError) =&gt; void</code> |  |
 
 <b>Returns:</b>
