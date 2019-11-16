@@ -24,8 +24,10 @@
     "postbuild:esm": "for f in lib/*.js; do mv \"$f\" \"${f%.js}.mjs\"; done",
     "build": "npm run build:esm && npm run build:cjs",
     "predocs": "npm run build",
-    "docs": "api-extractor run --local --verbose",
-    "postdocs": "api-documenter markdown -i temp/ -o docs/",
+    "docs:extract": "api-extractor run --local --verbose",
+    "docs:markdown": "api-documenter markdown -i temp/ -o docs/",
+    "docs": "npm run docs:extract && npm run docs:markdown",
+    "postdocs": "node scripts/build-readme",
     "clean": "git clean -fdxe node_modules",
     "prettier": "prettier --write skeleton.d.ts src/*",
     "test": "jest"
