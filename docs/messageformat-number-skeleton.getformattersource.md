@@ -16,9 +16,9 @@ export declare function getFormatterSource(locales: string | string[], skeleton:
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  locales | <code>string &#124; string[]</code> |  |
-|  skeleton | <code>string &#124; Skeleton</code> |  |
-|  onError | <code>(err: SkeletonError) =&gt; void</code> |  |
+|  locales | <code>string &#124; string[]</code> | One or more valid BCP 47 language tags, e.g. <code>fr</code> or <code>en-CA</code> |
+|  skeleton | <code>string &#124; Skeleton</code> | An ICU NumberFormatter skeleton |
+|  onError | <code>(err: SkeletonError) =&gt; void</code> | If defined, will be called separately for each encountered parsing error and unsupported feature. |
 
 <b>Returns:</b>
 
@@ -26,7 +26,7 @@ export declare function getFormatterSource(locales: string | string[], skeleton:
 
 ## Remarks
 
-The returned function will memoize an `Intl.NumberFormat` instance that makes use of features provided by the [Unified API Proposal](https://github.com/tc39/proposal-unified-intl-numberformat)<!-- -->. If the error callback is defined, it will be called separately for each encountered parsing error and unsupported feature.
+The returned function will memoize an `Intl.NumberFormat` instance that makes use of features provided by the [Unified API Proposal](https://github.com/tc39/proposal-unified-intl-numberformat)<!-- -->.
 
 ## Example
 

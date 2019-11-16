@@ -9,15 +9,18 @@ import { parseSkeleton } from './parser/parse-skeleton'
 import { Skeleton } from './types/skeleton'
 
 /**
- * Returns a number formatter function for the given locales and skeleton source.
+ * Returns a number formatter function for the given locales and number skeleton
  *
  * @remarks
  * Uses `Intl.NumberFormat` internally, including features provided by the
  * {@link https://github.com/tc39/proposal-unified-intl-numberformat | Unified
- * API Proposal}. If the error callback is defined, it will be called separately
- * for each encountered parsing error and unsupported feature.
+ * API Proposal}.
  *
  * @public
+ * @param locales - One or more valid BCP 47 language tags, e.g. `fr` or `en-CA`
+ * @param skeleton - An ICU NumberFormatter skeleton
+ * @param onError - If defined, will be called separately for each encountered
+ *   parsing error and unsupported feature.
  * @example
  * ```js
  * import { getFormatter } from 'messageformat-number-skeleton'
@@ -53,10 +56,13 @@ export function getFormatter(
  * The returned function will memoize an `Intl.NumberFormat` instance that makes
  * use of features provided by the {@link
  * https://github.com/tc39/proposal-unified-intl-numberformat | Unified API
- * Proposal}. If the error callback is defined, it will be called separately for
- * each encountered parsing error and unsupported feature.
+ * Proposal}.
  *
  * @public
+ * @param locales - One or more valid BCP 47 language tags, e.g. `fr` or `en-CA`
+ * @param skeleton - An ICU NumberFormatter skeleton
+ * @param onError - If defined, will be called separately for each encountered
+ *   parsing error and unsupported feature.
  * @example
  * ```js
  * import { getFormatterSource } from 'messageformat-number-skeleton'

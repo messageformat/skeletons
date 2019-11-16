@@ -4,7 +4,7 @@
 
 ## getFormatter() function
 
-Returns a number formatter function for the given locales and skeleton source.
+Returns a number formatter function for the given locales and number skeleton
 
 <b>Signature:</b>
 
@@ -16,9 +16,9 @@ export declare function getFormatter(locales: string | string[], skeleton: strin
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  locales | <code>string &#124; string[]</code> |  |
-|  skeleton | <code>string &#124; Skeleton</code> |  |
-|  onError | <code>(err: SkeletonError) =&gt; void</code> |  |
+|  locales | <code>string &#124; string[]</code> | One or more valid BCP 47 language tags, e.g. <code>fr</code> or <code>en-CA</code> |
+|  skeleton | <code>string &#124; Skeleton</code> | An ICU NumberFormatter skeleton |
+|  onError | <code>(err: SkeletonError) =&gt; void</code> | If defined, will be called separately for each encountered parsing error and unsupported feature. |
 
 <b>Returns:</b>
 
@@ -26,7 +26,7 @@ export declare function getFormatter(locales: string | string[], skeleton: strin
 
 ## Remarks
 
-Uses `Intl.NumberFormat` internally, including features provided by the [Unified API Proposal](https://github.com/tc39/proposal-unified-intl-numberformat)<!-- -->. If the error callback is defined, it will be called separately for each encountered parsing error and unsupported feature.
+Uses `Intl.NumberFormat` internally, including features provided by the [Unified API Proposal](https://github.com/tc39/proposal-unified-intl-numberformat)<!-- -->.
 
 ## Example
 

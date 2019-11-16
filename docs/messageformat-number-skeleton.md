@@ -28,7 +28,7 @@ import {
 
 |  Function | Description |
 |  --- | --- |
-|  [getFormatter(locales, skeleton, onError)](./messageformat-number-skeleton.getformatter.md) | Returns a number formatter function for the given locales and skeleton source. |
+|  [getFormatter(locales, skeleton, onError)](./messageformat-number-skeleton.getformatter.md) | Returns a number formatter function for the given locales and number skeleton |
 |  [getFormatterSource(locales, skeleton, onError)](./messageformat-number-skeleton.getformattersource.md) | Returns a string of JavaScript source that evaluates to a number formatter function with the same <code>(value: number) =&gt; string</code> signature as the function returned by [getFormatter()](./messageformat-number-skeleton.getformatter.md)<!-- -->. |
 |  [parseSkeleton(src, onError)](./messageformat-number-skeleton.parseskeleton.md) | Parse an input skeleton string into a [Skeleton](./messageformat-number-skeleton.skeleton.md) structure. |
 
