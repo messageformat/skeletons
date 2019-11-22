@@ -42,7 +42,9 @@ const tests: { [testSet: string]: { [src: string]: Skeleton } } = {
       unit: { style: 'currency', currency: 'CAD' }
     },
     'group-min2': { group: 'group-min2' },
+    'group-off': { group: 'group-off' },
     'sign-always': { sign: 'sign-always' },
+    'sign-auto': { sign: 'sign-auto' },
     'sign-except-zero': { sign: 'sign-except-zero' },
     'sign-accounting currency/CAD': {
       sign: 'sign-accounting',
@@ -51,11 +53,11 @@ const tests: { [testSet: string]: { [src: string]: Skeleton } } = {
   },
   notation: {
     scientific: { notation: { style: 'scientific', source: '' } },
-    'scientific/sign-always': {
+    'scientific/sign-auto': {
       notation: {
         style: 'scientific',
-        expSign: 'sign-always',
-        source: 'sign-always'
+        expSign: 'sign-auto',
+        source: 'sign-auto'
       }
     },
     'scientific/+ee': {
@@ -166,10 +168,14 @@ const tests: { [testSet: string]: { [src: string]: Skeleton } } = {
   misc: {
     ' ': {},
     'decimal-always': { decimal: 'decimal-always' },
+    'decimal-auto': { decimal: 'decimal-auto' },
     latin: { numberingSystem: 'latn' },
     'numbering-system/thai': { numberingSystem: 'thai' },
     'per-measure-unit/duration-second': { unitPer: 'duration-second' },
     'precision-unlimited': { precision: { style: 'precision-unlimited' } },
+    'rounding-mode-ceiling': { roundingMode: 'rounding-mode-ceiling' },
+    'rounding-mode-down': { roundingMode: 'rounding-mode-down' },
+    'rounding-mode-floor': { roundingMode: 'rounding-mode-floor' },
     'rounding-mode-up': { roundingMode: 'rounding-mode-up' }
   }
 }
@@ -194,6 +200,7 @@ describe('errors', () => {
     currency: { code: 'MISSING_OPTION', stem: 'currency' },
     'currency/EUR/CAD': { code: 'TOO_MANY_OPTIONS', stem: 'currency' },
     '.00/@@/@@': { code: 'TOO_MANY_OPTIONS', stem: '.00' },
+    '@@/.00': { code: 'BAD_OPTION', stem: '@@' },
     'notation-simple/foo': { code: 'BAD_OPTION', stem: 'notation-simple' },
     'scientific engineering': {
       code: 'MASKED_VALUE',
