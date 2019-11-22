@@ -1,5 +1,5 @@
 import { Skeleton } from '../types/skeleton'
-import { parsePatternAsSkeleton } from './pattern-as-skeleton'
+import { parsePattern } from '../parse-pattern'
 
 const cases: { [name: string]: { [pattern: string]: Skeleton } } = {
   'Number Patterns': {
@@ -300,7 +300,7 @@ for (const [name, tests] of Object.entries(cases)) {
   describe(name, () => {
     for (const [pattern, expected] of Object.entries(tests)) {
       test(pattern, () => {
-        const skeleton = parsePatternAsSkeleton(pattern, 'EUR')
+        const skeleton = parsePattern(pattern, 'EUR')
         expect(skeleton).toEqual(expected)
       })
     }
@@ -322,7 +322,7 @@ const errors = {
 describe('Errors', () => {
   for (const [pattern, error] of Object.entries(errors)) {
     test(pattern, () => {
-      expect(() => parsePatternAsSkeleton(pattern)).toThrow(error)
+      expect(() => parsePattern(pattern)).toThrow(error)
     })
   }
 })

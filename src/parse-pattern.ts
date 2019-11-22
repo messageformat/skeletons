@@ -1,7 +1,7 @@
-import { Skeleton } from '../types/skeleton'
-import { AffixToken } from './affix-tokens'
-import { parseTokens } from './parse-tokens'
-import { parseNumberAsSkeleton } from './number-as-skeleton'
+import { Skeleton } from './types/skeleton'
+import { AffixToken } from './pattern-parser/affix-tokens'
+import { parseTokens } from './pattern-parser/parse-tokens'
+import { parseNumberAsSkeleton } from './pattern-parser/number-as-skeleton'
 
 function handleAffix(
   affixTokens: AffixToken[],
@@ -74,7 +74,7 @@ function getNegativeAffix(affixTokens: AffixToken[], isPrefix: boolean) {
   return str
 }
 
-export function parsePatternAsSkeleton(src: string, currency?: string) {
+export function parsePattern(src: string, currency?: string) {
   const { tokens, negative } = parseTokens(src)
   const res = parseNumberAsSkeleton(tokens.number)
 

@@ -1,5 +1,5 @@
 import { Skeleton } from '../types/skeleton'
-import { parseSkeleton } from './parse-skeleton'
+import { parseSkeleton } from '../parse-skeleton'
 
 const tests: { [testSet: string]: { [src: string]: Skeleton } } = {
   examples: {

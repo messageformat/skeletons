@@ -26,6 +26,6 @@ export {
   UnsupportedError
 } from './errors'
 export { getFormatter, getFormatterSource } from './get-formatter'
-export { parseSkeleton } from './parser/parse-skeleton'
+export { parseSkeleton } from './parse-skeleton'
 export { Skeleton } from './types/skeleton'
 export { Unit } from './types/unit'

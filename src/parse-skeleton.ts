@@ -1,6 +1,6 @@
-import { SkeletonError } from '../errors'
-import { Skeleton } from '../types/skeleton'
-import { TokenParser } from './token-parser'
+import { SkeletonError } from './errors'
+import { Skeleton } from './types/skeleton'
+import { TokenParser } from './skeleton-parser/token-parser'
 
 /**
  * Parse an input skeleton string into a {@link Skeleton} structure.

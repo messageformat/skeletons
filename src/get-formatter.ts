@@ -5,7 +5,7 @@ import {
   getNumberFormatModifierSource
 } from './numberformat/modifier'
 import { getNumberFormatOptions } from './numberformat/options'
-import { parseSkeleton } from './parser/parse-skeleton'
+import { parseSkeleton } from './parse-skeleton'
 import { Skeleton } from './types/skeleton'
 
 /**

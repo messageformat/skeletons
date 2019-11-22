@@ -1,5 +1,5 @@
 import { getFormatter, getFormatterSource } from './get-formatter'
-import { parseSkeleton } from './parser/parse-skeleton'
+import { parseSkeleton } from './parse-skeleton'
 
 const tests: {
   [testSet: string]: { [src: string]: [number, string, {}[]?] }
