@@ -16,6 +16,7 @@ export interface Skeleton
 
 |  Property | Type | Description |
 |  --- | --- | --- |
+|  [affix](./messageformat-number-skeleton.skeleton.affix.md) | <code>{</code><br/><code>        pos: [string, string];</code><br/><code>        neg?: [string, string];</code><br/><code>    }</code> |  |
 |  [decimal](./messageformat-number-skeleton.skeleton.decimal.md) | <code>'decimal-auto' &#124; 'decimal-always'</code> |  |
 |  [group](./messageformat-number-skeleton.skeleton.group.md) | <code>'group-off' &#124; 'group-min2' &#124; 'group-auto' &#124; 'group-on-aligned' &#124; 'group-thousands'</code> |  |
 |  [integerWidth](./messageformat-number-skeleton.skeleton.integerwidth.md) | <code>{</code><br/><code>        min: number;</code><br/><code>        max?: number;</code><br/><code>        source?: string;</code><br/><code>    }</code> |  |

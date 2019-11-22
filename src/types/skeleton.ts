@@ -9,7 +9,7 @@ import { Unit } from './unit'
 export interface Skeleton {
   /**
    * @remarks
-   * The prefix and suffix of a DecimalFormat pattern. Not used for skeletons.
+   * The prefix and suffix of an ICU NumberFormatter pattern. Not used for skeletons.
    */
   affix?: { pos: [string, string]; neg?: [string, string] }
   decimal?: 'decimal-auto' | 'decimal-always'

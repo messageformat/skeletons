@@ -3,12 +3,12 @@ import { Skeleton } from './types/skeleton'
 import { TokenParser } from './skeleton-parser/token-parser'
 
 /**
- * Parse an input skeleton string into a {@link Skeleton} structure.
+ * Parse an {@link
+ * https://github.com/unicode-org/icu/blob/master/docs/userguide/format_parse/numbers/skeletons.md
+ * | ICU NumberFormatter skeleton} string into a {@link Skeleton} structure.
  *
  * @public
- * @param src - The skeleton string, consisting of {@link
- *   https://github.com/unicode-org/icu/blob/master/docs/userguide/format_parse/numbers/skeletons.md
- *   | space-separated tokens}
+ * @param src - The skeleton string
  * @param onError - If defined, will be called when the parser encounters a
  *   syntax error. The function will still return a {@link Skeleton}, but it may
  *   not contain information for all tokens.

@@ -4,7 +4,7 @@
 
 ## parseSkeleton() function
 
-Parse an input skeleton string into a [Skeleton](./messageformat-number-skeleton.skeleton.md) structure.
+Parse an [ICU NumberFormatter skeleton](https://github.com/unicode-org/icu/blob/master/docs/userguide/format_parse/numbers/skeletons.md) string into a [Skeleton](./messageformat-number-skeleton.skeleton.md) structure.
 
 <b>Signature:</b>
 
@@ -16,7 +16,7 @@ export declare function parseSkeleton(src: string, onError?: (err: SkeletonError
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  src | <code>string</code> | The skeleton string, consisting of [space-separated tokens](https://github.com/unicode-org/icu/blob/master/docs/userguide/format_parse/numbers/skeletons.md) |
+|  src | <code>string</code> | The skeleton string |
 |  onError | <code>(err: SkeletonError) =&gt; void</code> | If defined, will be called when the parser encounters a syntax error. The function will still return a [Skeleton](./messageformat-number-skeleton.skeleton.md)<!-- -->, but it may not contain information for all tokens. |
 
 <b>Returns:</b>

@@ -74,6 +74,31 @@ function getNegativeAffix(affixTokens: AffixToken[], isPrefix: boolean) {
   return str
 }
 
+/**
+ * Parse an {@link
+ * http://unicode.org/reports/tr35/tr35-numbers.html#Number_Format_Patterns |
+ * ICU NumberFormatter pattern} string into a {@link Skeleton} structure.
+ *
+ * @public
+ * @param src - The pattern string
+ * @param currency - If the pattern includes ¤ tokens, their skeleton
+ *   representation requires a three-letter currency code.
+ *
+ * @remarks
+ * Unlike the skeleton parser, the pattern parser is not able to return partial
+ * results on error, and will instead throw. Output padding is not supported.
+ *
+ * @example
+ * ```js
+ * import { parseSkeleton } from 'messageformat-number-skeleton'
+ *
+ * parseSkeleton('compact-short currency/GBP', console.error)
+ * // {
+ * //   notation: { style: 'compact-short' },
+ * //   unit: { style: 'currency', currency: 'GBP' }
+ * // }
+ * ```
+ */
 export function parsePattern(src: string, currency?: string) {
   const { tokens, negative } = parseTokens(src)
   const res = parseNumberAsSkeleton(tokens.number)
