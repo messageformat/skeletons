@@ -132,16 +132,17 @@ export function getNumberFormatOptions(
   }
 
   switch (group) {
-    case 'group-auto':
-      opt.useGrouping = true
-      break
     case 'group-off':
       opt.useGrouping = false
+      break
+    case 'group-auto':
+      opt.useGrouping = true
       break
     case 'group-min2':
     case 'group-on-aligned':
     case 'group-thousands':
       fail(group)
+      opt.useGrouping = true
       break
   }
 

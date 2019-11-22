@@ -73,14 +73,17 @@ const tests: { [K in keyof Skeleton]: { [name: string]: TestCase } } = {
     },
     'group-min2': {
       skeleton: { group: 'group-min2' },
+      result: { useGrouping: true },
       unsupported: [['group-min2']]
     },
     'group-on-aligned': {
       skeleton: { group: 'group-on-aligned' },
+      result: { useGrouping: true },
       unsupported: [['group-on-aligned']]
     },
     'group-thousands': {
       skeleton: { group: 'group-thousands' },
+      result: { useGrouping: true },
       unsupported: [['group-thousands']]
     }
   },
