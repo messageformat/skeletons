@@ -111,7 +111,7 @@ for (const [testSet, cases] of Object.entries(tests)) {
         const cb = jest.fn()
 
         // function from string
-        let fmt = getFormatter('en', src, cb)
+        let fmt = getFormatter('en', `::${src}`, null, cb)
         if (errors) {
           const [stem] = src.split('/', 1)
           const base = { code: 'UNSUPPORTED', stem }
@@ -127,12 +127,12 @@ for (const [testSet, cases] of Object.entries(tests)) {
         expect(fmt(value)).toBe(expected)
 
         // source from string
-        let fmtSrc = getFormatterSource('en', src, jest.fn())
+        let fmtSrc = getFormatterSource('en', `:: ${src}`, null, jest.fn())
         fmt = new Function(`return ${fmtSrc}`)()
         expect(fmt(value)).toBe(expected)
 
         // source from skeleton
-        fmtSrc = getFormatterSource(['en'], skeleton, jest.fn())
+        fmtSrc = getFormatterSource(['en'], skeleton, null, jest.fn())
         fmt = new Function(`return ${fmtSrc}`)()
         expect(fmt(value)).toBe(expected)
       })

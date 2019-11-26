@@ -5,6 +5,7 @@ import {
   getNumberFormatModifierSource
 } from './numberformat/modifier'
 import { getNumberFormatOptions } from './numberformat/options'
+import { parsePattern } from './parse-pattern'
 import { parseSkeleton } from './parse-skeleton'
 import { Skeleton } from './types/skeleton'
 
@@ -18,18 +19,21 @@ import { Skeleton } from './types/skeleton'
  *
  * @public
  * @param locales - One or more valid BCP 47 language tags, e.g. `fr` or `en-CA`
- * @param skeleton - An ICU NumberFormatter skeleton
+ * @param skeleton - An ICU NumberFormatter pattern or `::`-prefixed skeleton
+ *   string, or a parsed `Skeleton` structure
+ * @param currency - If `skeleton` is a pattern string that includes ¤ tokens,
+ *   their skeleton representation requires a three-letter currency code.
  * @param onError - If defined, will be called separately for each encountered
  *   parsing error and unsupported feature.
  * @example
  * ```js
  * import { getFormatter } from 'messageformat-number-skeleton'
  *
- * let src = 'currency/CAD unit-width-narrow'
+ * let src = ':: currency/CAD unit-width-narrow'
  * let fmt = getFormatter('en-CA', src, console.error)
  * fmt(42) // '$42.00'
  *
- * src = 'percent scale/100'
+ * src = '::percent scale/100'
  * fmt = getFormatter('en', src, console.error)
  * fmt(0.3) // '30%'
  * ```
@@ -37,9 +41,14 @@ import { Skeleton } from './types/skeleton'
 export function getFormatter(
   locales: string | string[],
   skeleton: string | Skeleton,
+  currency?: string | null,
   onError?: (err: NumberFormatError) => void
 ) {
-  if (typeof skeleton === 'string') skeleton = parseSkeleton(skeleton, onError)
+  if (typeof skeleton === 'string') {
+    skeleton = skeleton.startsWith('::')
+      ? parseSkeleton(skeleton.slice(2), onError)
+      : parsePattern(skeleton, currency, onError)
+  }
   const lc = getNumberFormatLocales(locales, skeleton)
   const opt = getNumberFormatOptions(skeleton, onError)
   const mod = getNumberFormatModifier(skeleton)
@@ -60,14 +69,17 @@ export function getFormatter(
  *
  * @public
  * @param locales - One or more valid BCP 47 language tags, e.g. `fr` or `en-CA`
- * @param skeleton - An ICU NumberFormatter skeleton
+ * @param skeleton - An ICU NumberFormatter pattern or `::`-prefixed skeleton
+ *   string, or a parsed `Skeleton` structure
+ * @param currency - If `skeleton` is a pattern string that includes ¤ tokens,
+ *   their skeleton representation requires a three-letter currency code.
  * @param onError - If defined, will be called separately for each encountered
  *   parsing error and unsupported feature.
  * @example
  * ```js
  * import { getFormatterSource } from 'messageformat-number-skeleton'
  *
- * getFormatterSource('en', 'percent', console.error)
+ * getFormatterSource('en', '::percent', console.error)
  * // '(function() {\n' +
  * // '  var opt = {"style":"percent"};\n' +
  * // '  var nf = new Intl.NumberFormat(["en"], opt);\n' +
@@ -75,7 +87,7 @@ export function getFormatter(
  * // '  return function(value) { return nf.format(mod(value)); }\n' +
  * // '})()'
  *
- * const src = getFormatterSource('en-CA', 'currency/CAD unit-width-narrow', console.error)
+ * const src = getFormatterSource('en-CA', ':: currency/CAD unit-width-narrow', console.error)
  * // '(function() {\n' +
  * // '  var opt = {"style":"currency","currency":"CAD","currencyDisplay":"narrowSymbol","unitDisplay":"narrow"};\n' +
  * // '  var nf = new Intl.NumberFormat(["en-CA"], opt);\n'
@@ -88,9 +100,14 @@ export function getFormatter(
 export function getFormatterSource(
   locales: string | string[],
   skeleton: string | Skeleton,
+  currency?: string | null,
   onError?: (err: NumberFormatError) => void
 ) {
-  if (typeof skeleton === 'string') skeleton = parseSkeleton(skeleton, onError)
+  if (typeof skeleton === 'string') {
+    skeleton = skeleton.startsWith('::')
+      ? parseSkeleton(skeleton.slice(2), onError)
+      : parsePattern(skeleton, currency, onError)
+  }
   const lc = getNumberFormatLocales(locales, skeleton)
   const opt = getNumberFormatOptions(skeleton, onError)
   const modSrc = getNumberFormatModifierSource(skeleton)

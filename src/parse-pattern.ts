@@ -7,7 +7,7 @@ import { NumberFormatError, PatternError } from './errors'
 function handleAffix(
   affixTokens: AffixToken[],
   res: Skeleton,
-  currency: string | undefined,
+  currency: string | null | undefined,
   onError: (error: PatternError) => void,
   isPrefix: boolean
 ) {
@@ -110,7 +110,7 @@ function getNegativeAffix(affixTokens: AffixToken[], isPrefix: boolean) {
  */
 export function parsePattern(
   src: string,
-  currency?: string,
+  currency?: string | null,
   onError: (error: NumberFormatError) => void = error => {
     throw error
   }
