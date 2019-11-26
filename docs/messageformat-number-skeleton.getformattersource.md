@@ -9,7 +9,7 @@ Returns a string of JavaScript source that evaluates to a number formatter funct
 <b>Signature:</b>
 
 ```typescript
-export declare function getFormatterSource(locales: string | string[], skeleton: string | Skeleton, onError?: (err: SkeletonError) => void): string;
+export declare function getFormatterSource(locales: string | string[], skeleton: string | Skeleton, onError?: (err: NumberFormatError) => void): string;
 ```
 
 ## Parameters
@@ -18,7 +18,7 @@ export declare function getFormatterSource(locales: string | string[], skeleton:
 |  --- | --- | --- |
 |  locales | <code>string &#124; string[]</code> | One or more valid BCP 47 language tags, e.g. <code>fr</code> or <code>en-CA</code> |
 |  skeleton | <code>string &#124; Skeleton</code> | An ICU NumberFormatter skeleton |
-|  onError | <code>(err: SkeletonError) =&gt; void</code> | If defined, will be called separately for each encountered parsing error and unsupported feature. |
+|  onError | <code>(err: NumberFormatError) =&gt; void</code> | If defined, will be called separately for each encountered parsing error and unsupported feature. |
 
 <b>Returns:</b>
 

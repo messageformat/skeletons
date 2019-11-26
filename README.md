@@ -8,7 +8,7 @@ import {
  getFormatterSource,
  parseSkeleton,
  Skeleton,
- SkeletonError,
+ NumberFormatError,
  Unit
 } from 'messageformat-number-skeleton'
 
@@ -18,7 +18,7 @@ import {
 
 |  Class | Description |
 |  --- | --- |
-|  [SkeletonError](https://github.com/messageformat/number-skeleton/blob/master/docs/messageformat-number-skeleton.skeletonerror.md) | Base class for errors. In addition to a <code>code</code> and a human-friendly <code>message</code>, often also includes the token <code>stem</code> as well as other fields. |
+|  [NumberFormatError](https://github.com/messageformat/number-skeleton/blob/master/docs/messageformat-number-skeleton.numberformaterror.md) | Base class for errors. In addition to a <code>code</code> and a human-friendly <code>message</code>, often also includes the token <code>stem</code> as well as other fields. |
 
 ## Functions
 

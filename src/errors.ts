@@ -1,10 +1,10 @@
 /**
  * Base class for errors. In addition to a `code` and a human-friendly
- * `message`, often also includes the token `stem` as well as other fields.
+ * `message`, may also includes the token `stem` as well as other fields.
  *
  * @public
  */
-export class SkeletonError extends Error {
+export class NumberFormatError extends Error {
   code: string
   /** @internal */
   constructor(code: string, msg: string) {
@@ -14,7 +14,7 @@ export class SkeletonError extends Error {
 }
 
 /** @internal */
-export class BadOptionError extends SkeletonError {
+export class BadOptionError extends NumberFormatError {
   stem: string
   option: string
   constructor(stem: string, opt: string) {
@@ -25,7 +25,7 @@ export class BadOptionError extends SkeletonError {
 }
 
 /** @internal */
-export class BadStemError extends SkeletonError {
+export class BadStemError extends NumberFormatError {
   stem: string
   constructor(stem: string) {
     super('BAD_STEM', `Unknown stem: ${stem}`)
@@ -34,7 +34,7 @@ export class BadStemError extends SkeletonError {
 }
 
 /** @internal */
-export class MaskedValueError extends SkeletonError {
+export class MaskedValueError extends NumberFormatError {
   type: string
   prev: any
   constructor(type: string, prev: any) {
@@ -45,7 +45,7 @@ export class MaskedValueError extends SkeletonError {
 }
 
 /** @internal */
-export class MissingOptionError extends SkeletonError {
+export class MissingOptionError extends NumberFormatError {
   stem: any
   constructor(stem: string) {
     super('MISSING_OPTION', `Required option missing for ${stem}`)
@@ -54,7 +54,7 @@ export class MissingOptionError extends SkeletonError {
 }
 
 /** @internal */
-export class TooManyOptionsError extends SkeletonError {
+export class TooManyOptionsError extends NumberFormatError {
   stem: any
   options: any
   constructor(stem: string, options: string[], maxOpt: number) {
@@ -69,7 +69,7 @@ export class TooManyOptionsError extends SkeletonError {
 }
 
 /** @internal */
-export class UnsupportedError extends SkeletonError {
+export class UnsupportedError extends NumberFormatError {
   stem: string
   source?: string
   constructor(stem: string, source?: string) {

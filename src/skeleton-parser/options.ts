@@ -1,5 +1,5 @@
 import {
-  SkeletonError,
+  NumberFormatError,
   BadOptionError,
   MissingOptionError,
   TooManyOptionsError
@@ -77,7 +77,7 @@ function hasMinOption(stem: string): stem is keyof typeof minOptions {
 export function validOptions(
   stem: string,
   options: string[],
-  onError: (err: SkeletonError) => void
+  onError: (err: NumberFormatError) => void
 ) {
   if (hasMaxOption(stem)) {
     const maxOpt = maxOptions[stem]

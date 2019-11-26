@@ -1,4 +1,4 @@
-import { SkeletonError } from './errors'
+import { NumberFormatError } from './errors'
 import { getNumberFormatLocales } from './numberformat/locales'
 import {
   getNumberFormatModifier,
@@ -37,7 +37,7 @@ import { Skeleton } from './types/skeleton'
 export function getFormatter(
   locales: string | string[],
   skeleton: string | Skeleton,
-  onError?: (err: SkeletonError) => void
+  onError?: (err: NumberFormatError) => void
 ) {
   if (typeof skeleton === 'string') skeleton = parseSkeleton(skeleton, onError)
   const lc = getNumberFormatLocales(locales, skeleton)
@@ -88,7 +88,7 @@ export function getFormatter(
 export function getFormatterSource(
   locales: string | string[],
   skeleton: string | Skeleton,
-  onError?: (err: SkeletonError) => void
+  onError?: (err: NumberFormatError) => void
 ) {
   if (typeof skeleton === 'string') skeleton = parseSkeleton(skeleton, onError)
   const lc = getNumberFormatLocales(locales, skeleton)

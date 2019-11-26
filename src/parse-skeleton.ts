@@ -1,4 +1,4 @@
-import { SkeletonError } from './errors'
+import { NumberFormatError } from './errors'
 import { Skeleton } from './types/skeleton'
 import { TokenParser } from './skeleton-parser/token-parser'
 
@@ -26,7 +26,7 @@ import { TokenParser } from './skeleton-parser/token-parser'
  */
 export function parseSkeleton(
   src: string,
-  onError?: (err: SkeletonError) => void
+  onError?: (err: NumberFormatError) => void
 ): Skeleton {
   const tokens = []
   for (const part of src.split(' ')) {

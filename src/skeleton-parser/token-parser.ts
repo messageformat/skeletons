@@ -1,5 +1,5 @@
 import {
-  SkeletonError,
+  NumberFormatError,
   BadOptionError,
   BadStemError,
   MaskedValueError
@@ -11,10 +11,10 @@ import { parsePrecisionBlueprint } from './parse-precision-blueprint'
 
 /** @internal */
 export class TokenParser {
-  onError: (err: SkeletonError) => void
+  onError: (err: NumberFormatError) => void
   skeleton: Skeleton = {}
 
-  constructor(onError?: (err: SkeletonError) => void) {
+  constructor(onError?: (err: NumberFormatError) => void) {
     this.onError = onError || (() => {})
   }
 

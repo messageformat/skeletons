@@ -58,7 +58,7 @@ export interface NumberFormatOptions extends Intl.NumberFormatOptions {
  *
  * getNumberFormatOptions(sk2, console.error)
  * // Error: The stem group-min2 is not supported
- * //   at UnsupportedError.SkeletonError ... {
+ * //   at UnsupportedError.NumberFormatError ... {
  * //     code: 'UNSUPPORTED',
  * //     stem: 'group-min2'
  * //   }

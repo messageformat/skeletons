@@ -6,9 +6,10 @@
  * import {
  *  getFormatter,
  *  getFormatterSource,
+ *  NumberFormatError,
+ *  parsePattern,
  *  parseSkeleton,
  *  Skeleton,
- *  SkeletonError,
  *  Unit
  * } from 'messageformat-number-skeleton'
  * ```
@@ -21,7 +22,7 @@ export {
   BadStemError,
   MaskedValueError,
   MissingOptionError,
-  SkeletonError,
+  NumberFormatError,
   TooManyOptionsError,
   UnsupportedError
 } from './errors'

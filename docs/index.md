@@ -15,7 +15,7 @@ import {
  getFormatterSource,
  parseSkeleton,
  Skeleton,
- SkeletonError,
+ NumberFormatError,
  Unit
 } from 'messageformat-number-skeleton'
 

@@ -1,4 +1,8 @@
-import { SkeletonError, BadOptionError, TooManyOptionsError } from '../errors'
+import {
+  NumberFormatError,
+  BadOptionError,
+  TooManyOptionsError
+} from '../errors'
 import { Skeleton } from '../types/skeleton'
 
 function parseBlueprintDigits(src: string, style: 'fraction' | 'significant') {
@@ -22,7 +26,7 @@ function parseBlueprintDigits(src: string, style: 'fraction' | 'significant') {
 export function parsePrecisionBlueprint(
   stem: string,
   options: string[],
-  onError: (err: SkeletonError) => void
+  onError: (err: NumberFormatError) => void
 ) {
   const fd = parseBlueprintDigits(stem, 'fraction')
   if (fd) {
