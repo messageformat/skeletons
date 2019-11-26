@@ -6,9 +6,10 @@ Tools for working with [ICU NumberFormatter skeletons](https://github.com/unicod
 import {
  getFormatter,
  getFormatterSource,
+ NumberFormatError,
+ parsePattern,
  parseSkeleton,
  Skeleton,
- NumberFormatError,
  Unit
 } from 'messageformat-number-skeleton'
 
@@ -18,7 +19,7 @@ import {
 
 |  Class | Description |
 |  --- | --- |
-|  [NumberFormatError](https://github.com/messageformat/number-skeleton/blob/master/docs/messageformat-number-skeleton.numberformaterror.md) | Base class for errors. In addition to a <code>code</code> and a human-friendly <code>message</code>, often also includes the token <code>stem</code> as well as other fields. |
+|  [NumberFormatError](https://github.com/messageformat/number-skeleton/blob/master/docs/messageformat-number-skeleton.numberformaterror.md) | Base class for errors. In addition to a <code>code</code> and a human-friendly <code>message</code>, may also includes the token <code>stem</code> as well as other fields. |
 
 ## Functions
 
@@ -26,7 +27,7 @@ import {
 |  --- | --- |
 |  [getFormatter(locales, skeleton, onError)](https://github.com/messageformat/number-skeleton/blob/master/docs/messageformat-number-skeleton.getformatter.md) | Returns a number formatter function for the given locales and number skeleton |
 |  [getFormatterSource(locales, skeleton, onError)](https://github.com/messageformat/number-skeleton/blob/master/docs/messageformat-number-skeleton.getformattersource.md) | Returns a string of JavaScript source that evaluates to a number formatter function with the same <code>(value: number) =&gt; string</code> signature as the function returned by [getFormatter()](https://github.com/messageformat/number-skeleton/blob/master/docs/messageformat-number-skeleton.getformatter.md)<!-- -->. |
-|  [parsePattern(src, currency)](https://github.com/messageformat/number-skeleton/blob/master/docs/messageformat-number-skeleton.parsepattern.md) | Parse an [ICU NumberFormatter pattern](http://unicode.org/reports/tr35/tr35-numbers.html#Number_Format_Patterns) string into a [Skeleton](https://github.com/messageformat/number-skeleton/blob/master/docs/messageformat-number-skeleton.skeleton.md) structure. |
+|  [parsePattern(src, currency, onError)](https://github.com/messageformat/number-skeleton/blob/master/docs/messageformat-number-skeleton.parsepattern.md) | Parse an [ICU NumberFormatter pattern](http://unicode.org/reports/tr35/tr35-numbers.html#Number_Format_Patterns) string into a [Skeleton](https://github.com/messageformat/number-skeleton/blob/master/docs/messageformat-number-skeleton.skeleton.md) structure. |
 |  [parseSkeleton(src, onError)](https://github.com/messageformat/number-skeleton/blob/master/docs/messageformat-number-skeleton.parseskeleton.md) | Parse an [ICU NumberFormatter skeleton](https://github.com/unicode-org/icu/blob/master/docs/userguide/format_parse/numbers/skeletons.md) string into a [Skeleton](https://github.com/messageformat/number-skeleton/blob/master/docs/messageformat-number-skeleton.skeleton.md) structure. |
 
 ## Interfaces

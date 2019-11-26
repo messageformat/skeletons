@@ -223,6 +223,7 @@ describe('errors', () => {
 
   for (const [src, expected] of Object.entries(cases)) {
     test(src, () => {
+      expect(() => parseSkeleton(src)).toThrow()
       const onError = jest.fn()
       parseSkeleton(src, onError)
       expect(onError.mock.calls).toMatchObject([[expected]])

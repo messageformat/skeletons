@@ -14,8 +14,8 @@ export class TokenParser {
   onError: (err: NumberFormatError) => void
   skeleton: Skeleton = {}
 
-  constructor(onError?: (err: NumberFormatError) => void) {
-    this.onError = onError || (() => {})
+  constructor(onError: (err: NumberFormatError) => void) {
+    this.onError = onError
   }
 
   badOption(stem: string, opt: string) {

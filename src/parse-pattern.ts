@@ -2,11 +2,13 @@ import { Skeleton } from './types/skeleton'
 import { AffixToken } from './pattern-parser/affix-tokens'
 import { parseTokens } from './pattern-parser/parse-tokens'
 import { parseNumberAsSkeleton } from './pattern-parser/number-as-skeleton'
+import { NumberFormatError, PatternError } from './errors'
 
 function handleAffix(
   affixTokens: AffixToken[],
   res: Skeleton,
   currency: string | undefined,
+  onError: (error: PatternError) => void,
   isPrefix: boolean
 ) {
   let inFmt = false
@@ -20,7 +22,11 @@ function handleAffix(
         break
 
       case '¤':
-        if (!currency) throw new Error('The ¤ pattern requires a currency')
+        if (!currency) {
+          const msg = `The ¤ pattern requires a currency`
+          onError(new PatternError('¤', msg))
+          break
+        }
         res.unit = { style: 'currency', currency }
         switch (token.currency) {
           case 'iso-code':
@@ -83,6 +89,9 @@ function getNegativeAffix(affixTokens: AffixToken[], isPrefix: boolean) {
  * @param src - The pattern string
  * @param currency - If the pattern includes ¤ tokens, their skeleton
  *   representation requires a three-letter currency code.
+ * @param onError - Called when the parser encounters a syntax error. The
+ *   function will still return a {@link Skeleton}, but it will be incomplete
+ *   and/or inaccurate. If not defined, the error will be thrown instead.
  *
  * @remarks
  * Unlike the skeleton parser, the pattern parser is not able to return partial
@@ -99,12 +108,18 @@ function getNegativeAffix(affixTokens: AffixToken[], isPrefix: boolean) {
  * // }
  * ```
  */
-export function parsePattern(src: string, currency?: string) {
-  const { tokens, negative } = parseTokens(src)
-  const res = parseNumberAsSkeleton(tokens.number)
+export function parsePattern(
+  src: string,
+  currency?: string,
+  onError: (error: NumberFormatError) => void = error => {
+    throw error
+  }
+) {
+  const { tokens, negative } = parseTokens(src, onError)
+  const res = parseNumberAsSkeleton(tokens.number, onError)
 
-  const prefix = handleAffix(tokens.prefix, res, currency, true)
-  const suffix = handleAffix(tokens.suffix, res, currency, false)
+  const prefix = handleAffix(tokens.prefix, res, currency, onError, true)
+  const suffix = handleAffix(tokens.suffix, res, currency, onError, false)
   if (negative) {
     const negPrefix = getNegativeAffix(negative.prefix, true)
     const negSuffix = getNegativeAffix(negative.suffix, false)

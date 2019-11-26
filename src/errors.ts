@@ -38,7 +38,7 @@ export class MaskedValueError extends NumberFormatError {
   type: string
   prev: any
   constructor(type: string, prev: any) {
-    super('MASKED_VALUE', `Value for skeleton type ${type} masks previous`)
+    super('MASKED_VALUE', `Value for ${type} is set multiple times`)
     this.type = type
     this.prev = prev
   }
@@ -50,6 +50,15 @@ export class MissingOptionError extends NumberFormatError {
   constructor(stem: string) {
     super('MISSING_OPTION', `Required option missing for ${stem}`)
     this.stem = stem
+  }
+}
+
+/** @internal */
+export class PatternError extends NumberFormatError {
+  char: string
+  constructor(char: string, msg: string) {
+    super('BAD_PATTERN', msg)
+    this.char = char
   }
 }
 

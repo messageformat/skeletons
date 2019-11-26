@@ -1,3 +1,5 @@
+import { PatternError } from '../errors'
+
 export type AffixToken =
   | { char: '%'; width: number; style: 'percent' | 'permille' }
   | {
@@ -9,7 +11,11 @@ export type AffixToken =
   | { char: '+' | '-'; width: number }
   | { char: "'"; width: number; str: string }
 
-export function parseAffixToken(src: string, pos: number): AffixToken | null {
+export function parseAffixToken(
+  src: string,
+  pos: number,
+  onError: (err: PatternError) => void
+): AffixToken | null {
   const char = src[pos]
   switch (char) {
     case '%':
@@ -28,8 +34,11 @@ export function parseAffixToken(src: string, pos: number): AffixToken | null {
           return { char, currency: 'full-name', width }
         case 5:
           return { char, currency: 'narrow', width }
-        default:
-          throw new Error(`Invalid number (${width}) of ¤ chars in pattern`)
+        default: {
+          const msg = `Invalid number (${width}) of ¤ chars in pattern`
+          onError(new PatternError('¤', msg))
+          return null
+        }
       }
     }
     case '*': {
@@ -48,7 +57,9 @@ export function parseAffixToken(src: string, pos: number): AffixToken | null {
         let next = src[++pos]
         ++width
         if (next === undefined) {
-          throw new Error(`Unterminated quoted literal in pattern: ${str}`)
+          const msg = `Unterminated quoted literal in pattern: ${str}`
+          onError(new PatternError("'", msg))
+          return { char, str, width }
         } else if (next === "'") {
           if (src[++pos] !== "'") return { char, str, width }
           else ++width

@@ -9,7 +9,7 @@ Parse an [ICU NumberFormatter pattern](http://unicode.org/reports/tr35/tr35-numb
 <b>Signature:</b>
 
 ```typescript
-export declare function parsePattern(src: string, currency?: string): Skeleton;
+export declare function parsePattern(src: string, currency?: string, onError?: (error: NumberFormatError) => void): Skeleton;
 ```
 
 ## Parameters
@@ -18,6 +18,7 @@ export declare function parsePattern(src: string, currency?: string): Skeleton;
 |  --- | --- | --- |
 |  src | <code>string</code> | The pattern string |
 |  currency | <code>string</code> | If the pattern includes ¤ tokens, their skeleton representation requires a three-letter currency code. |
+|  onError | <code>(error: NumberFormatError) =&gt; void</code> | Called when the parser encounters a syntax error. The function will still return a [Skeleton](./messageformat-number-skeleton.skeleton.md)<!-- -->, but it will be incomplete and/or inaccurate. If not defined, the error will be thrown instead. |
 
 <b>Returns:</b>
 

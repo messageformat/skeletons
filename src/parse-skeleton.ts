@@ -9,9 +9,10 @@ import { TokenParser } from './skeleton-parser/token-parser'
  *
  * @public
  * @param src - The skeleton string
- * @param onError - If defined, will be called when the parser encounters a
- *   syntax error. The function will still return a {@link Skeleton}, but it may
- *   not contain information for all tokens.
+ * @param onError - Called when the parser encounters a syntax error. The
+ *   function will still return a {@link Skeleton}, but it may not contain
+ *   information for all tokens. If not defined, the error will be thrown
+ *   instead.
  *
  * @example
  * ```js
@@ -26,7 +27,9 @@ import { TokenParser } from './skeleton-parser/token-parser'
  */
 export function parseSkeleton(
   src: string,
-  onError?: (err: NumberFormatError) => void
+  onError: (err: NumberFormatError) => void = error => {
+    throw error
+  }
 ): Skeleton {
   const tokens = []
   for (const part of src.split(' ')) {

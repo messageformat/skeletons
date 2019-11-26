@@ -17,7 +17,7 @@ export declare function parseSkeleton(src: string, onError?: (err: NumberFormatE
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  src | <code>string</code> | The skeleton string |
-|  onError | <code>(err: NumberFormatError) =&gt; void</code> | If defined, will be called when the parser encounters a syntax error. The function will still return a [Skeleton](./messageformat-number-skeleton.skeleton.md)<!-- -->, but it may not contain information for all tokens. |
+|  onError | <code>(err: NumberFormatError) =&gt; void</code> | Called when the parser encounters a syntax error. The function will still return a [Skeleton](./messageformat-number-skeleton.skeleton.md)<!-- -->, but it may not contain information for all tokens. If not defined, the error will be thrown instead. |
 
 <b>Returns:</b>
 

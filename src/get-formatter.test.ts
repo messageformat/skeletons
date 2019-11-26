@@ -122,17 +122,17 @@ for (const [testSet, cases] of Object.entries(tests)) {
         expect(fmt(value)).toBe(expected)
 
         // function from skeleton
-        const skeleton = parseSkeleton(src)
+        const skeleton = parseSkeleton(src, jest.fn())
         fmt = getFormatter(['en'], skeleton)
         expect(fmt(value)).toBe(expected)
 
         // source from string
-        let fmtSrc = getFormatterSource('en', src)
+        let fmtSrc = getFormatterSource('en', src, jest.fn())
         fmt = new Function(`return ${fmtSrc}`)()
         expect(fmt(value)).toBe(expected)
 
         // source from skeleton
-        fmtSrc = getFormatterSource(['en'], skeleton)
+        fmtSrc = getFormatterSource(['en'], skeleton, jest.fn())
         fmt = new Function(`return ${fmtSrc}`)()
         expect(fmt(value)).toBe(expected)
       })

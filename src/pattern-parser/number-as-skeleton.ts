@@ -1,7 +1,11 @@
+import { NumberFormatError, MaskedValueError, PatternError } from '../errors'
 import { Skeleton } from '../types/skeleton'
 import { NumberToken } from './number-tokens'
 
-export function parseNumberAsSkeleton(tokens: NumberToken[]) {
+export function parseNumberAsSkeleton(
+  tokens: NumberToken[],
+  onError: (error: NumberFormatError) => void
+) {
   const res: Skeleton = {}
 
   let hasGroups = false
@@ -16,7 +20,10 @@ export function parseNumberAsSkeleton(tokens: NumberToken[]) {
     switch (token.char) {
       case '#': {
         if (decimalPos === -1) {
-          if (intDigits) throw new Error('Pattern has # after integer digits')
+          if (intDigits) {
+            const msg = 'Pattern has # after integer digits'
+            onError(new PatternError('#', msg))
+          }
           intOptional += token.width
         } else {
           fracOptional += token.width
@@ -28,15 +35,18 @@ export function parseNumberAsSkeleton(tokens: NumberToken[]) {
         if (decimalPos === -1) {
           intDigits += token.digits
         } else {
-          if (fracOptional)
-            throw new Error('Pattern has digits after # in fraction')
+          if (fracOptional) {
+            const msg = 'Pattern has digits after # in fraction'
+            onError(new PatternError('0', msg))
+          }
           fracDigits += token.digits
         }
         break
       }
 
       case '@': {
-        if (res.precision) throw new Error('Pattern sets multiple precisions')
+        if (res.precision)
+          onError(new MaskedValueError('precision', res.precision))
         res.precision = {
           style: 'precision-fraction',
           minSignificant: token.min,
@@ -50,16 +60,18 @@ export function parseNumberAsSkeleton(tokens: NumberToken[]) {
         break
 
       case '.':
-        if (decimalPos === 1)
-          throw new Error('Pattern has more than one decimal separator')
+        if (decimalPos === 1) {
+          const msg = 'Pattern has more than one decimal separator'
+          onError(new PatternError('.', msg))
+        }
         decimalPos = pos
         break
 
       case 'E': {
-        if (hasExponent) throw new Error('Pattern has more than one exponent')
+        if (hasExponent) onError(new MaskedValueError('exponent', res.notation))
         if (hasGroups) {
           const msg = 'Exponential patterns may not contain grouping separators'
-          throw new Error(msg)
+          onError(new PatternError('E', msg))
         }
         res.notation = {
           style: 'scientific',

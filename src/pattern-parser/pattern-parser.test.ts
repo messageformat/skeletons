@@ -307,22 +307,79 @@ for (const [name, tests] of Object.entries(cases)) {
   })
 }
 
-const errors = {
-  '0#': 'Pattern has # after integer digits',
-  '0.#0': 'Pattern has digits after # in fraction',
-  '@#@': 'Pattern sets multiple precisions',
-  '0.0.0': 'Pattern has more than one decimal separator',
-  '0E0E00': 'Pattern has more than one exponent',
-  '#,##0.0E0': 'Exponential patterns may not contain grouping separators',
-  '¤¤': 'The ¤ pattern requires a currency',
-  '¤¤¤¤': 'Invalid number (4) of ¤ chars in pattern',
-  "0'foo": 'Unterminated quoted literal in pattern: foo'
+const errorCases = {
+  '0#': { errors: ['Pattern has # after integer digits'], expected: {} },
+  '0.#0': {
+    errors: ['Pattern has digits after # in fraction'],
+    expected: {
+      precision: { style: 'precision-fraction', minFraction: 1, maxFraction: 2 }
+    }
+  },
+  '@#@': {
+    errors: ['Value for precision is set multiple times'],
+    expected: {
+      precision: {
+        style: 'precision-fraction',
+        minSignificant: 1,
+        maxSignificant: 1
+      }
+    }
+  },
+  '0.0.0': {
+    errors: ['Pattern has more than one decimal separator'],
+    expected: {
+      precision: {
+        style: 'precision-fraction',
+        minFraction: 2,
+        maxFraction: 2
+      }
+    }
+  },
+  '0E0E00': {
+    errors: ['Value for exponent is set multiple times'],
+    expected: {
+      integerWidth: { min: 1 },
+      notation: { style: 'scientific', expDigits: 2, expSign: 'sign-auto' },
+      precision: { style: 'precision-fraction', maxSignificant: 1 }
+    }
+  },
+  '#,##0.0E0': {
+    errors: ['Exponential patterns may not contain grouping separators'],
+    expected: {
+      group: 'group-auto',
+      integerWidth: { min: 1, max: 4 },
+      notation: { style: 'scientific', expDigits: 1, expSign: 'sign-auto' },
+      precision: {
+        style: 'precision-fraction',
+        minSignificant: 2,
+        maxSignificant: 2
+      }
+    }
+  },
+  '¤¤': { errors: ['The ¤ pattern requires a currency'], expected: {} },
+  '¤¤¤¤': {
+    errors: [
+      'Invalid number (4) of ¤ chars in pattern',
+      'The ¤ pattern requires a currency'
+    ],
+    expected: { affix: { pos: ['¤', ''] } }
+  },
+  "0'foo": {
+    errors: ['Unterminated quoted literal in pattern: foo'],
+    expected: { affix: { pos: ['', 'foo'] } }
+  }
 }
 
 describe('Errors', () => {
-  for (const [pattern, error] of Object.entries(errors)) {
+  for (const [pattern, { errors, expected }] of Object.entries(errorCases)) {
     test(pattern, () => {
-      expect(() => parsePattern(pattern)).toThrow(error)
+      expect(() => parsePattern(pattern)).toThrow(errors[0])
+      const onError = jest.fn()
+      const res = parsePattern(pattern, undefined, onError)
+      expect(onError.mock.calls).toMatchObject(
+        errors.map(message => [{ message }])
+      )
+      expect(res).toEqual(expected)
     })
   }
 })
