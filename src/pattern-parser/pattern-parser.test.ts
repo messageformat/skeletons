@@ -153,23 +153,23 @@ const cases: { [name: string]: { [pattern: string]: Skeleton } } = {
   'Scientific Notation': {
     '0.###E0': {
       integerWidth: { min: 1 },
-      notation: { style: 'scientific', expDigits: 1, expSign: 'sign-auto' },
+      notation: { style: 'scientific' },
       precision: { style: 'precision-fraction', maxSignificant: 4 }
     },
     '0.###E0 m/s': {
       affix: { pos: ['', ' m/s'] },
       integerWidth: { min: 1 },
-      notation: { style: 'scientific', expDigits: 1, expSign: 'sign-auto' },
+      notation: { style: 'scientific' },
       precision: { style: 'precision-fraction', maxSignificant: 4 }
     },
     '0.###E+0': {
       integerWidth: { min: 1 },
-      notation: { style: 'scientific', expDigits: 1, expSign: 'sign-always' },
+      notation: { style: 'scientific', expSign: 'sign-always' },
       precision: { style: 'precision-fraction', maxSignificant: 4 }
     },
     '00.###E0': {
       integerWidth: { min: 2 },
-      notation: { style: 'scientific', expDigits: 1, expSign: 'sign-auto' },
+      notation: { style: 'scientific' },
       precision: {
         style: 'precision-fraction',
         minSignificant: 2,
@@ -178,31 +178,31 @@ const cases: { [name: string]: { [pattern: string]: Skeleton } } = {
     },
     '##0.####E0': {
       integerWidth: { min: 1, max: 3 },
-      notation: { style: 'scientific', expDigits: 1, expSign: 'sign-auto' },
+      notation: { style: 'scientific' },
       precision: { style: 'precision-fraction', maxSignificant: 5 }
     },
     '#.##E0': {
       integerWidth: { min: 1, max: 1 },
-      notation: { style: 'scientific', expDigits: 1, expSign: 'sign-auto' },
+      notation: { style: 'scientific' },
       precision: { style: 'precision-fraction', maxSignificant: 3 }
     },
     '#.0#E0': {
       integerWidth: { min: 1, max: 1 },
-      notation: { style: 'scientific', expDigits: 1, expSign: 'sign-auto' },
+      notation: { style: 'scientific' },
       precision: { style: 'precision-fraction', maxSignificant: 2 }
     },
     '0E0': {
       integerWidth: { min: 1 },
-      notation: { style: 'scientific', expDigits: 1, expSign: 'sign-auto' },
+      notation: { style: 'scientific' },
       precision: { style: 'precision-fraction', maxSignificant: 1 }
     },
     '#E0': {
       integerWidth: { min: 1, max: 1 },
-      notation: { style: 'scientific', expDigits: 1, expSign: 'sign-auto' }
+      notation: { style: 'scientific' }
     },
     '###E0': {
       integerWidth: { min: 1, max: 3 },
-      notation: { style: 'scientific', expDigits: 1, expSign: 'sign-auto' }
+      notation: { style: 'scientific' }
     }
   },
   'Significant Digits': {
@@ -245,7 +245,7 @@ const cases: { [name: string]: { [pattern: string]: Skeleton } } = {
     },
     '@@###E0': {
       integerWidth: { min: 1, max: 1 },
-      notation: { style: 'scientific', expDigits: 1, expSign: 'sign-auto' },
+      notation: { style: 'scientific' },
       precision: {
         style: 'precision-fraction',
         minSignificant: 2,
@@ -290,7 +290,7 @@ const cases: { [name: string]: { [pattern: string]: Skeleton } } = {
     },
     '2E0': {
       integerWidth: { min: 1 },
-      notation: { style: 'scientific', expDigits: 1, expSign: 'sign-auto' },
+      notation: { style: 'scientific' },
       precision: { style: 'precision-increment', increment: 2 }
     }
   }
@@ -339,7 +339,7 @@ const errorCases = {
     errors: ['Value for exponent is set multiple times'],
     expected: {
       integerWidth: { min: 1 },
-      notation: { style: 'scientific', expDigits: 2, expSign: 'sign-auto' },
+      notation: { style: 'scientific', expDigits: 2 },
       precision: { style: 'precision-fraction', maxSignificant: 1 }
     }
   },
@@ -348,7 +348,7 @@ const errorCases = {
     expected: {
       group: 'group-auto',
       integerWidth: { min: 1, max: 4 },
-      notation: { style: 'scientific', expDigits: 1, expSign: 'sign-auto' },
+      notation: { style: 'scientific' },
       precision: {
         style: 'precision-fraction',
         minSignificant: 2,

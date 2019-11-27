@@ -73,11 +73,9 @@ export function parseNumberAsSkeleton(
           const msg = 'Exponential patterns may not contain grouping separators'
           onError(new PatternError('E', msg))
         }
-        res.notation = {
-          style: 'scientific',
-          expDigits: token.expDigits,
-          expSign: token.plus ? 'sign-always' : 'sign-auto'
-        }
+        res.notation = { style: 'scientific' }
+        if (token.expDigits > 1) res.notation.expDigits = token.expDigits
+        if (token.plus) res.notation.expSign = 'sign-always'
         hasExponent = true
       }
     }
