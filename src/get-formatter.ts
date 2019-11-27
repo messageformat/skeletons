@@ -53,6 +53,14 @@ export function getFormatter(
   const opt = getNumberFormatOptions(skeleton, onError)
   const mod = getNumberFormatModifier(skeleton)
   const nf = new Intl.NumberFormat(lc, opt)
+  if (skeleton.affix) {
+    const [p0, p1] = skeleton.affix.pos
+    const [n0, n1] = skeleton.affix.neg || ['', '']
+    return (value: number) => {
+      const n = nf.format(mod(value))
+      return value < 0 ? `${n0}${n}${n1}` : `${p0}${n}${p1}`
+    }
+  }
   return (value: number) => nf.format(mod(value))
 }
 
@@ -116,13 +124,22 @@ export function getFormatterSource(
     `var opt = ${JSON.stringify(opt)};`,
     `var nf = new Intl.NumberFormat(${JSON.stringify(lc)}, opt);`
   ]
+
+  let res = 'nf.format(value)'
   if (modSrc) {
-    lines.push(
-      `var mod = ${modSrc};`,
-      `return function(value) { return nf.format(mod(value)); }`
-    )
-  } else {
-    lines.push(`return function(value) { return nf.format(value); }`)
+    lines.push(`var mod = ${modSrc};`)
+    res = 'nf.format(mod(value))'
   }
+  if (skeleton.affix) {
+    const [p0, p1] = skeleton.affix.pos.map(s => JSON.stringify(s))
+    if (skeleton.affix.neg) {
+      const [n0, n1] = skeleton.affix.neg.map(s => JSON.stringify(s))
+      res = `value < 0 ? ${n0} + ${res} + ${n1} : ${p0} + ${res} + ${p1}`
+    } else {
+      res = `${p0} + ${res} + ${p1}`
+    }
+  }
+  lines.push(`return function(value) { return ${res}; }`)
+
   return lines.join('\n  ') + '\n})()'
 }

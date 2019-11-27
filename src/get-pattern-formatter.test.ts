@@ -23,15 +23,21 @@ const tests: {
       lc: 'fr',
       cur: 'JPY',
       exp: '1 234,57 JPY'
-    }
-    //"'#'#": { value: 123, lc: 'en', exp: '#123' },
-    //"# o''clock": { value: 12, lc: 'en', exp: "12 o'clock" }
+    },
+    "'#'#": { value: 123, lc: 'en', exp: '#123' },
+    "# o''clock": { value: 12, lc: 'en', exp: "12 o'clock" }
   },
   'Currency symbol': {
     '¤': { value: 12, lc: 'en', cur: 'CAD', exp: 'CA$12.00' },
     '¤¤': { value: 12, lc: 'en', cur: 'CAD', exp: 'CAD 12.00' },
     '¤¤¤': { value: 5, lc: 'en', cur: 'CAD', exp: '5.00 Canadian dollars' },
-    '¤¤¤¤¤': { value: 12, lc: 'en', cur: 'CAD', exp: '$12.00' }
+    '¤¤¤¤¤': { value: 12, lc: 'en', cur: 'CAD', exp: '$12.00' },
+    '¤#,##0.00;(¤#,##0.00)': {
+      value: -3.27,
+      lc: 'en',
+      cur: 'USD',
+      exp: '($3.27)'
+    }
   },
   //'Scientific Notation': {
   //  '0.###E0': { value: 1234, lc: 'en', exp: '1.234E3' },
