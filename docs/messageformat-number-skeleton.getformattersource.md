@@ -9,7 +9,7 @@ Returns a string of JavaScript source that evaluates to a number formatter funct
 <b>Signature:</b>
 
 ```typescript
-export declare function getFormatterSource(locales: string | string[], skeleton: string | Skeleton, onError?: (err: NumberFormatError) => void): string;
+export declare function getFormatterSource(locales: string | string[], skeleton: string | Skeleton, currency?: string | null, onError?: (err: NumberFormatError) => void): string;
 ```
 
 ## Parameters
@@ -17,7 +17,8 @@ export declare function getFormatterSource(locales: string | string[], skeleton:
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  locales | <code>string &#124; string[]</code> | One or more valid BCP 47 language tags, e.g. <code>fr</code> or <code>en-CA</code> |
-|  skeleton | <code>string &#124; Skeleton</code> | An ICU NumberFormatter skeleton |
+|  skeleton | <code>string &#124; Skeleton</code> | An ICU NumberFormatter pattern or <code>::</code>-prefixed skeleton string, or a parsed <code>Skeleton</code> structure |
+|  currency | <code>string &#124; null</code> | If <code>skeleton</code> is a pattern string that includes ¤ tokens, their skeleton representation requires a three-letter currency code. |
 |  onError | <code>(err: NumberFormatError) =&gt; void</code> | If defined, will be called separately for each encountered parsing error and unsupported feature. |
 
 <b>Returns:</b>
@@ -34,7 +35,7 @@ The returned function will memoize an `Intl.NumberFormat` instance that makes us
 ```js
 import { getFormatterSource } from 'messageformat-number-skeleton'
 
-getFormatterSource('en', 'percent', console.error)
+getFormatterSource('en', '::percent', console.error)
 // '(function() {\n' +
 // '  var opt = {"style":"percent"};\n' +
 // '  var nf = new Intl.NumberFormat(["en"], opt);\n' +
@@ -42,7 +43,7 @@ getFormatterSource('en', 'percent', console.error)
 // '  return function(value) { return nf.format(mod(value)); }\n' +
 // '})()'
 
-const src = getFormatterSource('en-CA', 'currency/CAD unit-width-narrow', console.error)
+const src = getFormatterSource('en-CA', ':: currency/CAD unit-width-narrow', console.error)
 // '(function() {\n' +
 // '  var opt = {"style":"currency","currency":"CAD","currencyDisplay":"narrowSymbol","unitDisplay":"narrow"};\n' +
 // '  var nf = new Intl.NumberFormat(["en-CA"], opt);\n'

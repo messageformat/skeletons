@@ -9,7 +9,7 @@ Returns a number formatter function for the given locales and number skeleton
 <b>Signature:</b>
 
 ```typescript
-export declare function getFormatter(locales: string | string[], skeleton: string | Skeleton, onError?: (err: NumberFormatError) => void): (value: number) => string;
+export declare function getFormatter(locales: string | string[], skeleton: string | Skeleton, currency?: string | null, onError?: (err: NumberFormatError) => void): (value: number) => string;
 ```
 
 ## Parameters
@@ -17,7 +17,8 @@ export declare function getFormatter(locales: string | string[], skeleton: strin
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  locales | <code>string &#124; string[]</code> | One or more valid BCP 47 language tags, e.g. <code>fr</code> or <code>en-CA</code> |
-|  skeleton | <code>string &#124; Skeleton</code> | An ICU NumberFormatter skeleton |
+|  skeleton | <code>string &#124; Skeleton</code> | An ICU NumberFormatter pattern or <code>::</code>-prefixed skeleton string, or a parsed <code>Skeleton</code> structure |
+|  currency | <code>string &#124; null</code> | If <code>skeleton</code> is a pattern string that includes ¤ tokens, their skeleton representation requires a three-letter currency code. |
 |  onError | <code>(err: NumberFormatError) =&gt; void</code> | If defined, will be called separately for each encountered parsing error and unsupported feature. |
 
 <b>Returns:</b>
@@ -34,11 +35,11 @@ Uses `Intl.NumberFormat` internally, including features provided by the [Unified
 ```js
 import { getFormatter } from 'messageformat-number-skeleton'
 
-let src = 'currency/CAD unit-width-narrow'
+let src = ':: currency/CAD unit-width-narrow'
 let fmt = getFormatter('en-CA', src, console.error)
 fmt(42) // '$42.00'
 
-src = 'percent scale/100'
+src = '::percent scale/100'
 fmt = getFormatter('en', src, console.error)
 fmt(0.3) // '30%'
 

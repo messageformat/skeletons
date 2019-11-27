@@ -45,9 +45,10 @@ export function getFormatter(
   onError?: (err: NumberFormatError) => void
 ) {
   if (typeof skeleton === 'string') {
-    skeleton = skeleton.startsWith('::')
-      ? parseSkeleton(skeleton.slice(2), onError)
-      : parsePattern(skeleton, currency, onError)
+    skeleton =
+      skeleton.indexOf('::') === 0
+        ? parseSkeleton(skeleton.slice(2), onError)
+        : parsePattern(skeleton, currency, onError)
   }
   const lc = getNumberFormatLocales(locales, skeleton)
   const opt = getNumberFormatOptions(skeleton, onError)
@@ -112,9 +113,10 @@ export function getFormatterSource(
   onError?: (err: NumberFormatError) => void
 ) {
   if (typeof skeleton === 'string') {
-    skeleton = skeleton.startsWith('::')
-      ? parseSkeleton(skeleton.slice(2), onError)
-      : parsePattern(skeleton, currency, onError)
+    skeleton =
+      skeleton.indexOf('::') === 0
+        ? parseSkeleton(skeleton.slice(2), onError)
+        : parsePattern(skeleton, currency, onError)
   }
   const lc = getNumberFormatLocales(locales, skeleton)
   const opt = getNumberFormatOptions(skeleton, onError)
