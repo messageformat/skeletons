@@ -146,12 +146,6 @@ export function getNumberFormatOptions(
       break
   }
 
-  if (integerWidth) {
-    const { min, max, source } = integerWidth
-    if (min > 0) opt.minimumIntegerDigits = min
-    if (Number(max) > 0) fail('integer-width', source)
-  }
-
   if (precision) {
     switch (precision.style) {
       case 'precision-fraction': {
@@ -203,9 +197,24 @@ export function getNumberFormatOptions(
       case 'engineering': {
         const { expDigits, expSign, source, style } = notation
         opt.notation = style
-        if (expDigits || expSign) fail(style, source)
+        if (
+          (expDigits && expDigits > 1) ||
+          (expSign && expSign !== 'sign-auto')
+        )
+          fail(style, source)
         break
       }
+    }
+  }
+
+  if (integerWidth) {
+    const { min, max, source } = integerWidth
+    if (min > 0) opt.minimumIntegerDigits = min
+    if (Number(max) > 0) {
+      const hasExp =
+        opt.notation === 'engineering' || opt.notation === 'scientific'
+      if (max === 3 && hasExp) opt.notation = 'engineering'
+      else fail('integer-width', source)
     }
   }
 
