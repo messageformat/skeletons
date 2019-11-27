@@ -2,3 +2,12 @@ language: node_js
 node_js:
   - "node"
   - "lts/*"
+
+before_install:
+  # Required for Node.js v12 & older
+  - npm install -g full-icu
+  - export NODE_ICU_DATA=`node-full-icu-path 2>/dev/null`
+
+script:
+  - npm test
+  - npm run docs
