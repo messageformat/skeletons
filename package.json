@@ -21,7 +21,7 @@
   "scripts": {
     "build:cjs": "tsc",
     "build:esm": "tsc -d -m ES6",
-    "postbuild:esm": "for f in lib/*.js; do mv \"$f\" \"${f%.js}.mjs\"; done",
+    "postbuild:esm": "for f in `find lib -name '*.js'`; do mv \"$f\" \"${f%.js}.mjs\"; done",
     "build": "npm run build:esm && npm run build:cjs",
     "predocs": "npm run build",
     "docs:extract": "api-extractor run --local --verbose",
