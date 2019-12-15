@@ -1,0 +1,10 @@
+// Used for tests only; defined here to satisfy VS Code
+{
+  "extends": "..",
+  "compilerOptions": {
+    "lib": ["es2017"],
+    "types": ["jest"]
+  },
+  "exclude": [],
+  "include": ["**/*.test.ts"]
+}
