@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "lib": ["es5"],
+    "listEmittedFiles": true,
+    "moduleResolution": "node",
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "lib",
+    "strict": true,
+    "target": "es5",
+    "types": []
+  },
+  "exclude": ["src/**/*.test.ts"],
+  "include": ["src/**/*"]
+}
