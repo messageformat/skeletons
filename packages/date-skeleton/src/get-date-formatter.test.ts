@@ -32,13 +32,13 @@ const tests: {
     ]
   },
   ccHv: {
-    expected: /^Mon, 15 GMT/,
+    expected: /^Mon, 15 [A-Z]/,
     errors: [
       'Numeric value is not supported for Stand-alone local day of week; falling back to weekday:short'
     ]
   },
   eeeeKVZ: {
-    expected: /^Monday, 3 PM GMT/,
+    expected: /^Monday, 3 PM [A-Z]/,
     errors: [
       'Time Zone: ID is not supported with width 1',
       'Duplicate tz token'
