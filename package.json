@@ -1,0 +1,15 @@
+{
+  "name": "messageformat-skeletons",
+  "description": "Monorepo for messageformat parser skeletons",
+  "scripts": {
+    "ci:date": "cd packages/date-skeleton && npm ci",
+    "ci:number": "cd packages/number-skeleton && npm ci",
+    "install": "npm run ci:date && npm run ci:number",
+    "test:date": "cd packages/date-skeleton && npm run test",
+    "test:number": "cd packages/number-skeleton && npm run test",
+    "test": "npm run test:date && npm run test:number",
+    "docs:date": "cd packages/date-skeleton && npm run docs",
+    "docs:number": "cd packages/number-skeleton && npm run docs",
+    "docs": "npm run docs:date && npm run docs:number"
+  }
+}
