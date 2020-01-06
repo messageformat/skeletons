@@ -17,21 +17,21 @@ import {
 
 |  Class | Description |
 |  --- | --- |
-|  [DateFormatError](https://github.com/messageformat/date-skeleton/blob/master/docs/messageformat-date-skeleton.dateformaterror.md) |  |
+|  [DateFormatError](https://github.com/messageformat/skeletons/blob/master/packages/date-skeleton/docs/messageformat-date-skeleton.dateformaterror.md) |  |
 
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [getDateFormatter(locales, tokens, onError)](https://github.com/messageformat/date-skeleton/blob/master/docs/messageformat-date-skeleton.getdateformatter.md) |  |
-|  [getDateFormatterSource(locales, tokens, onError)](https://github.com/messageformat/date-skeleton/blob/master/docs/messageformat-date-skeleton.getdateformattersource.md) |  |
-|  [parseDateTokens(src)](https://github.com/messageformat/date-skeleton/blob/master/docs/messageformat-date-skeleton.parsedatetokens.md) |  |
+|  [getDateFormatter(locales, tokens, onError)](https://github.com/messageformat/skeletons/blob/master/packages/date-skeleton/docs/messageformat-date-skeleton.getdateformatter.md) |  |
+|  [getDateFormatterSource(locales, tokens, onError)](https://github.com/messageformat/skeletons/blob/master/packages/date-skeleton/docs/messageformat-date-skeleton.getdateformattersource.md) |  |
+|  [parseDateTokens(src)](https://github.com/messageformat/skeletons/blob/master/packages/date-skeleton/docs/messageformat-date-skeleton.parsedatetokens.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [DateToken](https://github.com/messageformat/date-skeleton/blob/master/docs/messageformat-date-skeleton.datetoken.md) |  |
+|  [DateToken](https://github.com/messageformat/skeletons/blob/master/packages/date-skeleton/docs/messageformat-date-skeleton.datetoken.md) |  |
 
 ---
 

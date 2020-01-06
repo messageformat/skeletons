@@ -1,6 +1,9 @@
 const fs = require('fs')
 const path = require('path')
-const { homepage, name } = require('../package.json')
+const { repository, name } = require('../package.json')
+
+let url = repository.url.replace(/\.git$/, '/blob/master')
+if (repository.directory) url = `${url}/${repository.directory}`
 
 const footer = `\n\n---
 
@@ -21,7 +24,7 @@ const linkRe = new RegExp(`\\./${name}\\b`, 'g')
 const body = bodySrc
   .slice(headEnd)
   .replace(/^.*/, `# ${name}`)
-  .replace(linkRe, `${homepage}/blob/master/docs/${name}`)
+  .replace(linkRe, `${url}/docs/${name}`)
   .trim()
 
 const readmePath = path.resolve(__dirname, '../README.md')
