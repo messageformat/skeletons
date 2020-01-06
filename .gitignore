@@ -1,6 +1,6 @@
 .*
-node_modules
+coverage/
+lib/
+node_modules/
+temp/
 tsdoc-metadata.json
-/coverage
-/lib
-/temp

@@ -7,6 +7,7 @@ before_install:
   # Required for Node.js v12 & older
   - npm install -g full-icu
   - export NODE_ICU_DATA=`node-full-icu-path 2>/dev/null`
+  - cd packages/number-skeleton
 
 script:
   - npm test
