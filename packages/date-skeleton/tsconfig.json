@@ -1,16 +1,17 @@
 {
   "compilerOptions": {
-    "lib": ["es5"],
+    "lib": ["ES2017"],
     "listEmittedFiles": true,
+    "module": "ESNext",
     "moduleResolution": "node",
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "outDir": "lib",
     "strict": true,
-    "target": "es5",
-    "types": []
+    "target": "ES2017",
+    "types": ["jest"]
   },
-  "exclude": ["src/**/*.test.ts"],
+  "exclude": ["**/*.test.ts"],
   "include": ["src/**/*"]
 }

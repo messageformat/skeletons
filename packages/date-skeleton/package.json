@@ -21,19 +21,17 @@
   "files": [
     "lib/"
   ],
-  "main": "lib/index",
+  "type": "module",
+  "main": "lib/index.js",
   "scripts": {
-    "build:cjs": "tsc",
-    "build:esm": "tsc -d -m ES6",
-    "postbuild:esm": "for f in `find lib -name '*.js'`; do mv \"$f\" \"${f%.js}.mjs\"; done",
-    "build": "npm run build:esm && npm run build:cjs",
+    "build": "tsc -d",
     "predocs": "npm run build",
     "docs:extract": "api-extractor run --local --verbose",
     "docs:markdown": "api-documenter markdown -i temp/ -o docs/",
     "docs": "npm run docs:extract && npm run docs:markdown",
     "postdocs": "node scripts/build-readme",
     "clean": "git clean -fdxe node_modules",
-    "prettier": "prettier --write skeleton.d.ts src/*",
+    "prettier": "prettier --write src/*",
     "test": "jest"
   },
   "prettier": {
