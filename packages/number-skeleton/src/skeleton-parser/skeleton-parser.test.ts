@@ -1,5 +1,5 @@
 import { Skeleton } from '../types/skeleton'
-import { parseSkeleton } from '../parse-skeleton'
+import { parseNumberSkeleton } from '../parse-skeleton'
 
 const tests: { [testSet: string]: { [src: string]: Skeleton } } = {
   examples: {
@@ -185,7 +185,7 @@ for (const [testSet, cases] of Object.entries(tests)) {
     for (const [src, expected] of Object.entries(cases)) {
       test(src, () => {
         const onError = jest.fn()
-        const skeleton = parseSkeleton(src, onError)
+        const skeleton = parseNumberSkeleton(src, onError)
         expect(onError).not.toHaveBeenCalled()
         expect(skeleton).toEqual(expected)
       })
@@ -223,9 +223,9 @@ describe('errors', () => {
 
   for (const [src, expected] of Object.entries(cases)) {
     test(src, () => {
-      expect(() => parseSkeleton(src)).toThrow()
+      expect(() => parseNumberSkeleton(src)).toThrow()
       const onError = jest.fn()
-      parseSkeleton(src, onError)
+      parseNumberSkeleton(src, onError)
       expect(onError.mock.calls).toMatchObject([[expected]])
     })
   }

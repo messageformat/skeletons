@@ -4,11 +4,11 @@
  *
  * ```js
  * import {
- *  getFormatter,
- *  getFormatterSource,
+ *  getNumberFormatter,
+ *  getNumberFormatterSource,
  *  NumberFormatError,
- *  parsePattern,
- *  parseSkeleton,
+ *  parseNumberPattern,
+ *  parseNumberSkeleton,
  *  Skeleton,
  *  Unit
  * } from 'messageformat-number-skeleton'
@@ -26,8 +26,8 @@ export {
   TooManyOptionsError,
   UnsupportedError
 } from './errors'
-export { getFormatter, getFormatterSource } from './get-formatter'
-export { parsePattern } from './parse-pattern'
-export { parseSkeleton } from './parse-skeleton'
+export { getNumberFormatter, getNumberFormatterSource } from './get-formatter'
+export { parseNumberPattern } from './parse-pattern'
+export { parseNumberSkeleton } from './parse-skeleton'
 export { Skeleton } from './types/skeleton'
 export { Unit } from './types/unit'

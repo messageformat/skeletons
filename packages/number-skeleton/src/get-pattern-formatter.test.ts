@@ -1,5 +1,5 @@
-import { getFormatter, getFormatterSource } from './get-formatter'
-import { parsePattern } from './parse-pattern'
+import { getNumberFormatter, getNumberFormatterSource } from './get-formatter'
+import { parseNumberPattern } from './parse-pattern'
 
 const tests: {
   [testSet: string]: {
@@ -81,24 +81,24 @@ for (const [testSet, cases] of Object.entries(tests)) {
         const cb = jest.fn()
 
         // function from string
-        let fmt = getFormatter(lc, src, cur, cb)
+        let fmt = getNumberFormatter(lc, src, cur, cb)
         expect(cb.mock.calls).toMatchObject(
           errors.map(message => [{ message }])
         )
         expect(fmt(value)).toBe(exp)
 
         // function from skeleton
-        const skeleton = parsePattern(src, cur)
-        fmt = getFormatter([lc], skeleton)
+        const skeleton = parseNumberPattern(src, cur)
+        fmt = getNumberFormatter([lc], skeleton)
         expect(fmt(value)).toBe(exp)
 
         // source from string
-        let fmtSrc = getFormatterSource(lc, src, cur)
+        let fmtSrc = getNumberFormatterSource(lc, src, cur)
         fmt = new Function(`return ${fmtSrc}`)()
         expect(fmt(value)).toBe(exp)
 
         // source from skeleton
-        fmtSrc = getFormatterSource([lc], skeleton, cur)
+        fmtSrc = getNumberFormatterSource([lc], skeleton, cur)
         fmt = new Function(`return ${fmtSrc}`)()
         expect(fmt(value)).toBe(exp)
       })

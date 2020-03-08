@@ -16,16 +16,16 @@ import { TokenParser } from './skeleton-parser/token-parser'
  *
  * @example
  * ```js
- * import { parseSkeleton } from 'messageformat-number-skeleton'
+ * import { parseNumberSkeleton } from 'messageformat-number-skeleton'
  *
- * parseSkeleton('compact-short currency/GBP', console.error)
+ * parseNumberSkeleton('compact-short currency/GBP', console.error)
  * // {
  * //   notation: { style: 'compact-short' },
  * //   unit: { style: 'currency', currency: 'GBP' }
  * // }
  * ```
  */
-export function parseSkeleton(
+export function parseNumberSkeleton(
   src: string,
   onError: (err: NumberFormatError) => void = error => {
     throw error

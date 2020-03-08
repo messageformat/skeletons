@@ -5,8 +5,8 @@ import {
   getNumberFormatModifierSource
 } from './numberformat/modifier'
 import { getNumberFormatOptions } from './numberformat/options'
-import { parsePattern } from './parse-pattern'
-import { parseSkeleton } from './parse-skeleton'
+import { parseNumberPattern } from './parse-pattern'
+import { parseNumberSkeleton } from './parse-skeleton'
 import { Skeleton } from './types/skeleton'
 
 /**
@@ -27,18 +27,18 @@ import { Skeleton } from './types/skeleton'
  *   parsing error and unsupported feature.
  * @example
  * ```js
- * import { getFormatter } from 'messageformat-number-skeleton'
+ * import { getNumberFormatter } from 'messageformat-number-skeleton'
  *
  * let src = ':: currency/CAD unit-width-narrow'
- * let fmt = getFormatter('en-CA', src, console.error)
+ * let fmt = getNumberFormatter('en-CA', src, console.error)
  * fmt(42) // '$42.00'
  *
  * src = '::percent scale/100'
- * fmt = getFormatter('en', src, console.error)
+ * fmt = getNumberFormatter('en', src, console.error)
  * fmt(0.3) // '30%'
  * ```
  */
-export function getFormatter(
+export function getNumberFormatter(
   locales: string | string[],
   skeleton: string | Skeleton,
   currency?: string | null,
@@ -47,8 +47,8 @@ export function getFormatter(
   if (typeof skeleton === 'string') {
     skeleton =
       skeleton.indexOf('::') === 0
-        ? parseSkeleton(skeleton.slice(2), onError)
-        : parsePattern(skeleton, currency, onError)
+        ? parseNumberSkeleton(skeleton.slice(2), onError)
+        : parseNumberPattern(skeleton, currency, onError)
   }
   const lc = getNumberFormatLocales(locales, skeleton)
   const opt = getNumberFormatOptions(skeleton, onError)
@@ -68,7 +68,7 @@ export function getFormatter(
 /**
  * Returns a string of JavaScript source that evaluates to a number formatter
  * function with the same `(value: number) => string` signature as the function
- * returned by {@link getFormatter}.
+ * returned by {@link getNumberFormatter}.
  *
  * @remarks
  * The returned function will memoize an `Intl.NumberFormat` instance that makes
@@ -86,9 +86,9 @@ export function getFormatter(
  *   parsing error and unsupported feature.
  * @example
  * ```js
- * import { getFormatterSource } from 'messageformat-number-skeleton'
+ * import { getNumberFormatterSource } from 'messageformat-number-skeleton'
  *
- * getFormatterSource('en', '::percent', console.error)
+ * getNumberFormatterSource('en', '::percent', console.error)
  * // '(function() {\n' +
  * // '  var opt = {"style":"percent"};\n' +
  * // '  var nf = new Intl.NumberFormat(["en"], opt);\n' +
@@ -96,7 +96,7 @@ export function getFormatter(
  * // '  return function(value) { return nf.format(mod(value)); }\n' +
  * // '})()'
  *
- * const src = getFormatterSource('en-CA', ':: currency/CAD unit-width-narrow', console.error)
+ * const src = getNumberFormatterSource('en-CA', ':: currency/CAD unit-width-narrow', console.error)
  * // '(function() {\n' +
  * // '  var opt = {"style":"currency","currency":"CAD","currencyDisplay":"narrowSymbol","unitDisplay":"narrow"};\n' +
  * // '  var nf = new Intl.NumberFormat(["en-CA"], opt);\n'
@@ -106,7 +106,7 @@ export function getFormatter(
  * fmt(42) // '$42.00'
  * ```
  */
-export function getFormatterSource(
+export function getNumberFormatterSource(
   locales: string | string[],
   skeleton: string | Skeleton,
   currency?: string | null,
@@ -115,8 +115,8 @@ export function getFormatterSource(
   if (typeof skeleton === 'string') {
     skeleton =
       skeleton.indexOf('::') === 0
-        ? parseSkeleton(skeleton.slice(2), onError)
-        : parsePattern(skeleton, currency, onError)
+        ? parseNumberSkeleton(skeleton.slice(2), onError)
+        : parseNumberPattern(skeleton, currency, onError)
   }
   const lc = getNumberFormatLocales(locales, skeleton)
   const opt = getNumberFormatOptions(skeleton, onError)

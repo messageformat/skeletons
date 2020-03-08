@@ -1,5 +1,5 @@
 import { Skeleton } from '../types/skeleton'
-import { parsePattern } from '../parse-pattern'
+import { parseNumberPattern } from '../parse-pattern'
 
 const cases: { [name: string]: { [pattern: string]: Skeleton } } = {
   'Number Patterns': {
@@ -300,7 +300,7 @@ for (const [name, tests] of Object.entries(cases)) {
   describe(name, () => {
     for (const [pattern, expected] of Object.entries(tests)) {
       test(pattern, () => {
-        const skeleton = parsePattern(pattern, 'EUR')
+        const skeleton = parseNumberPattern(pattern, 'EUR')
         expect(skeleton).toEqual(expected)
       })
     }
@@ -373,9 +373,9 @@ const errorCases = {
 describe('Errors', () => {
   for (const [pattern, { errors, expected }] of Object.entries(errorCases)) {
     test(pattern, () => {
-      expect(() => parsePattern(pattern)).toThrow(errors[0])
+      expect(() => parseNumberPattern(pattern)).toThrow(errors[0])
       const onError = jest.fn()
-      const res = parsePattern(pattern, undefined, onError)
+      const res = parseNumberPattern(pattern, undefined, onError)
       expect(onError.mock.calls).toMatchObject(
         errors.map(message => [{ message }])
       )

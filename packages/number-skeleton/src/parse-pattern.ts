@@ -99,16 +99,21 @@ function getNegativeAffix(affixTokens: AffixToken[], isPrefix: boolean) {
  *
  * @example
  * ```js
- * import { parseSkeleton } from 'messageformat-number-skeleton'
+ * import { parseNumberPattern } from 'messageformat-number-skeleton'
  *
- * parseSkeleton('compact-short currency/GBP', console.error)
+ * parseNumberPattern('#,##0.00 ¤', 'EUR', console.error)
  * // {
- * //   notation: { style: 'compact-short' },
- * //   unit: { style: 'currency', currency: 'GBP' }
+ * //   group: 'group-auto',
+ * //   precision: {
+ * //     style: 'precision-fraction',
+ * //     minFraction: 2,
+ * //     maxFraction: 2
+ * //   },
+ * //   unit: { style: 'currency', currency: 'EUR' }
  * // }
  * ```
  */
-export function parsePattern(
+export function parseNumberPattern(
   src: string,
   currency?: string | null,
   onError: (error: NumberFormatError) => void = error => {

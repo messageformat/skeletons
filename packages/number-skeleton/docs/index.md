@@ -11,11 +11,11 @@
 |  [messageformat-number-skeleton](./messageformat-number-skeleton.md) | Tools for working with [ICU NumberFormatter skeletons](https://github.com/unicode-org/icu/blob/master/docs/userguide/format_parse/numbers/skeletons.md)<!-- -->.
 ```js
 import {
- getFormatter,
- getFormatterSource,
+ getNumberFormatter,
+ getNumberFormatterSource,
  NumberFormatError,
- parsePattern,
- parseSkeleton,
+ parseNumberPattern,
+ parseNumberSkeleton,
  Skeleton,
  Unit
 } from 'messageformat-number-skeleton'

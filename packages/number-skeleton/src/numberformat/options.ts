@@ -35,11 +35,11 @@ export interface NumberFormatOptions extends Intl.NumberFormatOptions {
  * ```js
  * import {
  *   getNumberFormatOptions,
- *   parseSkeleton
+ *   parseNumberSkeleton
  * } from 'messageformat-number-skeleton'
  *
  * const src = 'currency/CAD unit-width-narrow'
- * const skeleton = parseSkeleton(src, console.error)
+ * const skeleton = parseNumberSkeleton(src, console.error)
  * // {
  * //   unit: { style: 'currency', currency: 'CAD' },
  * //   unitWidth: 'unit-width-narrow'
@@ -53,7 +53,7 @@ export interface NumberFormatOptions extends Intl.NumberFormatOptions {
  * //   unitDisplay: 'narrow'
  * // }
  *
- * const sk2 = parseSkeleton('group-min2')
+ * const sk2 = parseNumberSkeleton('group-min2')
  * // { group: 'group-min2' }
  *
  * getNumberFormatOptions(sk2, console.error)
