@@ -1,6 +1,8 @@
-const fs = require('fs')
-const path = require('path')
-const { repository, name } = require('../package.json')
+const { readFileSync, writeFileSync } = require('fs')
+const { resolve } = require('path')
+
+const pkgSrc = readFileSync(resolve('package.json'), 'utf8')
+const { repository, name } = JSON.parse(pkgSrc)
 
 let url = repository.url.replace(/\.git$/, '/blob/master')
 if (repository.directory) url = `${url}/${repository.directory}`
@@ -13,11 +15,7 @@ const footer = `\n\n---
 <img width=200 alt="OpenJS Foundation" src="https://messageformat.github.io/messageformat/logo/openjsf.svg" />
 </a>`
 
-const bodySrcPath = path.resolve(
-  __dirname,
-  '../docs/messageformat-date-skeleton.md'
-)
-const bodySrc = fs.readFileSync(bodySrcPath, 'utf8')
+const bodySrc = readFileSync(resolve(`docs/${name}.md`), 'utf8')
 const headEnd = bodySrc.indexOf(`## ${name}`)
 
 const linkRe = new RegExp(`\\./${name}\\b`, 'g')
@@ -27,5 +25,5 @@ const body = bodySrc
   .replace(linkRe, `${url}/docs/${name}`)
   .trim()
 
-const readmePath = path.resolve(__dirname, '../README.md')
-fs.writeFileSync(readmePath, body + footer)
+const readmePath = resolve('README.md')
+writeFileSync(readmePath, body + footer)
