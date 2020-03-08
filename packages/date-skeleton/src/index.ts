@@ -15,6 +15,6 @@
  * @packageDocumentation
  */
 
-export { getDateFormatter, getDateFormatterSource } from './get-date-formatter'
-export { DateFormatError } from './options'
-export { DateToken, parseDateTokens } from './tokens'
+export { getDateFormatter, getDateFormatterSource } from './get-date-formatter.js'
+export { DateFormatError } from './options.js'
+export { DateToken, parseDateTokens } from './tokens.js'

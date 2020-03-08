@@ -1,4 +1,4 @@
-import { DateToken } from './tokens'
+import { DateToken } from './tokens.js'
 
 type ErrorHandler = (msg: string, type?: 'error' | 'warning') => void
 
