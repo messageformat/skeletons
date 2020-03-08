@@ -1,4 +1,4 @@
-import { Skeleton } from '../types/skeleton'
+import { Skeleton } from '../types/skeleton.js'
 
 /**
  * Add

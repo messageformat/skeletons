@@ -1,6 +1,6 @@
-import { AffixToken, parseAffixToken } from './affix-tokens'
-import { NumberToken, parseNumberToken } from './number-tokens'
-import { PatternError } from '../errors'
+import { AffixToken, parseAffixToken } from './affix-tokens.js'
+import { NumberToken, parseNumberToken } from './number-tokens.js'
+import { PatternError } from '../errors.js'
 
 function parseSubpattern(
   src: string,

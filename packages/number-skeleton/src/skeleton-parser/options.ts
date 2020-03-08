@@ -3,7 +3,7 @@ import {
   BadOptionError,
   MissingOptionError,
   TooManyOptionsError
-} from '../errors'
+} from '../errors.js'
 
 const maxOptions = {
   'compact-short': 0,

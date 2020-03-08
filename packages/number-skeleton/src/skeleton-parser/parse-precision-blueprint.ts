@@ -2,8 +2,8 @@ import {
   NumberFormatError,
   BadOptionError,
   TooManyOptionsError
-} from '../errors'
-import { Skeleton } from '../types/skeleton'
+} from '../errors.js'
+import { Skeleton } from '../types/skeleton.js'
 
 function parseBlueprintDigits(src: string, style: 'fraction' | 'significant') {
   const re = style === 'fraction' ? /^\.(0*)(\+|#*)$/ : /^(@+)(\+|#*)$/

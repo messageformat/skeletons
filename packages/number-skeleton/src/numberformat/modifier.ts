@@ -1,4 +1,4 @@
-import { Skeleton } from '../types/skeleton'
+import { Skeleton } from '../types/skeleton.js'
 
 // from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round
 function round(x: number, precision: number) {

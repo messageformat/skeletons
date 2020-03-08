@@ -1,13 +1,13 @@
-import { NumberFormatError } from './errors'
-import { getNumberFormatLocales } from './numberformat/locales'
+import { NumberFormatError } from './errors.js'
+import { getNumberFormatLocales } from './numberformat/locales.js'
 import {
   getNumberFormatModifier,
   getNumberFormatModifierSource
-} from './numberformat/modifier'
-import { getNumberFormatOptions } from './numberformat/options'
-import { parseNumberPattern } from './parse-pattern'
-import { parseNumberSkeleton } from './parse-skeleton'
-import { Skeleton } from './types/skeleton'
+} from './numberformat/modifier.js'
+import { getNumberFormatOptions } from './numberformat/options.js'
+import { parseNumberPattern } from './parse-pattern.js'
+import { parseNumberSkeleton } from './parse-skeleton.js'
+import { Skeleton } from './types/skeleton.js'
 
 /**
  * Returns a number formatter function for the given locales and number skeleton

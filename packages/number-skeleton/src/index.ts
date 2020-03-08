@@ -25,9 +25,9 @@ export {
   NumberFormatError,
   TooManyOptionsError,
   UnsupportedError
-} from './errors'
-export { getNumberFormatter, getNumberFormatterSource } from './get-formatter'
-export { parseNumberPattern } from './parse-pattern'
-export { parseNumberSkeleton } from './parse-skeleton'
-export { Skeleton } from './types/skeleton'
-export { Unit } from './types/unit'
+} from './errors.js'
+export { getNumberFormatter, getNumberFormatterSource } from './get-formatter.js'
+export { parseNumberPattern } from './parse-pattern.js'
+export { parseNumberSkeleton } from './parse-skeleton.js'
+export { Skeleton } from './types/skeleton.js'
+export { Unit } from './types/unit.js'

@@ -1,6 +1,6 @@
-import { NumberFormatError, MaskedValueError, PatternError } from '../errors'
-import { Skeleton } from '../types/skeleton'
-import { NumberToken } from './number-tokens'
+import { NumberFormatError, MaskedValueError, PatternError } from '../errors.js'
+import { Skeleton } from '../types/skeleton.js'
+import { NumberToken } from './number-tokens.js'
 
 export function parseNumberAsSkeleton(
   tokens: NumberToken[],

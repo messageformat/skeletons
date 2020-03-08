@@ -1,8 +1,8 @@
-import { Skeleton } from './types/skeleton'
-import { AffixToken } from './pattern-parser/affix-tokens'
-import { parseTokens } from './pattern-parser/parse-tokens'
-import { parseNumberAsSkeleton } from './pattern-parser/number-as-skeleton'
-import { NumberFormatError, PatternError } from './errors'
+import { Skeleton } from './types/skeleton.js'
+import { AffixToken } from './pattern-parser/affix-tokens.js'
+import { parseTokens } from './pattern-parser/parse-tokens.js'
+import { parseNumberAsSkeleton } from './pattern-parser/number-as-skeleton.js'
+import { NumberFormatError, PatternError } from './errors.js'
 
 function handleAffix(
   affixTokens: AffixToken[],

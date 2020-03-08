@@ -1,6 +1,6 @@
-import { NumberFormatError } from './errors'
-import { Skeleton } from './types/skeleton'
-import { TokenParser } from './skeleton-parser/token-parser'
+import { NumberFormatError } from './errors.js'
+import { Skeleton } from './types/skeleton.js'
+import { TokenParser } from './skeleton-parser/token-parser.js'
 
 /**
  * Parse an {@link

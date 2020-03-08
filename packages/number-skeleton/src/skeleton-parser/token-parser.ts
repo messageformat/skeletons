@@ -3,11 +3,11 @@ import {
   BadOptionError,
   BadStemError,
   MaskedValueError
-} from '../errors'
-import { isNumberingSystem, Skeleton } from '../types/skeleton'
-import { isUnit } from '../types/unit'
-import { validOptions } from './options'
-import { parsePrecisionBlueprint } from './parse-precision-blueprint'
+} from '../errors.js'
+import { isNumberingSystem, Skeleton } from '../types/skeleton.js'
+import { isUnit } from '../types/unit.js'
+import { validOptions } from './options.js'
+import { parsePrecisionBlueprint } from './parse-precision-blueprint.js'
 
 /** @internal */
 export class TokenParser {

@@ -52,7 +52,8 @@
     ]
   },
   "jest": {
-    "collectCoverage": true
+    "collectCoverage": true,
+    "resolver": "jest-ts-webcompat-resolver"
   },
   "devDependencies": {
     "@babel/core": "^7.7.4",
@@ -63,6 +64,7 @@
     "@types/jest": "^24.0.23",
     "babel-jest": "^24.9.0",
     "jest": "^24.9.0",
+    "jest-ts-webcompat-resolver": "^1.0.0",
     "prettier": "^1.19.1",
     "typescript": "^3.7.2"
   }

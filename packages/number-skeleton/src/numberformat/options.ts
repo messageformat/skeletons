@@ -1,5 +1,5 @@
-import { UnsupportedError } from '../errors'
-import { Skeleton } from '../types/skeleton'
+import { UnsupportedError } from '../errors.js'
+import { Skeleton } from '../types/skeleton.js'
 
 /**
  * Extends `Intl.NumberFormat` options to include features brought by the

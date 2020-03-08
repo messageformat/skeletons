@@ -1,4 +1,4 @@
-import { PatternError } from '../errors'
+import { PatternError } from '../errors.js'
 
 export type AffixToken =
   | { char: '%'; width: number; style: 'percent' | 'permille' }

@@ -1,4 +1,4 @@
-import { Unit } from './unit'
+import { Unit } from './unit.js'
 
 /**
  * An object representation of a parsed string skeleton, with token values
