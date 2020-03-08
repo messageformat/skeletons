@@ -59,6 +59,11 @@ export const fields: {
   x: { field: 'tz', desc: 'Time Zone: ISO8601' }
 }
 
+/**
+ * An object representation of a parsed date skeleton token
+ *
+ * @public
+ */
 export type DateToken = {
   char: string
   error?: Error
@@ -116,6 +121,30 @@ function readToken(src: string, pos: number) {
   }
 }
 
+/**
+ * Parse an {@link http://userguide.icu-project.org/formatparse/datetime | ICU
+ * DateFormat skeleton} string into a {@link DateToken} array.
+ *
+ * @remarks
+ * Errors will not be thrown, but if encountered are included as the relevant
+ * token's `error` value.
+ *
+ * @public
+ * @param src - The skeleton string
+ *
+ * @example
+ * ```js
+ * import { parseDateTokens } from 'messageformat-date-skeleton'
+ *
+ * parseDateTokens('GrMMMdd', console.error)
+ * // [
+ * //   { char: 'G', field: 'era', desc: 'Era', width: 1 },
+ * //   { char: 'r', field: 'year', desc: 'Related Gregorian year', width: 1 },
+ * //   { char: 'M', field: 'month', desc: 'Month in year', width: 3 },
+ * //   { char: 'd', field: 'day', desc: 'Day in month', width: 2 }
+ * // ]
+ * ```
+ */
 export function parseDateTokens(src: string) {
   const tokens: DateToken[] = []
   let pos = 0

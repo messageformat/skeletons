@@ -21,19 +21,19 @@ import {
 
 |  Class | Description |
 |  --- | --- |
-|  [DateFormatError](./messageformat-date-skeleton.dateformaterror.md) |  |
+|  [DateFormatError](./messageformat-date-skeleton.dateformaterror.md) | Parent class for errors. |
 
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [getDateFormatter(locales, tokens, onError)](./messageformat-date-skeleton.getdateformatter.md) |  |
-|  [getDateFormatterSource(locales, tokens, onError)](./messageformat-date-skeleton.getdateformattersource.md) |  |
-|  [parseDateTokens(src)](./messageformat-date-skeleton.parsedatetokens.md) |  |
+|  [getDateFormatter(locales, tokens, onError)](./messageformat-date-skeleton.getdateformatter.md) | Returns a date formatter function for the given locales and date skeleton |
+|  [getDateFormatterSource(locales, tokens, onError)](./messageformat-date-skeleton.getdateformattersource.md) | Returns a string of JavaScript source that evaluates to a date formatter function with the same <code>(value: number) =&gt; string</code> signature as the function returned by [getDateFormatter()](./messageformat-date-skeleton.getdateformatter.md)<!-- -->. |
+|  [parseDateTokens(src)](./messageformat-date-skeleton.parsedatetokens.md) | Parse an [ICU DateFormat skeleton](http://userguide.icu-project.org/formatparse/datetime) string into a [DateToken](./messageformat-date-skeleton.datetoken.md) array. |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [DateToken](./messageformat-date-skeleton.datetoken.md) |  |
+|  [DateToken](./messageformat-date-skeleton.datetoken.md) | An object representation of a parsed date skeleton token |
 

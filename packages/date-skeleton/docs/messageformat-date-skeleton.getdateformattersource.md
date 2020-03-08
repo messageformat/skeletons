@@ -4,6 +4,8 @@
 
 ## getDateFormatterSource() function
 
+Returns a string of JavaScript source that evaluates to a date formatter function with the same `(value: number) => string` signature as the function returned by [getDateFormatter()](./messageformat-date-skeleton.getdateformatter.md)<!-- -->.
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,11 +16,43 @@ export declare function getDateFormatterSource(locales: string | string[], token
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  locales | <code>string &#124; string[]</code> |  |
-|  tokens | <code>string &#124; DateToken[]</code> |  |
-|  onError | <code>(err: DateFormatError) =&gt; void</code> |  |
+|  locales | <code>string &#124; string[]</code> | One or more valid BCP 47 language tags, e.g. <code>fr</code> or <code>en-CA</code> |
+|  tokens | <code>string &#124; DateToken[]</code> | An ICU DateFormat skeleton string, or an array or parsed <code>DateToken</code> tokens |
+|  onError | <code>(err: DateFormatError) =&gt; void</code> | If defined, will be called separately for each encountered parsing error and unsupported feature. |
 
 <b>Returns:</b>
 
 `string`
+
+## Remarks
+
+The returned function will memoize an `Intl.DateTimeFormat` instance.
+
+## Example
+
+
+```js
+import { getDateFormatterSource } from 'messageformat-date-skeleton'
+
+getDateFormatterSource('en-CA', 'GrMMMdd', console.error)
+// '(function() {\n' +
+// '  var opt = {"era":"short","calendar":"gregory","year":"numeric",' +
+//      '"month":"short","day":"2-digit"};\n' +
+// '  var dtf = new Intl.DateTimeFormat("en-CA", opt);\n' +
+// '  return function(value) { return dtf.format(value); }\n' +
+// '})()'
+
+const src = getDateFormatterSource('en-CA', 'hamszzzz', console.error)
+// '(function() {\n' +
+// '  var opt = {"hour":"numeric","hourCycle":"h12","minute":"numeric",' +
+//      '"second":"numeric","timeZoneName":"long"};\n' +
+// '  var dtf = new Intl.DateTimeFormat("en-CA", opt);\n' +
+// '  return function(value) { return dtf.format(value); }\n' +
+// '})()'
+
+const fmt = new Function(`return ${src}`)()
+const date = new Date(2006, 0, 2, 15, 4, 5, 789)
+fmt(date) // '3:04:05 p.m. Newfoundland Daylight Time'
+
+```
 

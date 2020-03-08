@@ -4,6 +4,8 @@
 
 ## DateToken type
 
+An object representation of a parsed date skeleton token
+
 <b>Signature:</b>
 
 ```typescript

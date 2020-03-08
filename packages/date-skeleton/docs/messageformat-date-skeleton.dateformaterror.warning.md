@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-static WARNING: ErrorType;
+static WARNING: 'warning';
 ```

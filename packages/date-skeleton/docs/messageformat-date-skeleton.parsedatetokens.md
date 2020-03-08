@@ -4,6 +4,8 @@
 
 ## parseDateTokens() function
 
+Parse an [ICU DateFormat skeleton](http://userguide.icu-project.org/formatparse/datetime) string into a [DateToken](./messageformat-date-skeleton.datetoken.md) array.
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,9 +16,29 @@ export declare function parseDateTokens(src: string): DateToken[];
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  src | <code>string</code> |  |
+|  src | <code>string</code> | The skeleton string |
 
 <b>Returns:</b>
 
 `DateToken[]`
+
+## Remarks
+
+Errors will not be thrown, but if encountered are included as the relevant token's `error` value.
+
+## Example
+
+
+```js
+import { parseDateTokens } from 'messageformat-date-skeleton'
+
+parseDateTokens('GrMMMdd', console.error)
+// [
+//   { char: 'G', field: 'era', desc: 'Era', width: 1 },
+//   { char: 'r', field: 'year', desc: 'Related Gregorian year', width: 1 },
+//   { char: 'M', field: 'month', desc: 'Month in year', width: 3 },
+//   { char: 'd', field: 'day', desc: 'Day in month', width: 2 }
+// ]
+
+```
 

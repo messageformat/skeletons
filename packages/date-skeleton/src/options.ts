@@ -1,15 +1,26 @@
 import { DateToken } from './tokens'
 
-type ErrorType = 'error' | 'warning'
-type ErrorHandler = (msg: string, type?: ErrorType) => void
+type ErrorHandler = (msg: string, type?: 'error' | 'warning') => void
 
+/**
+ * Parent class for errors.
+ *
+ * @remarks
+ * Errors with `type: "warning"` do not necessarily indicate that the parser
+ * encountered an error. In addition to a human-friendly `message`, may also
+ * includes the `token` at which the error was encountered.
+ *
+ * @public
+ */
 export class DateFormatError extends Error {
-  static ERROR: ErrorType = 'error'
-  static WARNING: ErrorType = 'warning'
+  static ERROR: 'error'
+  static WARNING: 'warning'
 
   token: DateToken
-  type: ErrorType
-  constructor(msg: string, token: DateToken, type?: ErrorType) {
+  type: 'error' | 'warning'
+
+  /** @internal */
+  constructor(msg: string, token: DateToken, type?: 'error' | 'warning') {
     super(msg)
     this.token = token
     this.type = type || 'error'

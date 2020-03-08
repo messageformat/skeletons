@@ -4,24 +4,26 @@
 
 ## DateFormatError class
 
+Parent class for errors.
+
 <b>Signature:</b>
 
 ```typescript
 export declare class DateFormatError extends Error 
 ```
 
-## Constructors
+## Remarks
 
-|  Constructor | Modifiers | Description |
-|  --- | --- | --- |
-|  [(constructor)(msg, token, type)](./messageformat-date-skeleton.dateformaterror._constructor_.md) |  | Constructs a new instance of the <code>DateFormatError</code> class |
+Errors with `type: "warning"` do not necessarily indicate that the parser encountered an error. In addition to a human-friendly `message`<!-- -->, may also includes the `token` at which the error was encountered.
+
+The constructor for this class is marked as internal. Third-party code should not call the constructor directly or create subclasses that extend the `DateFormatError` class.
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [ERROR](./messageformat-date-skeleton.dateformaterror.error.md) | <code>static</code> | <code>ErrorType</code> |  |
+|  [ERROR](./messageformat-date-skeleton.dateformaterror.error.md) | <code>static</code> | <code>'error'</code> |  |
 |  [token](./messageformat-date-skeleton.dateformaterror.token.md) |  | <code>DateToken</code> |  |
-|  [type](./messageformat-date-skeleton.dateformaterror.type.md) |  | <code>ErrorType</code> |  |
-|  [WARNING](./messageformat-date-skeleton.dateformaterror.warning.md) | <code>static</code> | <code>ErrorType</code> |  |
+|  [type](./messageformat-date-skeleton.dateformaterror.type.md) |  | <code>'error' &#124; 'warning'</code> |  |
+|  [WARNING](./messageformat-date-skeleton.dateformaterror.warning.md) | <code>static</code> | <code>'warning'</code> |  |
 

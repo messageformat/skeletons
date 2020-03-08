@@ -4,6 +4,8 @@
 
 ## getDateFormatter() function
 
+Returns a date formatter function for the given locales and date skeleton
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,11 +16,32 @@ export declare function getDateFormatter(locales: string | string[], tokens: str
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  locales | <code>string &#124; string[]</code> |  |
-|  tokens | <code>string &#124; DateToken[]</code> |  |
-|  onError | <code>(error: DateFormatError) =&gt; void</code> |  |
+|  locales | <code>string &#124; string[]</code> | One or more valid BCP 47 language tags, e.g. <code>fr</code> or <code>en-CA</code> |
+|  tokens | <code>string &#124; DateToken[]</code> | An ICU DateFormat skeleton string, or an array or parsed <code>DateToken</code> tokens |
+|  onError | <code>(error: DateFormatError) =&gt; void</code> | If defined, will be called separately for each encountered parsing error and unsupported feature. |
 
 <b>Returns:</b>
 
 `(date: number | Date) => string`
+
+## Remarks
+
+Uses `Intl.DateTimeFormat` internally.
+
+## Example
+
+
+```js
+import { getDateFormatter } from 'messageformat-date-skeleton'
+
+// 2006 Jan 2, 15:04:05.789 in local time
+const date = new Date(2006, 0, 2, 15, 4, 5, 789)
+
+let fmt = getDateFormatter('en-CA', 'GrMMMdd', console.error)
+fmt(date) // 'Jan. 02, 2006 AD'
+
+fmt = getDateFormatter('en-CA', 'hamszzzz', console.error)
+fmt(date) // '3:04:05 p.m. Newfoundland Daylight Time'
+
+```
 

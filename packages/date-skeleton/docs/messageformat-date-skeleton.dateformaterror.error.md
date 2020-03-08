@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-static ERROR: ErrorType;
+static ERROR: 'error';
 ```
