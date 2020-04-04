@@ -2,14 +2,33 @@
   "name": "messageformat-skeletons",
   "description": "Monorepo for messageformat parser skeletons",
   "scripts": {
-    "ci:date": "cd packages/date-skeleton && npm ci",
-    "ci:number": "cd packages/number-skeleton && npm ci",
-    "install": "npm run ci:date && npm run ci:number",
-    "test:date": "cd packages/date-skeleton && npm run test",
-    "test:number": "cd packages/number-skeleton && npm run test",
-    "test": "npm run test:date && npm run test:number",
+    "build:date": "tsc -d --project packages/date-skeleton/tsconfig.json",
+    "build:number": "tsc -d --project packages/number-skeleton/tsconfig.json",
+    "build": "npm run build:date && npm run build:number",
+    "test": "jest",
     "docs:date": "cd packages/date-skeleton && npm run docs",
     "docs:number": "cd packages/number-skeleton && npm run docs",
     "docs": "npm run docs:date && npm run docs:number"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  },
+  "dependencies": {
+    "messageformat-date-skeleton": "file:packages/date-skeleton",
+    "messageformat-number-skeleton": "file:packages/number-skeleton"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "@babel/preset-typescript": "^7.7.4",
+    "@microsoft/api-documenter": "^7.7.1",
+    "@microsoft/api-extractor": "^7.7.0",
+    "@types/jest": "^24.0.23",
+    "babel-jest": "^24.9.0",
+    "jest": "^24.9.0",
+    "jest-ts-webcompat-resolver": "^1.0.0",
+    "prettier": "^1.19.1",
+    "typescript": "^3.7.2"
   }
 }

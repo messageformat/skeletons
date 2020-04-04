@@ -1,17 +1,7 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "lib": ["ES2017"],
-    "listEmittedFiles": true,
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "outDir": "lib",
-    "strict": true,
-    "target": "ES2017",
-    "types": ["jest"]
+    "outDir": "lib"
   },
-  "exclude": ["**/*.test.ts"],
   "include": ["src/**/*"]
 }

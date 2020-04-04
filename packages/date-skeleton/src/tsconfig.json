@@ -1,6 +1,6 @@
 // Used for tests only; defined here to satisfy VS Code
 {
-  "extends": "..",
+  "extends": "../tsconfig.json",
   "exclude": [],
   "include": ["**/*.test.ts"]
 }
