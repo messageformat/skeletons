@@ -5,10 +5,13 @@
     "build:date": "tsc -d --project packages/date-skeleton/tsconfig.json",
     "build:number": "tsc -d --project packages/number-skeleton/tsconfig.json",
     "build": "npm run build:date && npm run build:number",
+    "clean": "git clean -fdxe node_modules",
     "test": "jest",
-    "docs:date": "cd packages/date-skeleton && npm run docs",
-    "docs:number": "cd packages/number-skeleton && npm run docs",
-    "docs": "npm run docs:date && npm run docs:number"
+    "docs:extract:date": "api-extractor run --local --verbose -c packages/date-skeleton/api-extractor.json",
+    "docs:extract:number": "api-extractor run --local --verbose -c packages/number-skeleton/api-extractor.json",
+    "predocs": "npm run docs:extract:date && npm run docs:extract:number",
+    "docs": "api-documenter markdown -i temp/ -o docs/",
+    "postdocs": "node scripts/build-readmes"
   },
   "prettier": {
     "semi": false,

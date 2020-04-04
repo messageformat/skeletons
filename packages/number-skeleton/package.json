@@ -25,12 +25,6 @@
   "main": "lib/index.js",
   "scripts": {
     "build": "cd ../.. && npm run build:number",
-    "predocs": "npm run build",
-    "docs:extract": "api-extractor run --local --verbose",
-    "docs:markdown": "api-documenter markdown -i temp/ -o docs/",
-    "docs": "npm run docs:extract && npm run docs:markdown",
-    "postdocs": "node ../../scripts/build-readme",
-    "clean": "git clean -fdxe node_modules",
     "test": "cd ../.. && npm run test -- packages/number-skeleton"
   }
 }
