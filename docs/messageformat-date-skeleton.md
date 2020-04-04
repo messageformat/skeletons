@@ -6,16 +6,22 @@
 
 Tools for working with [ICU DateFormat skeletons](http://userguide.icu-project.org/formatparse/datetime)<!-- -->.
 
+## Remarks
+
+
 ```js
 import {
   DateFormatError,
-  DateToken,
+  DateToken, // TS only
   getDateFormatter,
   getDateFormatterSource,
   parseDateTokens
 } from 'messageformat-date-skeleton'
 
 ```
+The package is released as an ES module only. If using from a CommonJS context, you may need to `import()` it, or use a module loader like [esm](https://www.npmjs.com/package/esm)<!-- -->.
+
+Uses [Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat) internally. Position-dependent ICU DateFormat [patterns](https://unicode.org/reports/tr35/tr35-dates.html#Date_Format_Patterns) are not supported, as they cannot be represented with Intl.DateTimeFormat options.
 
 ## Classes
 
@@ -28,7 +34,7 @@ import {
 |  Function | Description |
 |  --- | --- |
 |  [getDateFormatter(locales, tokens, onError)](./messageformat-date-skeleton.getdateformatter.md) | Returns a date formatter function for the given locales and date skeleton |
-|  [getDateFormatterSource(locales, tokens, onError)](./messageformat-date-skeleton.getdateformattersource.md) | Returns a string of JavaScript source that evaluates to a date formatter function with the same <code>(value: number) =&gt; string</code> signature as the function returned by [getDateFormatter()](./messageformat-date-skeleton.getdateformatter.md)<!-- -->. |
+|  [getDateFormatterSource(locales, tokens, onError)](./messageformat-date-skeleton.getdateformattersource.md) | Returns a string of JavaScript source that evaluates to a date formatter function with the same <code>(date: Date &#124; number) =&gt; string</code> signature as the function returned by [getDateFormatter()](./messageformat-date-skeleton.getdateformatter.md)<!-- -->. |
 |  [parseDateTokens(src)](./messageformat-date-skeleton.parsedatetokens.md) | Parse an [ICU DateFormat skeleton](http://userguide.icu-project.org/formatparse/datetime) string into a [DateToken](./messageformat-date-skeleton.datetoken.md) array. |
 
 ## Type Aliases

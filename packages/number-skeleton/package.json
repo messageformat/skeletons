@@ -1,7 +1,7 @@
 {
   "name": "messageformat-number-skeleton",
   "version": "0.2.0",
-  "description": "A parser & formatter for ICU NumberFormatter skeleton strings",
+  "description": "A parser & formatter for ICU NumberFormat skeleton strings & patterns",
   "keywords": [
     "icu",
     "messageformat",

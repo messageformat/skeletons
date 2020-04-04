@@ -4,7 +4,7 @@
 
 ## getDateFormatterSource() function
 
-Returns a string of JavaScript source that evaluates to a date formatter function with the same `(value: number) => string` signature as the function returned by [getDateFormatter()](./messageformat-date-skeleton.getdateformatter.md)<!-- -->.
+Returns a string of JavaScript source that evaluates to a date formatter function with the same `(date: Date | number) => string` signature as the function returned by [getDateFormatter()](./messageformat-date-skeleton.getdateformatter.md)<!-- -->.
 
 <b>Signature:</b>
 

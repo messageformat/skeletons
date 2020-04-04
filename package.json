@@ -1,6 +1,7 @@
 {
   "name": "messageformat-skeletons",
   "description": "Monorepo for messageformat parser skeletons",
+  "private": true,
   "scripts": {
     "build:date": "tsc -d --project packages/date-skeleton/tsconfig.json",
     "build:number": "tsc -d --project packages/number-skeleton/tsconfig.json",

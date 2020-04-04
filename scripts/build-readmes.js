@@ -16,6 +16,7 @@ function getReadme(name, url) {
   const body = bodySrc
     .slice(headEnd)
     .replace(/^.*/, `# ${name}`)
+    .replace(/#+ Remarks\s*/, '')
     .replace(linkRe, url)
     .trim()
 

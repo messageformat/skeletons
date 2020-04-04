@@ -4,7 +4,10 @@
 
 ## messageformat-number-skeleton package
 
-Tools for working with [ICU NumberFormatter skeletons](https://github.com/unicode-org/icu/blob/master/docs/userguide/format_parse/numbers/skeletons.md)<!-- -->.
+Tools for working with [ICU NumberFormat skeletons](https://github.com/unicode-org/icu/blob/master/docs/userguide/format_parse/numbers/skeletons.md) and [patterns](http://unicode.org/reports/tr35/tr35-numbers.html#Number_Format_Patterns)<!-- -->.
+
+## Remarks
+
 
 ```js
 import {
@@ -13,11 +16,14 @@ import {
  NumberFormatError,
  parseNumberPattern,
  parseNumberSkeleton,
- Skeleton,
- Unit
+ Skeleton, // TS only
+ Unit // TS only
 } from 'messageformat-number-skeleton'
 
 ```
+The package is released as an ES module only. If using from a CommonJS context, you may need to `import()` it, or use a module loader like [esm](https://www.npmjs.com/package/esm)<!-- -->.
+
+Uses [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat) internally, including features provided by the [Unified API Proposal](https://github.com/tc39/proposal-unified-intl-numberformat)<!-- -->.
 
 ## Classes
 

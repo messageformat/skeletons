@@ -40,8 +40,8 @@ export function getDateFormatter(
 
 /**
  * Returns a string of JavaScript source that evaluates to a date formatter
- * function with the same `(value: number) => string` signature as the function
- * returned by {@link getDateFormatter}.
+ * function with the same `(date: Date | number) => string` signature as the
+ * function returned by {@link getDateFormatter}.
  *
  * @remarks
  * The returned function will memoize an `Intl.DateTimeFormat` instance.
