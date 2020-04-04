@@ -8,6 +8,18 @@
 
 |  Package | Description |
 |  --- | --- |
+|  [messageformat-date-skeleton](./messageformat-date-skeleton.md) | Tools for working with [ICU DateFormat skeletons](http://userguide.icu-project.org/formatparse/datetime)<!-- -->.
+```js
+import {
+  DateFormatError,
+  DateToken,
+  getDateFormatter,
+  getDateFormatterSource,
+  parseDateTokens
+} from 'messageformat-date-skeleton'
+
+```
+ |
 |  [messageformat-number-skeleton](./messageformat-number-skeleton.md) | Tools for working with [ICU NumberFormatter skeletons](https://github.com/unicode-org/icu/blob/master/docs/userguide/format_parse/numbers/skeletons.md)<!-- -->.
 ```js
 import {
